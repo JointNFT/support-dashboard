@@ -31,8 +31,12 @@ var STATIC_CHANNELS = [{
     sockets: []
 }];
 
-
-
+server.on('upgrade', function (request, socket, head) {
+    wss.handleUpgrade(request, socket, head, function (ws) {
+       wss.emit('connection', ws, request);
+    })
+  })
+  
 io.on('connection', (socket) => { // socket object may be used to send specific messages to the new connected client
     console.log('new client connected');
     socket.emit('connection', null);
@@ -58,11 +62,12 @@ io.on('connection', (socket) => { // socket object may be used to send specific 
         return id;
     });
 
-    socket.on('create-account', message => {
-
+    socket.on('create-account', data => {
+        console.log('data', data);
     });
     
     socket.on('send-message', message => {
+        console.log(message);
         io.emit('message', message);
     });
 
