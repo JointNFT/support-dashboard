@@ -3,15 +3,15 @@ import { Channel } from './Channel';
 
 export class ChannelList extends React.Component {
 
-    handleClick = id => {
-        this.props.onSelectChannel(id);
+    handleClick = address => {
+        this.props.onSelectChannel(address);
     }
 
     render() {
 
         let list = <div className="no-content-message">There is no channels to show</div>;
         if (this.props.channels && this.props.channels.map) {
-            list = this.props.channels.map(c => <Channel key={c.id} id={c.id} name={c.name} participants={c.participants} onClick={this.handleClick} />);
+            list = this.props.channels.map(c => <Channel address={c.userAddress} onClick={this.handleClick} />);
         }
         return (
             <div className='channel-list'>

@@ -24,21 +24,12 @@ export class Chat extends React.Component {
                 this.handleChannelSelect(this.state.channel.id);
             }
         });
-        socket.on('channel', channel => {
-            
-            let channels = this.state.channels;
-            channels.forEach(c => {
-                if (c.id === channel.id) {
-                    c.participants = channel.participants;
-                }
-            });
-            this.setState({ channels });
-        });
+
         socket.on('message', message => {
             console.log('message', message);
             let channels = this.state.channels
             channels.forEach(c => {
-                if (c.id === message.channel_id) {
+                if (c.userAddress === message.address) {
                     if (!c.messages) {
                         c.messages = [message];
                     } else {
@@ -52,25 +43,27 @@ export class Chat extends React.Component {
     }
 
     loadChannels = async () => {
-        fetch('/getChannels').then(async response => {
+        fetch('/getUsers?accessToken=some-token').then(async response => {
             let data = await response.json();
-            this.setState({ channels: data.channels });
+            this.setState({ channels: data.users });
         })
     }
 
-    handleChannelSelect = id => {
+    handleChannelSelect = address => {
         let channel = this.state.channels.find(c => {
-            return c.id === id;
+            return c.userAddress === address;
         });
-        this.setState({ channel });
-        this.socket.emit('channel-join', id, ack => {
+        fetch('/getMessages?address='+address+'&accessToken=some-token').then(async response => {
+            let data = await response.json();
+            channel.messages = data.messages;
+            this.setState({ channel });
         });
-        this.socket.emit('create-account', {'address':'0xe96', accessToken: "some-token"});
+        // this.socket.emit('create-account', {'address':'0xe96', accessToken: "some-token"});
     }
 
 
-    handleSendMessage = (channel_id, text) => {
-        this.socket.emit('send-message', { channel_id, text, senderName: this.socket.id, id: Date.now(), address: "0xe96", accessToken:"some-token", message:text, to:"0xe96", from:"support"});
+    handleSendMessage = (address, text) => {
+        this.socket.emit('send-message', { id: Date.now(), address: address, accessToken:"some-token", message:text, to:"0xe96", from:"support"});
     }
 
     render() {

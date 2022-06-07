@@ -5,7 +5,7 @@ export class MessagesPanel extends React.Component {
     state = { input_value: '' }
     send = () => {
         if (this.state.input_value && this.state.input_value != '') {
-            this.props.onSendMessage(this.props.channel.id, this.state.input_value);
+            this.props.onSendMessage(this.props.channel.userAddress, this.state.input_value);
             this.setState({ input_value: '' });
         }
     }
@@ -18,7 +18,7 @@ export class MessagesPanel extends React.Component {
 
         let list = <div className="no-content-message">There is no messages to show</div>;
         if (this.props.channel && this.props.channel.messages) {
-            list = this.props.channel.messages.map(m => <Message key={m.id} id={m.id} senderName={m.senderName} text={m.text} />);
+            list = this.props.channel.messages.map(m => <Message address={m.from} message={m.message} />);
         }
         return (
             <div className='messages-panel'>
