@@ -16,7 +16,7 @@ root.render(
                     <Chat />
                 </Col>
 
-                <Col> <Transaction/></Col>
+                {/* <Col> <Transaction/></Col> */}
             </Row>
         
     </React.StrictMode>,
