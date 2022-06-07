@@ -35,7 +35,7 @@ export class Chat extends React.Component {
             this.setState({ channels });
         });
         socket.on('message', message => {
-            
+            console.log('message', message);
             let channels = this.state.channels
             channels.forEach(c => {
                 if (c.id === message.channel_id) {
@@ -65,10 +65,12 @@ export class Chat extends React.Component {
         this.setState({ channel });
         this.socket.emit('channel-join', id, ack => {
         });
+        this.socket.emit('create-account', {'address':'0xe96', accessToken: "some-token"});
     }
 
+
     handleSendMessage = (channel_id, text) => {
-        this.socket.emit('send-message', { channel_id, text, senderName: this.socket.id, id: Date.now() });
+        this.socket.emit('send-message', { channel_id, text, senderName: this.socket.id, id: Date.now(), address: "0xe96", accessToken:"some-token", message:text, to:"0xe96", from:"support"});
     }
 
     render() {
