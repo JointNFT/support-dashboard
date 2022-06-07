@@ -17,7 +17,7 @@ var server = require('http').createServer(app)
 
 var io = require('socket.io')(server, {
     cors: {
-        origin: "http://localhost:3000"
+        origin: "*"
       }
 });
 var io = io.listen(server);
