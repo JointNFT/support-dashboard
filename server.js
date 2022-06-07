@@ -17,7 +17,7 @@ var server = require('http').createServer(app)
 
 var io = require('socket.io')(server, {
     cors: {
-        origin: "support-dashboard-highfy.herokuapp.com"
+        origin: "*"
       }
 });
 var io = io.listen(server);

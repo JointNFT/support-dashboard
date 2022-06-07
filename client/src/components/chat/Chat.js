@@ -18,7 +18,7 @@ export class Chat extends React.Component {
     }
 
     configureSocket = () => {
-        var socket = socketClient(SERVER);
+        var socket = socketClient();
         socket.on('connection', () => {
             if (this.state.channel) {
                 this.handleChannelSelect(this.state.channel.id);
@@ -52,7 +52,7 @@ export class Chat extends React.Component {
     }
 
     loadChannels = async () => {
-        fetch('http://localhost:3000/getChannels').then(async response => {
+        fetch('/getChannels').then(async response => {
             let data = await response.json();
             this.setState({ channels: data.channels });
         })
