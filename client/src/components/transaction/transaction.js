@@ -15,10 +15,9 @@ const Transaction = () => {
     }
 
     return (
-        <div>
+        <div className="transaction">
         <AddressForm fetchTx={fetchTransactions}/>
-        <TransactionList transactions={transactions}/>
-        
+        <TransactionList transactions={transactions}/>        
         </div>
     );
 };
