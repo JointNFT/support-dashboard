@@ -6,10 +6,13 @@ import { MessagesPanel } from "./MessagesPanel";
 import socketClient from "socket.io-client";
 const SERVER = "http://127.0.0.1:3000";
 export class Chat extends React.Component {
+    queryParams = new URLSearchParams(window.location.search);
+
     state = {
         channels: null,
         socket: null,
         channel: null,
+        accessToken: this.queryParams.get('accessToken')
     };
     socket;
     componentDidMount() {
@@ -52,7 +55,8 @@ export class Chat extends React.Component {
     };
 
     loadChannels = async () => {
-        fetch("/getUsers?accessToken=some-token").then(async (response) => {
+        console.log('accessToken - ', this.state.accessToken);
+        fetch("/getUsers?accessToken="+this.state.accessToken).then(async (response) => {
             let data = await response.json();
             this.setState({ channels: data.users });
         });
@@ -64,7 +68,7 @@ export class Chat extends React.Component {
             return c.userAddress === address;
         });
         
-        fetch("/getMessages?address=" + address + "&accessToken=some-token").then(async (response) => {
+        fetch("/getMessages?address=" + address + "&accessToken="+this.state.accessToken).then(async (response) => {
             let data = await response.json();
             channel.messages = data.messages;
             channels.forEach((c) => {
@@ -83,7 +87,7 @@ export class Chat extends React.Component {
         this.socket.emit("send-message", {
             id: Date.now(),
             address: address,
-            accessToken: "some-token",
+            accessToken: this.state.accessToken,
             message: text,
             to: "0xe97",
             from: "support",

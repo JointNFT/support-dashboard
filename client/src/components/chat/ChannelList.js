@@ -3,6 +3,7 @@ import { Channel } from "./Channel";
 import { ChatList } from "react-chat-elements";
 
 export class ChannelList extends React.Component {
+    queryParams = new URLSearchParams(window.location.search);
     handleClick = (data) => {
         this.props.onSelectChannel(data.title);
     };
@@ -12,7 +13,7 @@ export class ChannelList extends React.Component {
         if (this.props.channels && this.props.channels.map) {
             list = this.props.channels.map((c) => {
                 console.log('c',c)
-                if (c.accessToken == "some-token")
+                if (c.accessToken == this.queryParams.get("accessToken"))
                     return {
                         avatar: "https://storage.googleapis.com/opensea-static/opensea-profile/19.png",
                         alt: "Some DP",
