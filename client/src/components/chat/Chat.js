@@ -4,7 +4,7 @@ import { CreateAccountForm } from './CreateAccountForm';
 import './chat.scss';
 import { MessagesPanel } from './MessagesPanel';
 import socketClient from "socket.io-client";
-const SERVER = "https://support-dashboard-highfy.herokuapp.com/";
+const SERVER = "https://support-dashboard-highfy.herokuapp.com";
 export class Chat extends React.Component {
 
     state = {
