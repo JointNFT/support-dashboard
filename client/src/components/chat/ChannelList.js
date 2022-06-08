@@ -10,7 +10,7 @@ export class ChannelList extends React.Component {
         let list = <div className="no-content-message">There is no channels to show</div>;
         if (this.props.channels && this.props.channels.map) {
             list = this.props.channels.map((c) => {
-                if (channel.accessToken == "some-token") return <Channel address={c.userAddress} onClick={this.handleClick} />;
+                return <Channel address={c.userAddress} onClick={this.handleClick} />;
             });
         }
         return <div className="channel-list">{list}</div>;
