@@ -18,8 +18,8 @@ const AddressForm = (props) => {
 
     return (
         <div className="address-input">
-            <input type="text" id="userAdderss" onChange={handleUserAddresInput} value={userAddress}></input>
-            <input type="text" id="contractAddress" onChange={handleContractAddressInput} value={contractAddresses}></input>
+            <label>Customer Address</label><input type="text" id="userAdderss" onChange={handleUserAddresInput} value={userAddress}></input>
+            <label>Contract Addresses</label><input type="text" id="contractAddress" onChange={handleContractAddressInput} value={contractAddresses}></input>
             <button onClick={send}>Fetch Transactions</button>
         </div>
     );
