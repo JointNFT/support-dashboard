@@ -1,22 +1,18 @@
-import React from 'react';
-import { Channel } from './Channel';
+import React from "react";
+import { Channel } from "./Channel";
 
 export class ChannelList extends React.Component {
-
-    handleClick = address => {
+    handleClick = (address) => {
         this.props.onSelectChannel(address);
-    }
+    };
 
     render() {
-
         let list = <div className="no-content-message">There is no channels to show</div>;
         if (this.props.channels && this.props.channels.map) {
-            list = this.props.channels.map(c => <Channel address={c.userAddress} onClick={this.handleClick} />);
+            list = this.props.channels.map((c) => {
+                if (c.accessToken == "some-token") return <Channel address={c.userAddress} onClick={this.handleClick} />;
+            });
         }
-        return (
-            <div className='channel-list'>
-                {list}
-            </div>);
+        return <div className="channel-list">{list}</div>;
     }
-
 }
