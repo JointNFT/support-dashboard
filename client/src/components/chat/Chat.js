@@ -39,6 +39,13 @@ export class Chat extends React.Component {
             });
             this.setState({ channels });
         });
+
+        socket.on('new-account', data => {
+            let channels = this.state.channels;
+            channels.push(data);
+            this.setState({ channels });
+        })
+
         this.socket = socket;
     }
 
@@ -63,7 +70,7 @@ export class Chat extends React.Component {
 
 
     handleSendMessage = (address, text) => {
-        this.socket.emit('send-message', { id: Date.now(), address: address, accessToken:"some-token", message:text, to:"0xe96", from:"support"});
+        this.socket.emit('send-message', { id: Date.now(), address: address, accessToken:"some-token", message:text, to:"0xe97", from:"support"});
     }
 
     render() {

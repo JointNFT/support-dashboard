@@ -3,9 +3,14 @@ const path = require('path');
 const cors = require('cors');
 require("dotenv").config({path: './.env'});
 const chatHandlers = require("./utils/chatHandlers");
+const Web3 = require("web3");
+const utils = require("./utils/transactionDecoders");
+const axios = require("axios");
 
 
 var app = express()
+
+const w3 = new Web3(new Web3.providers.HttpProvider('https://rpcapi.fantom.network'))
 
 // Middleware
 app.use(express.static(path.resolve(__dirname, "./client/build")));
@@ -34,6 +39,7 @@ io.on('connection', (socket) => { // socket object may be used to send specific 
             return;
         }
         chatHandlers.createNewUser(data.address, data.accessToken);
+        io.emit('new-account', {userAddress: data.address, accessToken: data.accessToken});
     });
     
     socket.on('send-message', data => {
@@ -84,10 +90,38 @@ app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
+app.get('/transactions', async function (req, res) {
+    console.log(req.query);
+    let contractAddresses = req?.query?.contractAddresses.split(',');
+    console.log(contractAddresses);
+    let address = req?.query?.userAddress;
+    if (address == null) {
+        res.send({'error':'Please enter the address'});
+        return;
+    }
+    let apiKey = process.env.API_KEY;
+    let startBlock = "34911344"
+
+    let url="https://api.ftmscan.com/api?module=account&action=txlist&address="+address+"&startblock="+startBlock+"&endblock=99999999&sort=asc&apikey="+apiKey
+
+    const axiosRes = await axios.get(url);
+    const userTransactions = axiosRes?.data?.result;
+
+    if (userTransactions == null) {
+        res.send({'error':'couldnt fetch transactions for user'});
+    }
+    
+    console.log(contractAddresses);
+    filteredTransactions = utils.filter_for_useful_transactions(userTransactions, contractAddresses)
+    res.send(JSON.stringify({filteredTransactions}))
+})
+
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
+
+
 
 
 server.listen(port, () => {
