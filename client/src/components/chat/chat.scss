@@ -1,5 +1,5 @@
 .chat-app {
-    width: 100%;
+    width: 80%;
     height: 100%;
     display: flex;
 
@@ -19,6 +19,9 @@
         border-right: none;
         height: calc(100% - 22px);
     }
+    .bordered{
+        border: 3px solid red;
+      }
 
     .channel-item {
         border-bottom: 1px solid rgb(224, 224, 224);

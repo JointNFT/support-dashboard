@@ -1,4 +1,5 @@
 import React from 'react';
+import {Nav} from "react-bootstrap";
 import { ChannelList } from './ChannelList';
 import './chat.scss';
 import { MessagesPanel } from './MessagesPanel';
@@ -80,6 +81,7 @@ export class Chat extends React.Component {
                 <ChannelList channels={this.state.channels} onSelectChannel={this.handleChannelSelect} />
                 <MessagesPanel onSendMessage={this.handleSendMessage} channel={this.state.channel} />
             </div>
+            
         );
     }
 }

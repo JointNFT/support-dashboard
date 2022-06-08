@@ -1,7 +1,10 @@
 .transaction {  
-    background-color: #008080;  
-    color: yellow;  
-    padding: 40px;  
+  margin: 10px;
+    background-color: white;  
+    margin-left: 0;
     font-family: Arial;  
     text-align: center;  
+    
   }  
+  
+  

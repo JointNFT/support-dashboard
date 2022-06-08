@@ -5,12 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Chat } from "./components/chat/Chat";
 import Transaction from "./components/transaction/transaction";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Nav } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+            <Nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">HighFi</a>
+            </Nav>
             <Row style={{display:"flex"}}>
                 <Col style={{display:"contents"}}>
                     <Chat />
