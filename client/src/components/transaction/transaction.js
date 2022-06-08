@@ -1,9 +1,13 @@
 import React from "react";
 import './transaction.css'
 import Accordion from 'react-bootstrap/Accordion'
+import AddressForm from "./addressForm";
 
 const Transaction = () => {
+    let state = {'userAddress': "0x5c146cd18fa53914580573c9b9604588529406ca", contractAddresses:"0xad337077480134028b7c68af290e891ce28076eb"}
     return (
+        <div>
+        <AddressForm random='props'/>
         <Accordion defaultActiveKey="0" >
             <Accordion.Item eventKey="0">
                 <Accordion.Header >Accordion Item #1</Accordion.Header>
@@ -24,6 +28,7 @@ const Transaction = () => {
                 </Accordion.Body>
             </Accordion.Item>
         </Accordion>
+        </div>
     );
 };
 
