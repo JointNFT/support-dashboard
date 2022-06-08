@@ -11,14 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-            <Row style={{display:"flex"}}>
-                <Col style={{display:"contents"}}>
-                    <Chat />
-                </Col>
-
-                <Col> <Transaction/></Col>
-            </Row>
-        
+                <Chat />
     </React.StrictMode>,
     // document.getElementById("root")
 );

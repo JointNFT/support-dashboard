@@ -1,9 +1,10 @@
 import React from 'react';
 import { ChannelList } from './ChannelList';
+import { CreateAccountForm } from './CreateAccountForm';
 import './chat.scss';
 import { MessagesPanel } from './MessagesPanel';
 import socketClient from "socket.io-client";
-const SERVER = "http://127.0.0.1:3000";
+const SERVER = "https://support-dashboard-highfy.herokuapp.com/";
 export class Chat extends React.Component {
 
     state = {
@@ -18,7 +19,7 @@ export class Chat extends React.Component {
     }
 
     configureSocket = () => {
-        var socket = socketClient();
+        var socket = socketClient(SERVER);
         socket.on('connection', () => {
             if (this.state.channel) {
                 this.handleChannelSelect(this.state.channel.id);
@@ -40,27 +41,19 @@ export class Chat extends React.Component {
             this.setState({ channels });
         });
 
-        socket.on('new-account', data => {
-            let channels = this.state.channels;
-            channels.push(data);
-            this.setState({ channels });
-        })
-
         this.socket = socket;
     }
 
     loadChannels = async () => {
-        fetch('/getUsers?accessToken=some-token').then(async response => {
-            let data = await response.json();
-            this.setState({ channels: data.users });
-        })
+        let channels = [{userAddress: '', accessToken: 'some-token'}];
+        this.setState({channels})
     }
 
     handleChannelSelect = address => {
         let channel = this.state.channels.find(c => {
             return c.userAddress === address;
         });
-        fetch('/getMessages?address='+address+'&accessToken=some-token').then(async response => {
+        fetch(SERVER+'/getMessages?address='+address+'&accessToken=some-token').then(async response => {
             let data = await response.json();
             channel.messages = data.messages;
             this.setState({ channel });
@@ -70,13 +63,20 @@ export class Chat extends React.Component {
 
 
     handleSendMessage = (address, text) => {
-        this.socket.emit('send-message', { id: Date.now(), address: address, accessToken:"some-token", message:text, to:"0xe97", from:"support"});
+        this.socket.emit('send-message', { id: Date.now(), address: address, accessToken:"some-token", message:text, to:"support", from:address});
+    }
+
+    handleCreateAccount = (address, accessToken) => {
+        this.socket.emit('create-account', {userAddress: address, accessToken});
+        let channels = this.state.channels;
+        channels[0].userAddress = address;
+        this.setState({channels});
     }
 
     render() {
-
         return (
             <div className='chat-app'>
+                <CreateAccountForm createAccount={this.handleCreateAccount} />
                 <ChannelList channels={this.state.channels} onSelectChannel={this.handleChannelSelect} />
                 <MessagesPanel onSendMessage={this.handleSendMessage} channel={this.state.channel} />
             </div>

@@ -16,13 +16,13 @@ const w3 = new Web3(new Web3.providers.HttpProvider('https://rpcapi.fantom.netwo
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use(cors())
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 
 var server = require('http').createServer(app)
 
 var io = require('socket.io')(server, {
     cors: {
-        origin: "*"
+        origin: "localhost:3002"
       }
 });
 var io = io.listen(server);
