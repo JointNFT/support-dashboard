@@ -1,5 +1,8 @@
 import React from "react";
-import { Message } from "./Message";
+import "./chat.scss";
+import { MessageList } from 'react-chat-elements'
+import "react-chat-elements/dist/main.css";
+const messageListReferance = React.createRef();
 
 export class MessagesPanel extends React.Component {
     state = { input_value: "" };
@@ -14,14 +17,35 @@ export class MessagesPanel extends React.Component {
         this.setState({ input_value: e.target.value });
     };
 
+    style={
+        width: 'inherit',
+        '.rce-container-mlist > width': 'inherit'
+    }
+
     render() {
-        let list = <div className="no-content-message">There is no messages to show</div>;
+        let list = [];
         if (this.props.channel && this.props.channel.messages) {
-            list = this.props.channel.messages.map((m) => <Message address={m.from} message={m.message} />);
+            list = this.props.channel.messages.map((m) => {
+                let messageBodyParams = {}
+                // left for incoming, right for outgoing
+                messageBodyParams.position = m.from == "support" ? "right" : "left";
+                messageBodyParams.type = 'text';
+                messageBodyParams.text = m.message;
+                messageBodyParams.date = new Date();
+                return messageBodyParams;
+            });
+            console.log('list', list);
+            console.log('what comes out ? ',list ? list : [] )
         }
         return (
             <div className="messages-panel">
-                <div className="meesages-list">{list}</div>
+                <MessageList
+                    referance={messageListReferance}
+                    className='message-list'
+                    lockable={true}
+                    style={this.style}
+                    toBottomHeight={'100%'}
+                    dataSource={list == [] ? [] : list} />
                 {this.props.channel && (
                     <div className="messages-input">
                         <input type="text" onChange={this.handleInput} value={this.state.input_value} />
