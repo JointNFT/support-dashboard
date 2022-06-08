@@ -19,7 +19,7 @@ export class ChannelList extends React.Component {
                         title: c.userAddress,
                         subtitle: c?.messages != null ? c.messages.length[c.messages.length - 1] : "",
                         data: new Date(),
-                        unread: 0
+                        unread: c.unread != null ? c.unread : 0
                     };
             });
             console.log(list)

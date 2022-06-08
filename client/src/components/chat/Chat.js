@@ -32,8 +32,10 @@ export class Chat extends React.Component {
                 if (c.userAddress === message.address) {
                     if (!c.messages) {
                         c.messages = [message];
+                        c.unread = 1
                     } else {
                         c.messages.push(message);
+                        c.unread = c.unread + 1
                     }
                 }
             });
@@ -57,14 +59,23 @@ export class Chat extends React.Component {
     };
 
     handleChannelSelect = (address) => {
-        let channel = this.state.channels.find((c) => {
+        let channels = this.state.channels;
+        let channel = channels.find((c) => {
             return c.userAddress === address;
         });
+        
         fetch("/getMessages?address=" + address + "&accessToken=some-token").then(async (response) => {
             let data = await response.json();
             channel.messages = data.messages;
+            channels.forEach((c) => {
+                if (c.userAddress === channel.userAddress) {
+                        c.unread = 0
+                }
+            });
             this.setState({ channel });
         });
+        
+        this.setState({ channels });
         // this.socket.emit('create-account', {'address':'0xe96', accessToken: "some-token"});
     };
 
