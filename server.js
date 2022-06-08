@@ -34,12 +34,12 @@ io.on('connection', (socket) => { // socket object may be used to send specific 
     socket.emit('connection', null);
     
     socket.on('create-account', data => {
-        console.log('data', data);
-        if (data == null || data.address == null || data.accessToken == null) {
+        console.log('create account', data);
+        if (data == null || data.userAddress == null || data.accessToken == null) {
             return;
         }
-        chatHandlers.createNewUser(data.address, data.accessToken);
-        io.emit('new-account', {userAddress: data.address, accessToken: data.accessToken});
+        chatHandlers.createNewUser(data.userAddress, data.accessToken);
+        io.emit('new-account', {userAddress: data.userAddress, accessToken: data.accessToken});
     });
     
     socket.on('send-message', data => {
