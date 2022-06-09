@@ -4,7 +4,7 @@ export class CreateAccountForm extends React.Component {
     state = { userAddress: "", accessToken: "" };
     createAccount = () => {
         if (this.state.userAddress && this.state.input_value != "") {
-            this.props.createAccount(this.state.userAddress, this.state.accessToken);
+            this.props.createAccount(this.state.userAddress, 'some-token');
         }
     };
 
@@ -19,9 +19,10 @@ export class CreateAccountForm extends React.Component {
     render() {
         return (
             <div>
-                <input type="text" id="userAdderss" onChange={this.handleUserAddressInput} value={this.state.userAddress}></input>
-                <input type="text" id="accessToken" onChange={this.handleAccessTokenInput} value={this.state.accessToken}></input>
-                <button onClick={this.createAccount}>Create Account</button>
+                <div>
+                    <input type="text" id="userAdderss" onChange={this.handleUserAddressInput} value={this.state.userAddress}></input>
+                    <button onClick={this.createAccount}>Create Account</button>
+                </div>
             </div>
         );
     }
