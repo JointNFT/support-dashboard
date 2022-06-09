@@ -51,7 +51,8 @@ export class MessagesPanel extends React.Component {
                             placeholder="Type here..."
                             multiline={true}
                             onChange={this.handleInput}
-                            rightButtons={<Button color="white" backgroundColor="black" text="Send" onClick={this.send}/>}
+                            value={this.state.input_value}
+                            rightButtons={<Button color="white" backgroundColor="blue" text="Send" onClick={this.send}/>}
                         />
                 )}
             </div>
