@@ -44,8 +44,6 @@ export class MessagesPanel extends React.Component {
                 messageBodyParams.date = new Date();
                 return messageBodyParams;
             });
-            console.log("list", list);
-            console.log("what comes out ? ", list ? list : []);
         }
         return (
             <div className="messages-panel">
@@ -64,7 +62,7 @@ export class MessagesPanel extends React.Component {
                         onChange={this.handleInput}
                         value={this.state.input_value}
                         rightButtons={<Button color="white" text="Send" onClick={this.send} />}
-                        onKeyPress={this.handleKeypress}
+                        onKeyDown={this.handleKeypress}
                     />
                 )}
             </div>
