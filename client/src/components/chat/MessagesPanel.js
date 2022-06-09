@@ -10,8 +10,11 @@ export class MessagesPanel extends React.Component {
         if (this.state.input_value && this.state.input_value != "") {
             this.props.onSendMessage(this.props.channel.userAddress, this.state.input_value);
             this.setState({ input_value: "" });
+            this.inputClear();
         }
     };
+
+    inputClear = () => {};
 
     handleInput = (e) => {
         this.setState({ input_value: e.target.value });
@@ -50,6 +53,7 @@ export class MessagesPanel extends React.Component {
                             referance={inputReferance}
                             placeholder="Type here..."
                             multiline={true}
+                            clear={(clear) => (this.inputClear = clear)}
                             onChange={this.handleInput}
                             value={this.state.input_value}
                             rightButtons={<Button color="white"  text="Send" onClick={this.send}/>}
