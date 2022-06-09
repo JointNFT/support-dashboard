@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
+import './transactionList.css';
 
 const TransactionList = (props) => {
     let transactionList = [];
