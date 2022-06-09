@@ -8,7 +8,7 @@ const TransactionList = (props) => {
         let tx = props.transactions[i];
         transactionList.push(
             <Accordion.Item eventKey={i}>
-                <Accordion.Header>Transaction: {i}</Accordion.Header>
+                <Accordion.Header>Tx: {i}, Function: {tx?.decodedInput?.name}</Accordion.Header>
                 <Accordion.Body>
                     Transaction Status: {tx.isError ? "Success" : "Failure"}
                     <br />

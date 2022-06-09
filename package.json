@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "abi-decoder": "^2.4.0",
     "aws-sdk": "^2.1150.0",
     "axios": "^0.27.2",
     "cors": "^2.8.5",

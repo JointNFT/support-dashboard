@@ -99,7 +99,7 @@ app.get('/transactions', async function (req, res) {
         res.send({'error':'Please enter the address'});
         return;
     }
-    let apiKey = process.env.API_KEY;
+    let apiKey = process.env.FTM_SCAN_API_KEY;
     let startBlock = "34911344"
 
     let url="https://api.ftmscan.com/api?module=account&action=txlist&address="+address+"&startblock="+startBlock+"&endblock=99999999&sort=asc&apikey="+apiKey
@@ -112,8 +112,9 @@ app.get('/transactions', async function (req, res) {
     }
     
     console.log(contractAddresses);
-    filteredTransactions = utils.filter_for_useful_transactions(userTransactions, contractAddresses)
-    res.send(JSON.stringify({filteredTransactions}))
+    let filteredTransactions = utils.filter_for_useful_transactions(userTransactions, contractAddresses)
+    let populatedTransactions = await utils.populateTransactions(filteredTransactions, apiKey);
+    res.send(JSON.stringify({filteredTransactions: populatedTransactions}))
 })
 
 // All other GET requests not handled before will return our React app
