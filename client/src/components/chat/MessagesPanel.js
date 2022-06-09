@@ -25,6 +25,13 @@ export class MessagesPanel extends React.Component {
         ".rce-container-mlist > width": "inherit",
     };
 
+    handleKeypress = (e) => {
+        //it triggers by pressing the enter key
+        if (e.keyCode === 13) {
+            this.send();
+        }
+    };
+
     render() {
         let list = [];
         if (this.props.channel && this.props.channel.messages) {
@@ -49,15 +56,16 @@ export class MessagesPanel extends React.Component {
                     dataSource={list == [] ? [] : list}
                 />
                 {this.props.channel && (
-                        <Input
-                            referance={inputReferance}
-                            placeholder="Type here..."
-                            multiline={true}
-                            clear={(clear) => (this.inputClear = clear)}
-                            onChange={this.handleInput}
-                            value={this.state.input_value}
-                            rightButtons={<Button color="white"  text="Send" onClick={this.send}/>}
-                        />
+                    <Input
+                        referance={inputReferance}
+                        placeholder="Type here..."
+                        multiline={true}
+                        clear={(clear) => (this.inputClear = clear)}
+                        onChange={this.handleInput}
+                        value={this.state.input_value}
+                        rightButtons={<Button color="white" text="Send" onClick={this.send} />}
+                        onKeyPress={this.handleKeypress}
+                    />
                 )}
             </div>
         );
