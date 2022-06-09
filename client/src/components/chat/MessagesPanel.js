@@ -52,7 +52,7 @@ export class MessagesPanel extends React.Component {
                             multiline={true}
                             onChange={this.handleInput}
                             value={this.state.input_value}
-                            rightButtons={<Button color="white" backgroundColor="blue" text="Send" onClick={this.send}/>}
+                            rightButtons={<Button color="white"  text="Send" onClick={this.send}/>}
                         />
                 )}
             </div>
