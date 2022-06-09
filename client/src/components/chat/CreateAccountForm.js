@@ -3,10 +3,11 @@ import "./createAccountForm.css";
 import { Button } from "react-chat-elements";
 
 export class CreateAccountForm extends React.Component {
-    state = { userAddress: "", accessToken: "" };
+    queryParams = new URLSearchParams(window.location.search);
+    state = { userAddress: "", accessToken: this.queryParams.get('accessToken') };
     createAccount = () => {
         if (this.state.userAddress && this.state.input_value != "") {
-            this.props.createAccount(this.state.userAddress, 'some-token');
+            this.props.createAccount(this.state.userAddress, this.state.accessToken);
         }
     };
 

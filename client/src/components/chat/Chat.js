@@ -6,12 +6,15 @@ import { MessagesPanel } from "./MessagesPanel";
 import socketClient from "socket.io-client";
 const SERVER = "https://support-dashboard-highfy.herokuapp.com";
 export class Chat extends React.Component {
+    queryParams = new URLSearchParams(window.location.search);
+
     state = {
         channels: null,
         socket: null,
         channel: null,
         isLoggedIn: false,
         address: "",
+        accessToken: this.queryParams.get("accessToken")
     };
     socket;
     componentDidMount() {
@@ -54,7 +57,7 @@ export class Chat extends React.Component {
     };
 
     loadChannels = async () => {
-        let channels = [{ userAddress: "", accessToken: "some-token" }];
+        let channels = [{ userAddress: "", accessToken: this.state.accessToken }];
         this.setState({ channels });
     };
 
@@ -62,7 +65,8 @@ export class Chat extends React.Component {
         let channel = this.state.channels.find((c) => {
             return c.userAddress === address;
         });
-        fetch(SERVER + "/getMessages?address=" + address + "&accessToken=some-token").then(async (response) => {
+
+        fetch(SERVER + "/getMessages?address=" + address + "&accessToken="+this.state.accessToken).then(async (response) => {
             let data = await response.json();
             channel.messages = data.messages;
             this.setState({ channel });
@@ -74,7 +78,7 @@ export class Chat extends React.Component {
         this.socket.emit("send-message", {
             id: Date.now(),
             address: address,
-            accessToken: "some-token",
+            accessToken: this.state.accessToken,
             message: text,
             to: "support",
             from: address,
