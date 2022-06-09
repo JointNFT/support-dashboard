@@ -12,7 +12,7 @@ const TransactionList = (props) => {
                 <Accordion.Body>
                     Transaction Status: {tx.isError ? "Success" : "Failure"}
                     <br />
-                    Etherscan Link:{" "}
+                    Ftmscan Link:{" "}
                     <a target="_blank" href={"https://ftmscan.com/tx/" + tx.hash}>
                         Link
                     </a>
