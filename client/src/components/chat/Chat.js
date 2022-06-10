@@ -81,7 +81,6 @@ export class Chat extends React.Component {
                 if (c.userAddress === channel.userAddress) {
                         c.unread = 0  
                 }
-                c.messages = data.messages
             });
             this.setState({ channel });
         });
