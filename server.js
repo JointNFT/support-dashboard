@@ -6,6 +6,7 @@ const chatHandlers = require("./utils/chatHandlers");
 const Web3 = require("web3");
 const utils = require("./utils/transactionDecoders");
 const axios = require("axios");
+const { start } = require("repl");
 
 
 var app = express()
@@ -95,25 +96,21 @@ app.get('/transactions', async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(',');
     console.log(contractAddresses);
     let address = req?.query?.userAddress;
+    let chain = req?.query?.chain
     if (address == null) {
         res.send({'error':'Please enter the address'});
         return;
     }
-    let apiKey = process.env.FTM_SCAN_API_KEY;
     let startBlock = "34911344"
 
-    let url="https://api.ftmscan.com/api?module=account&action=txlist&address="+address+"&startblock="+startBlock+"&endblock=99999999&sort=asc&apikey="+apiKey
-
-    const axiosRes = await axios.get(url);
-    const userTransactions = axiosRes?.data?.result;
-
+    const userTransactions = await utils.getTransactions(address, startBlock, chain);
+    console.log(userTransactions.length);
     if (userTransactions == null) {
         res.send({'error':'couldnt fetch transactions for user'});
     }
     
-    console.log(contractAddresses);
     let filteredTransactions = utils.filter_for_useful_transactions(userTransactions, contractAddresses)
-    let populatedTransactions = await utils.populateTransactions(filteredTransactions, apiKey);
+    let populatedTransactions = await utils.populateTransactions(filteredTransactions, chain);
     res.send(JSON.stringify({filteredTransactions: populatedTransactions}))
 })
 

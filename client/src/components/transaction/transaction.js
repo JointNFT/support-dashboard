@@ -6,8 +6,8 @@ import TransactionList from "./transactionList";
 const Transaction = () => {
     let [transactions, setTransactions] = useState([]);
 
-    const fetchTransactions = async (userAddress, contractAddresses) => {
-        fetch("/transactions?userAddress=" + userAddress + "&contractAddresses=" + contractAddresses).then(async (response) => {
+    const fetchTransactions = async (userAddress, contractAddresses, chain) => {
+        fetch("/transactions?userAddress=" + userAddress + "&contractAddresses=" + contractAddresses + "&chain=" + chain).then(async (response) => {
             let data = await response.json();
             setTransactions(data.filteredTransactions);
             console.log(transactions);
