@@ -82,6 +82,7 @@ export class Chat extends React.Component {
             message: text,
             to: "support",
             from: address,
+            timestamp: + new Date()
         });
     };
 
