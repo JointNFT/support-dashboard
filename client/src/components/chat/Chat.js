@@ -79,7 +79,7 @@ export class Chat extends React.Component {
             channel.messages = data.messages;
             channels.forEach((c) => {
                 if (c.userAddress === channel.userAddress) {
-                        c.unread = 0
+                        c.unread = 0  
                 }
             });
             this.setState({ channel });
@@ -97,6 +97,7 @@ export class Chat extends React.Component {
             message: text,
             to: "0xe97",
             from: "support",
+            timestamp: + new Date()
         });
     };
 

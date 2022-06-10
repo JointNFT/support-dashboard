@@ -1,11 +1,12 @@
 const { db } = require("./db");
 
-const createUser = async (userAddress, accessToken) => {
+const updateUser = async (userAddress, accessToken, lastMessage = {}) => {
     let dbParams = {
         TableName: "ChatUsers",
         Item: {
             userAddress: userAddress,
             accessToken: accessToken,
+            lastMessage: lastMessage,
         },
     };
 
@@ -57,6 +58,7 @@ const storeMessages = async (userAddress, accessToken, message, to, from) => {
         },
     };
     let response = await db.put(params).promise();
+    response = await updateUser(userAddress, accessToken, params.Item);
     return await response;
 };
 

@@ -8,18 +8,20 @@ export class ChannelList extends React.Component {
         this.props.onSelectChannel(data.title);
     };
 
+
     render() {
         let list = [];
         if (this.props.channels && this.props.channels.map) {
+            console.log('channels',this.props.channels);
             list = this.props.channels.map((c) => {
-                console.log('c',c)
+                console.log(c)
                 if (c.accessToken == this.queryParams.get("accessToken"))
                     return {
                         avatar: "https://storage.googleapis.com/opensea-static/opensea-profile/19.png",
                         alt: "Some DP",
                         title: c.userAddress,
-                        subtitle: c.lastMessage.message,
-                        date: new Date(c.lastMessage.timestamp),
+                        date: new Date(c?.messages != null ? c.messages[c.messages.length - 1].timestamp : c?.lastMessage?.timestamp),
+                        subtitle: c?.messages != null ? c.messages[c.messages.length - 1].message : c?.lastMessage?.message,
                         unread: c.unread != null ? c.unread : 0
                     };
             });
