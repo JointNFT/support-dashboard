@@ -20,8 +20,8 @@ export class ChannelList extends React.Component {
                         avatar: "https://storage.googleapis.com/opensea-static/opensea-profile/19.png",
                         alt: "Some DP",
                         title: c.userAddress,
+                        date: new Date(c?.messages != null ? c.messages[c.messages.length - 1].timestamp : c?.lastMessage?.timestamp),
                         subtitle: c?.messages != null ? c.messages[c.messages.length - 1].message : c?.lastMessage?.message,
-                        data: new Date(),
                         unread: c.unread != null ? c.unread : 0
                     };
             });
