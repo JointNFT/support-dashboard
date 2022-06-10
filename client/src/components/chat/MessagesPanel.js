@@ -41,31 +41,36 @@ export class MessagesPanel extends React.Component {
                 messageBodyParams.date = m.timestamp;
                 return messageBodyParams;
             });
-            console.log("list", list);
-            console.log("what comes out ? ", list ? list : []);
         }
-        return (
-            <div className="messages-panel">
-                { this.props.channel && <ChatItem
-                    avatar={"https://storage.googleapis.com/opensea-static/opensea-profile/"+((parseInt(this.props.channel.userAddress)%30)+1)+".png"}
-                    title={this.props.channel.userAddress}
-                    className="chat-head"
-                /> }
-                <MessageList
-                    referance={messageListReferance}
-                    className="message-list"
-                    lockable={true}
-                    style={this.style}
-                    toBottomHeight={"100%"}
-                    dataSource={list == [] ? [] : list}
-                />
-                {this.props.channel && (
-                    <div className="messages-input">
-                        <input type="text" onChange={this.handleInput} value={this.state.input_value} onKeyDown={this.handleKeypress} />
-                        <button onClick={this.send}>Send</button>
-                    </div>
-                )}
-            </div>
-        );
+        if (this.props.channel) {
+            return (
+                <div className="messages-panel">
+                    { this.props.channel && <ChatItem
+                        avatar={"https://storage.googleapis.com/opensea-static/opensea-profile/"+((parseInt(this.props.channel.userAddress)%30)+1)+".png"}
+                        title={this.props.channel.userAddress}
+                        date={this.props.channel.messages[this.props.channel.messages.length - 1].timestamp}
+                        className="chat-head"
+                    /> }
+                    <MessageList
+                        referance={messageListReferance}
+                        className="message-list"
+                        lockable={true}
+                        style={this.style}
+                        toBottomHeight={"100%"}
+                        dataSource={list == [] ? [] : list}
+                    />
+                    {this.props.channel && (
+                        <div className="messages-input">
+                            <input type="text" onChange={this.handleInput} value={this.state.input_value} onKeyDown={this.handleKeypress} />
+                            <button onClick={this.send}>Send</button>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+        else {
+            return <div className="messages-panel empty-panel"> Please select a chat to start ! </div>
+        }
+        
     }
 }
