@@ -78,7 +78,7 @@ export class Chat extends React.Component {
             let data = await response.json();
             channel.messages = data.messages;
             channels.forEach((c) => {
-                if (c.userAddress === channel.userAddress) {
+                if (c.userAddress == channel.userAddress) {
                         c.unread = 0  
                 }
             });

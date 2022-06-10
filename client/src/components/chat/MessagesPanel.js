@@ -47,7 +47,7 @@ export class MessagesPanel extends React.Component {
         return (
             <div className="messages-panel">
                 { this.props.channel && <ChatItem
-                    avatar={"https://storage.googleapis.com/opensea-static/opensea-profile/19.png"}
+                    avatar={"https://storage.googleapis.com/opensea-static/opensea-profile/"+((parseInt(this.props.channel.userAddress)%30)+1)+".png"}
                     title={this.props.channel.userAddress}
                     className="chat-head"
                 /> }

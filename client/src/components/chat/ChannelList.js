@@ -17,11 +17,15 @@ export class ChannelList extends React.Component {
                 console.log(c)
                 if (c.accessToken == this.queryParams.get("accessToken"))
                     return {
-                        avatar: "https://storage.googleapis.com/opensea-static/opensea-profile/19.png",
+                        avatar: "https://storage.googleapis.com/opensea-static/opensea-profile/"+((parseInt(c.userAddress)%30)+1)+".png",
                         alt: "Some DP",
                         title: c.userAddress,
                         date: new Date(c?.messages != null ? c.messages[c.messages.length - 1].timestamp : c?.lastMessage?.timestamp),
                         subtitle: c?.messages != null ? c.messages[c.messages.length - 1].message : c?.lastMessage?.message,
+<<<<<<< HEAD
+=======
+                        date: new Date(c?.messages != null ? c.messages[c.messages.length - 1].timestamp : c?.lastMessage?.timestamp),
+>>>>>>> 8756e1e (minor UI changes)
                         unread: c.unread != null ? c.unread : 0
                     };
             });

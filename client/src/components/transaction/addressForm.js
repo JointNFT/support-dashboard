@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Form from 'react-bootstrap/Form'
+import { Button } from 'react-bootstrap';
+
 
 const AddressForm = (props) => {
     let [userAddress, setUserAddress] = useState("0x5c146cd18fa53914580573c9b9604588529406ca");
@@ -24,14 +26,26 @@ const AddressForm = (props) => {
 
     return (
         <div className="address-input">
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Customer Address</Form.Label>
+                <Form.Control type="text" id="userAdderss" onChange={handleUserAddresInput} value={userAddress}/>
+                <Form.Text className="text-muted">
+                    Enter the address of the customer to search
+                </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Contract Addresses</Form.Label>
+                <Form.Control type="text" id="contractAddress" onChange={handleContractAddressInput} value={contractAddresses}/>
+                <Form.Text className="text-muted">
+                    Comma seperated contract address to filter for
+                </Form.Text>
+            </Form.Group>
             
-            <label>Customer Address</label><input type="text" id="userAdderss" onChange={handleUserAddresInput} value={userAddress}></input>
-            <label>Contract Addresses</label><input type="text" id="contractAddress" onChange={handleContractAddressInput} value={contractAddresses}></input>
             <Form.Select aria-label="Default select example" size="sm" onChange={handleSelectInput}>
                 <option value="ftm">FATOM</option>
                 <option value="eth">ETHEREUM</option>
-            </Form.Select>
-            <button onClick={send}>Fetch Transactions</button>
+            </Form.Select>  
+            <Button onClick={send} variant="primary" className="fetch-tx-button" >Fetch Transactions</Button>
         </div>
     );
 };
