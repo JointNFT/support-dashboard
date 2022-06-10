@@ -101,7 +101,7 @@ app.get('/transactions', async function (req, res) {
         res.send({'error':'Please enter the address'});
         return;
     }
-    let startBlock = "34911344"
+    let startBlock = "0"
 
     const userTransactions = await utils.getTransactions(address, startBlock, chain);
     console.log(userTransactions.length);
@@ -110,6 +110,7 @@ app.get('/transactions', async function (req, res) {
     }
     
     let filteredTransactions = utils.filter_for_useful_transactions(userTransactions, contractAddresses)
+    console.log('filtered', filteredTransactions.length);
     let populatedTransactions = await utils.populateTransactions(filteredTransactions, chain);
     res.send(JSON.stringify({filteredTransactions: populatedTransactions}))
 })

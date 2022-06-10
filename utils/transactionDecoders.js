@@ -8,8 +8,8 @@ const web3 = new Web3(new Web3.providers.HttpProvider("https://rpc.ftm.tools/"))
 const otcAbi = require("../contracts/hedgyOtcABI");
 
 const scannerMap = {eth: {
-    apikey: process.env.ETHERSCAN_API_KEY,
-    getAbiUrl: 'https://api.etherscan.io/api?module=contract&action=getabi&address=REPLACE_ADDRESS&apiKey=REPLACE_APIKEY',
+    apiKey: process.env.ETHERSCAN_API_KEY,
+    getAbi: 'https://api.etherscan.io/api?module=contract&action=getabi&address=REPLACE_ADDRESS&apiKey=REPLACE_APIKEY',
     getTx: 'https://api.etherscan.io/api?module=account&action=txlist&address=REPLACE_ADDRESS&startblock=REPLACE_STARTBLOCK&endblock=999999999&sort=asc&apiKey=REPLACE_APIKEY'
 },
 ftm: {
