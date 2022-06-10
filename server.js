@@ -29,7 +29,6 @@ var io = require('socket.io')(server, {
 var io = io.listen(server);
 
 
-
 io.on('connection', (socket) => { // socket object may be used to send specific messages to the new connected client
     console.log('new client connected');
     socket.emit('connection', null);
@@ -74,9 +73,9 @@ app.get('/getUsers', async (req, res) => {
 })
 
 app.get('/getMessages', async (req, res) => {
-    console.log(req.query);
+    
     chatMessages = await chatHandlers.getMessages(req.query.address, req.query.accessToken);
-    console.log(chatMessages);
+    
     res.send(JSON.stringify({'messages': chatMessages}))
 })
 // Have Node serve the files for our built React app
@@ -92,9 +91,9 @@ app.get("/api", (req, res) => {
 });
 
 app.get('/transactions', async function (req, res) {
-    console.log(req.query);
+    
     let contractAddresses = req?.query?.contractAddresses.split(',');
-    console.log(contractAddresses);
+   
     let address = req?.query?.userAddress;
     let chain = req?.query?.chain
     if (address == null) {
@@ -104,13 +103,13 @@ app.get('/transactions', async function (req, res) {
     let startBlock = "0"
 
     const userTransactions = await utils.getTransactions(address, startBlock, chain);
-    console.log(userTransactions.length);
+    
     if (userTransactions == null) {
         res.send({'error':'couldnt fetch transactions for user'});
     }
     
     let filteredTransactions = utils.filter_for_useful_transactions(userTransactions, contractAddresses)
-    console.log('filtered', filteredTransactions.length);
+    
     let populatedTransactions = await utils.populateTransactions(filteredTransactions, chain);
     res.send(JSON.stringify({filteredTransactions: populatedTransactions}))
 })

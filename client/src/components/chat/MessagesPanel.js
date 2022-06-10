@@ -38,7 +38,7 @@ export class MessagesPanel extends React.Component {
                 messageBodyParams.position = m.from == "support" ? "right" : "left";
                 messageBodyParams.type = "text";
                 messageBodyParams.text = m.message;
-                messageBodyParams.date = new Date();
+                messageBodyParams.date = m.timestamp;
                 return messageBodyParams;
             });
             console.log("list", list);
