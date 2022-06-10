@@ -47,8 +47,14 @@ export class Chat extends React.Component {
 
         socket.on("new-account", (data) => {
             let channels = this.state.channels;
-            channels.push(data);
-            this.setState({ channels });
+            let channel = channels.find((c) => {
+                return c.userAddress === data.userAddress;
+            });
+            if (channel == null) {
+                channels.push(data);
+                this.setState({ channels });
+            }
+            
         });
 
         this.socket = socket;
