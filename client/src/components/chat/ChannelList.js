@@ -19,7 +19,7 @@ export class ChannelList extends React.Component {
                         alt: "Some DP",
                         title: c.userAddress,
                         subtitle: c.lastMessage.message,
-                        data: new Date(),
+                        date: new Date(c.lastMessage.timestamp),
                         unread: c.unread != null ? c.unread : 0
                     };
             });
