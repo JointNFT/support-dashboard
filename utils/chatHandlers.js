@@ -81,7 +81,7 @@ const handleCustomerMessage = async (address, message, accessToken, to, from) =>
     // check with db is thread is present
     const userAccount = await getUser(address, accessToken);
     if (userAccount == null) {
-        await createUser(address, accessToken);
+        await updateUser(address, accessToken);
     }
 
     // create thread
@@ -93,7 +93,7 @@ const createNewUser = async (address, accessToken) => {
     // check with db is thread is present
     const userAccount = await getUser(address, accessToken);
     if (userAccount == null) {
-        await createUser(address, accessToken);
+        await updateUser(address, accessToken);
     }
 };
 
