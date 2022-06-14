@@ -1,29 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import { Chat } from "./components/chat/Chat";
 import Transaction from "./components/transaction/transaction";
 import { Container, Row, Col, Nav } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-            <Nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">HighFi</a>
-            </Nav>
-            <Row style={{display:"flex"}}>
-                <Col style={{display:"contents"}}>
-                    <Chat />
-                </Col>
-
-                <Col> <Transaction/></Col>
-            </Row>
-        
-    </React.StrictMode>,
-    // document.getElementById("root")
+    <App />
+  </React.StrictMode>
+  // document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
