@@ -8,7 +8,6 @@ const utils = require("./utils/transactionDecoders");
 const axios = require("axios");
 const { start } = require("repl");
 
-
 var app = express()
 
 const w3 = new Web3(new Web3.providers.HttpProvider('https://rpcapi.fantom.network'))
@@ -114,13 +113,15 @@ app.get('/transactions', async function (req, res) {
     res.send(JSON.stringify({filteredTransactions: populatedTransactions}))
 })
 
+app.get('/test', (req, res) => {
+    chatHandlers.pushToDiscord({accessToken: "some-token"});
+    res.send('hehe');
+})
+
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
-
-
-
 
 server.listen(port, () => {
     console.log(`listening on *:${port}`);
