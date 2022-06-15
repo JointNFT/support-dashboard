@@ -4,7 +4,7 @@ import { CreateAccountForm } from "./CreateAccountForm";
 import "./chat.scss";
 import { MessagesPanel } from "./MessagesPanel";
 import socketClient from "socket.io-client";
-const SERVER = "https://support-dashboard-highfy.herokuapp.com";
+const SERVER = "http://localhost:3000";
 export class Chat extends React.Component {
     queryParams = new URLSearchParams(window.location.search);
 
@@ -14,6 +14,7 @@ export class Chat extends React.Component {
         channel: null,
         isLoggedIn: false,
         address: "",
+        isOnline: 'offline',
         accessToken: this.queryParams.get("accessToken")
     };
     socket;
@@ -24,6 +25,12 @@ export class Chat extends React.Component {
 
     configureSocket = () => {
         var socket = socketClient(SERVER);
+
+        socket.emit('test','isOnline');
+        socket.on('response',(arg)=>{
+            this.setState({ isOnline : 'online' })
+        })
+        
         socket.on("connection", () => {
             if (this.state.channel) {
                 this.handleChannelSelect(this.state.channel.id);
@@ -98,7 +105,7 @@ export class Chat extends React.Component {
             <div>
                 {this.state.isLoggedIn ? (
                     <div className="chat-app">
-                    <MessagesPanel onSendMessage={this.handleSendMessage} channel={this.state.channel} address={this.state.address} />
+                    <MessagesPanel onSendMessage={this.handleSendMessage} channel={this.state.channel} address={this.state.address} isOnline={this.state.isOnline} />
                 </div>
                 ) : (
                     <CreateAccountForm createAccount={this.handleCreateAccount} />
