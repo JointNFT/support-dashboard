@@ -33,7 +33,6 @@ io.on('connection', (socket) => { // socket object may be used to send specific 
     console.log('new client connected');
     socket.emit('connection', null);
     
-    console.log("after");
     socket.on('create-account', data => {
         console.log('data', data);
         if (data == null || data.address == null || data.accessToken == null) {

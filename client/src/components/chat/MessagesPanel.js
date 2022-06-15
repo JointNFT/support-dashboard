@@ -35,7 +35,6 @@ export class MessagesPanel extends React.Component {
 
     render() {
         let list = [];
-        console.log(this.props.isOnline);
         if (this.props.channel && this.props.channel.messages) {
             list = this.props.channel.messages.map((m) => {
                 let messageBodyParams = {};

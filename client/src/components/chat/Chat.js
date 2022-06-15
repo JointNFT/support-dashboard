@@ -4,7 +4,7 @@ import { CreateAccountForm } from "./CreateAccountForm";
 import "./chat.scss";
 import { MessagesPanel } from "./MessagesPanel";
 import socketClient from "socket.io-client";
-const SERVER = "http://localhost:3000";
+const SERVER = "https://support-dashboard-highfy.herokuapp.com";
 export class Chat extends React.Component {
     queryParams = new URLSearchParams(window.location.search);
 
@@ -26,8 +26,8 @@ export class Chat extends React.Component {
     configureSocket = () => {
         var socket = socketClient(SERVER);
 
-        socket.emit('test','isOnline');
-        socket.on('response',(arg)=>{
+        socket.emit('test','isOnline'); //testing if support-dashboard is online
+        socket.on('response',(arg)=>{   //response from the support-dashboard if online
             this.setState({ isOnline : 'online' })
         })
         
