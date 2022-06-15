@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd client && npm install && npm run build",
+    "build": "cd client && yarn install && npm run build",
     "quick-build": "cd client && npm run build",
     "start": "node server.js"
   },
@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@chatscope/chat-ui-kit-react": "^1.9.3",
+    "@chatscope/chat-ui-kit-styles": "^1.2.3",
     "abi-decoder": "^2.4.0",
     "aws-sdk": "^2.1150.0",
     "axios": "^0.27.2",

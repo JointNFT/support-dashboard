@@ -16,7 +16,7 @@ export default class Prioritized extends Component {
         </Nav>
         <Row md={8} style={{ display: "flex" }} className="content-row">
           <Col style={{ display: "contents" }}>
-            <Chat />
+            <Chat type="prioritized"/>
           </Col>
           <Col>
             {" "}

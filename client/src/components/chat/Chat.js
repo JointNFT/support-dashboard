@@ -95,7 +95,7 @@ export class Chat extends React.Component {
             address: address,
             accessToken: this.state.accessToken,
             message: text,
-            to: "0xe97",
+            to: address,
             from: "support",
             timestamp: + new Date()
         });

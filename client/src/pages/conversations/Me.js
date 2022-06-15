@@ -15,7 +15,7 @@ const Me = () => {
       </Nav>
       <Row md={8} style={{ display: "flex" }} className="content-row">
         <Col style={{ display: "contents" }}>
-          <Chat />
+          <Chat type="me"/>
         </Col>
         <Col>
           {" "}

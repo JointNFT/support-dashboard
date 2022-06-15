@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useContext, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import Sidebar from "./components/layout/Sidebar/Sidebar";
@@ -8,22 +8,32 @@ import GetStarted from "./pages/conversations/GetStarted";
 import Me from "./pages/conversations/Me";
 import Prioritized from "./pages/conversations/Prioritized";
 import Customers from "./pages/Customers";
+import AccessKeys from "./pages/AccessKeys";
 import Home from "./pages/Home";
 import Integrations from "./pages/Integrations";
+import { withAuthenticator, Button, Heading } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import UserContext from "./contexts/user/UserContext";
 
-function App() {
-  const [data, setData] = React.useState(null);
+function App({ signOut, user }) {
+  const [data, setData] = useState(null);
+  const { loginUser } = useContext(UserContext);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch("/api")
       .then((res) => res.json())
       .then((data) => setData(data.message));
   }, []);
 
+  useEffect(() => {
+    console.log('userChanged', user)
+  }, [user])
+
+
   return (
     <Router>
       <div className="wrapp">
-        <Sidebar />
+        <Sidebar signOut={signOut}/>
         <Routes>
           <Route path="/" element={<GetStarted />} />
           <Route path="/conversations/all" element={<All />} />
@@ -32,10 +42,12 @@ function App() {
           <Route path="/conversations/closed" element={<Closed />} />
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/customers" element={<Customers />} />
+          <Route path="/accessKeys" element={<AccessKeys />}/> 
         </Routes>
       </div>
     </Router>
+    
   );
 }
 
-export default App;
+export default withAuthenticator(App);
