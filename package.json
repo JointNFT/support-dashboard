@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd client && yarn install && npm run build",
+    "build": "cd client && npm install --force && npm run build",
     "quick-build": "cd client && npm run build",
     "start": "node server.js"
   },
