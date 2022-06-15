@@ -1,5 +1,5 @@
 const { getMessages, storeMessages, getUser, getUsers, updateUser } = require("./db");
-const { hasDiscordIntegration } = require("./discordHandlers");
+const { getDiscordSettings, alertInSupportChannel } = require("./discordHandlers");
 
 const handleCustomerMessage = async (address, message, accessToken, to, from) => {
     // check with db is thread is present
@@ -21,8 +21,12 @@ const createNewUser = async (address, accessToken) => {
     }
 };
 
-const pushToDiscord = async (message) => {
-    hasDiscordIntegration(message.accessToken);
+const pushToDiscord = async (message, client) => {
+    const discordSettings = await getDiscordSettings(message.accessToken);
+    console.log(discordSettings);
+    if (discordSettings.type == "basic") {
+        alertInSupportChannel(message, discordSettings, client);
+    }
     // check if discord integrations is present 
         // if discord integrations is present and channel is present 
             // get channel

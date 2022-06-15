@@ -56,7 +56,7 @@ const getUsers = async (accessToken) => {
   return user;
 };
 
-const getDiscordIntegration = async (accessToken) => {
+const getDiscordSettings = async (accessToken) => {
   const params = {
       TableName: "DiscordIntegration",
       KeyConditionExpression: "accessToken = :pkey",
@@ -102,4 +102,4 @@ const getMessages = async (userAddress, accesToken) => {
   return messages;
 };
 
-module.exports = {getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordIntegration};
+module.exports = {getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings};

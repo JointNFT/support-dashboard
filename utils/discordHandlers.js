@@ -1,9 +1,14 @@
-const { getDiscordIntegration } = require("./db");
+const db = require("./db");
 
 
-const hasDiscordIntegration = async (accessToken) => {
-    console.log(await getDiscordIntegration(accessToken));
-    return 'test';
+const getDiscordSettings = async (accessToken) => {
+    return await db.getDiscordSettings(accessToken);
 } 
 
-module.exports = {hasDiscordIntegration};
+const alertInSupportChannel = async (message, discordSettings, client) => {
+    const channel = client.channels.cache.get(discordSettings.channelId);
+    const obj = JSON.stringify(message.message);
+    channel.send(obj); 
+}
+
+module.exports = {getDiscordSettings, alertInSupportChannel};
