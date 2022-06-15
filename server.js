@@ -32,6 +32,10 @@ var io = io.listen(server);
 io.on('connection', (socket) => { // socket object may be used to send specific messages to the new connected client
     console.log('new client connected');
     socket.emit('connection', null);
+
+    socket.on('test',(arg)=>{
+        socket.emit('response','online');
+    })
     
     socket.on('create-account', data => {
         console.log('create account', data);

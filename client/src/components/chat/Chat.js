@@ -27,6 +27,9 @@ export class Chat extends React.Component {
                 this.handleChannelSelect(this.state.channel.id);
             }
         });
+        socket.on("test",(arg)=>{
+            console.log(arg);
+        })
 
         socket.on("message", (message) => {
             console.log("message", message);
