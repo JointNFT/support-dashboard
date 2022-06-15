@@ -9,6 +9,9 @@
     "quick-build": "cd client && npm run build",
     "start": "node server.js"
   },
+  "engines": {
+    "node": "17.x"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
