@@ -1,5 +1,5 @@
 import React from "react";
-import "./createAccountForm.css";
+import "./createAccountForm.scss";
 import { Button } from "react-chat-elements";
 
 export class CreateAccountForm extends React.Component {
@@ -26,7 +26,8 @@ export class CreateAccountForm extends React.Component {
                     <label>Please enter your wallet address to start talking !</label>
                     <input type="text" id="userAdderss" onChange={this.handleUserAddressInput} value={this.state.userAddress}></input>
                     <br/>
-                    <Button onClick={this.createAccount} text="Start Chatting"></Button>
+                    <br/>
+                    <button className="button" onClick={this.createAccount}>Start Chatting</button>
                 </div>
             </div>
         );

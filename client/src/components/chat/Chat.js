@@ -14,6 +14,7 @@ export class Chat extends React.Component {
         channel: null,
         isLoggedIn: false,
         address: "",
+        isOnline: 'offline',
         accessToken: this.queryParams.get("accessToken")
     };
     socket;
@@ -24,6 +25,12 @@ export class Chat extends React.Component {
 
     configureSocket = () => {
         var socket = socketClient(SERVER);
+
+        socket.emit('test','isOnline'); //testing if support-dashboard is online
+        socket.on('response',(arg)=>{   //response from the support-dashboard if online
+            this.setState({ isOnline : 'online' })
+        })
+        
         socket.on("connection", () => {
             if (this.state.channel) {
                 this.handleChannelSelect(this.state.channel.id);
@@ -98,7 +105,7 @@ export class Chat extends React.Component {
             <div>
                 {this.state.isLoggedIn ? (
                     <div className="chat-app">
-                    <MessagesPanel onSendMessage={this.handleSendMessage} channel={this.state.channel} address={this.state.address} />
+                    <MessagesPanel onSendMessage={this.handleSendMessage} channel={this.state.channel} address={this.state.address} isOnline={this.state.isOnline} />
                 </div>
                 ) : (
                     <CreateAccountForm createAccount={this.handleCreateAccount} />

@@ -1,5 +1,6 @@
 import React from "react";
 import { MessageList, Input, Button } from "react-chat-elements";
+import FaPaperPlane from 'react-icons/lib/fa/paper-plane';
 import "react-chat-elements/dist/main.css";
 const messageListReferance = React.createRef();
 const inputReferance = React.createRef();
@@ -47,6 +48,13 @@ export class MessagesPanel extends React.Component {
         }
         return (
             <div className="messages-panel">
+                <div className='header'>
+                    <h4 className='title'>Welcome to HighFi Chat!</h4>
+                    <h6 className='subtitle'>Ask us anything using the chat window 💭</h6>
+                    <div className='online-header'>
+                        <h7>We are {this.props.isOnline} at the moment.</h7>
+                    </div>
+                </div>
                 <MessageList
                     referance={messageListReferance}
                     className="message-list"
@@ -55,13 +63,15 @@ export class MessagesPanel extends React.Component {
                 />
                 {this.props.channel && (
                     <Input
+                        className="messages-input"
                         referance={inputReferance}
-                        placeholder="Type here..."
+                        color="black"
+                        placeholder="Start Typing..."
                         multiline={true}
                         clear={(clear) => (this.inputClear = clear)}
                         onChange={this.handleInput}
                         value={this.state.input_value}
-                        rightButtons={<Button color="white" text="Send" onClick={this.send} />}
+                        rightButtons={<button className="button" onClick={this.send}><FaPaperPlane color="white"/></button>}
                         onKeyDown={this.handleKeypress}
                     />
                 )}
