@@ -40,13 +40,13 @@ export class ChannelList extends React.Component {
                 <ConversationList className="chat-list">
                     {list.map((conversationInfo) => (
                         <Conversation
-                            name={conversationInfo.title}
+                            name={conversationInfo.title.slice(0,6)+ "..."}
                             info={conversationInfo.subtitle}
                             unreadCnt={conversationInfo.unread}
                             lastActivityTime={format(conversationInfo.date)}
                             onClick={() => this.handleClick(conversationInfo.title)}
                         >
-                            <Avatar src={conversationInfo.avatar} name={conversationInfo.title} />
+                            <Avatar src={conversationInfo.avatar} name={conversationInfo.title.slice(0,10)+ "..."} />
                         </Conversation>
                     ))}
                 </ConversationList>
