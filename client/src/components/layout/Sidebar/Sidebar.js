@@ -41,7 +41,7 @@ const Sidebar = (props) => {
             />
           </Link>
           <Link
-            to="/conversations/all"
+            to="/conversations/"
             className={`link ${activeLink === 1 && "active"}`}
             tabIndex={1}
             onClick={handleClick}
