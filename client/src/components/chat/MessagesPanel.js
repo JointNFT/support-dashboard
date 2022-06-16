@@ -62,13 +62,13 @@ export class MessagesPanel extends React.Component {
                             />
                         </Conversation>
                     )}
-                    <Container>
+                    {/* <Container>
                         <Row>
                             <Col> Status : xyz</Col>
                             <Col></Col>
                             <Col></Col>
                         </Row>
-                    </Container>
+                    </Container> */}
                     <MessageList>
                         {list.map((messageInfo) => (
                             <Message
