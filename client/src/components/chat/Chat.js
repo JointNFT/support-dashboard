@@ -105,9 +105,10 @@ export class Chat extends React.Component {
     };
 
     render() {
+        console.log(this.props);
         return (
             <div className="chat-app" >
-                <ChannelList channels={this.state.channels} onSelectChannel={this.handleChannelSelect} />
+                <ChannelList channels={this.state.channels} onSelectChannel={this.handleChannelSelect} type={this.props.type}/>
                 <MessagesPanel onSendMessage={this.handleSendMessage} channel={this.state.channel} />
             </div>
         );
