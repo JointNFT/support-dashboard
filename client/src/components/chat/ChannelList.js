@@ -36,7 +36,7 @@ export class ChannelList extends React.Component {
         if (list.length) {
             return (
                 
-                    <ConversationList>
+                    <ConversationList className="chat-list">
                         {list.map((conversationInfo) => 
                             <Conversation
                                 name={conversationInfo.title}

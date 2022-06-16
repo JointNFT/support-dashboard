@@ -1,11 +1,3 @@
-.rce-container-mlist {
-    width: inherit;
-    display: block;
-  }
-  
-  .rce-container-mlist {
-    height: 500px;
-  }
 
   .message-list {
       height:  calc(100vh - 200px);
@@ -14,16 +6,6 @@
 
   .chat-head {
       width: 110vh;
-  }
-
-  .rce-mlist {
-    width: inherit;
-  }
-
-  .rce-citem {
-    -webkit-user-select: all;
-    -ms-user-select: all;
-    user-select: all;
   }
 
   .empty-panel {

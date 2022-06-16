@@ -51,7 +51,7 @@ export class MessagesPanel extends React.Component {
             return (
                 <div className="messages-panel">
                     {this.props.channel && (
-                        <Conversation name={this.props.channel.userAddress}>
+                        <Conversation className="chat-head" name={this.props.channel.userAddress}>
                             <Avatar
                                 src={
                                     "https://storage.googleapis.com/opensea-static/opensea-profile/" +
@@ -69,7 +69,7 @@ export class MessagesPanel extends React.Component {
                             <Col></Col>
                         </Row>
                     </Container> */}
-                    <MessageList>
+                    <MessageList className="message-list">
                         {list.map((messageInfo) => (
                             <Message
                                 model={{
@@ -81,14 +81,14 @@ export class MessagesPanel extends React.Component {
                                 }}
                             >
                                 <Message.Header sender={messageInfo.from} sentTime={format(messageInfo.date)} />
-                                <Avatar
+                                { (messageInfo.position == "incoming")  &&<Avatar
                                     src={
                                         "https://storage.googleapis.com/opensea-static/opensea-profile/" +
                                         ((parseInt(messageInfo.from) % 30) + 1) +
                                         ".png"
                                     }
-                                    name={messageInfo.from == "support" ? "supp" : messageInfo.from}
-                                />
+                                    name={messageInfo.from == "support" ? "" : messageInfo.from}
+                                />}
                             </Message>
                         ))}
                     </MessageList>
