@@ -132,7 +132,7 @@ const Sidebar = (props) => {
           </div>
         </div>
       </div>
-      <div className={`expaned ${activeLink === 1 && "active"}`}>
+      <div className={`expaned ${activeLink === 1 && "active"}`} onMouseLeave={() => setActiveLink(0)}>
         <div className={`tab ${conversationTab && "active"}`}>
           <div
             className="tab-title"
@@ -180,7 +180,7 @@ const Sidebar = (props) => {
             </Link>
           </div>
         </div>
-        <div className={`tab ${inboxesTab && "active"}`}>
+        {/* <div className={`tab ${inboxesTab && "active"}`}>
           <div className="tab-title" onClick={() => setInboxesTab(!inboxesTab)}>
             <span>Inboxes</span>
             <div className="icon">
@@ -206,7 +206,7 @@ const Sidebar = (props) => {
             <FiSettings size={15} />
             <span className="ps-2 btns">Configure Inbox</span>         
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

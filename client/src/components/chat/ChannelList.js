@@ -40,7 +40,7 @@ export class ChannelList extends React.Component {
                 <ConversationList className="chat-list">
                     {list.map((conversationInfo) => (
                         <Conversation
-                            name={conversationInfo.title.slice(0,6)+ "..."}
+                            name={conversationInfo.title.slice(0,10)+ "..."}
                             info={conversationInfo.subtitle}
                             unreadCnt={conversationInfo.unread}
                             lastActivityTime={format(conversationInfo.date)}
