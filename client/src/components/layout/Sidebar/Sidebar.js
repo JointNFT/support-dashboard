@@ -45,6 +45,7 @@ const Sidebar = (props) => {
             className={`link ${activeLink === 1 && "active"}`}
             tabIndex={1}
             onClick={handleClick}
+            onMouseEnter={() => setActiveLink(1)}
           >
             <AiOutlineMail
               size={20}
