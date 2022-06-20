@@ -11,29 +11,28 @@ import Customers from "./pages/Customers";
 import AccessKeys from "./pages/AccessKeys";
 import Home from "./pages/Home";
 import Integrations from "./pages/Integrations";
-import { withAuthenticator, Button, Heading } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
+import { withAuthenticator, Button, Heading } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
 import UserContext from "./contexts/user/UserContext";
-
+const SERVER = "http://localhost:3000";
 function App({ signOut, user }) {
   const [data, setData] = useState(null);
   const { loginUser } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("/api")
+    fetch(SERVER + "/api")
       .then((res) => res.json())
       .then((data) => setData(data.message));
   }, []);
 
   useEffect(() => {
-    console.log('userChanged', user)
-  }, [user])
-
+    console.log("userChanged", user);
+  }, [user]);
 
   return (
     <Router>
       <div className="wrapp">
-        <Sidebar signOut={signOut}/>
+        <Sidebar signOut={signOut} />
         <Routes>
           <Route path="/" element={<GetStarted />} />
           <Route path="/conversations/all" element={<All />} />
@@ -42,11 +41,10 @@ function App({ signOut, user }) {
           <Route path="/conversations/closed" element={<Closed />} />
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/customers" element={<Customers />} />
-          <Route path="/accessKeys" element={<AccessKeys />}/> 
+          <Route path="/accessKeys" element={<AccessKeys />} />
         </Routes>
       </div>
     </Router>
-    
   );
 }
 
