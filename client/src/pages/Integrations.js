@@ -1,8 +1,11 @@
 import { Component } from "react";
+import Sidebar from "../components/layout/Sidebar/Sidebar";
 
 export default class Integrations extends Component {
   render() {
     return (
+	<div className="wrapp">
+		<Sidebar signOut={this.props.signout} />
       <div className="integrations">
         <h4>Integrations</h4>
         <p>Connect with our apps</p>
@@ -41,6 +44,7 @@ export default class Integrations extends Component {
           </div>
         </div>
       </div>
+	</div>
     );
   }
 }

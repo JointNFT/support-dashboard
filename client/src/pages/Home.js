@@ -1,10 +1,12 @@
 import { Col, Nav, Row } from "react-bootstrap";
 import { Chat } from "../components/chat/Chat";
+import Sidebar from "../components/layout/Sidebar/Sidebar";
 import Transaction from "../components/transaction/transaction";
 
 const Home = () => {
-
   return (
+    <div className="wrapp">
+      <Sidebar signOut={this.props.signout} />
       <div className="content">
         <Nav
           class="navbar navbar-expand-lg navbar-light bg-light"
@@ -23,6 +25,7 @@ const Home = () => {
             <Transaction />
           </Col>
         </Row>
+      </div>
     </div>
   );
 };
