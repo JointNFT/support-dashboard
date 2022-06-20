@@ -1,37 +1,225 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.wrapp {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+  .sidebar {
+    width: 20%;
+    background-color: #fff;
+
+    &.active {
+      background-color: #001529;
+    }
+  }
+  .content {
+    height: 100%;
+    width: 80%;
+    margin-left: auto;
+
+    .content-row {
+      width: 100%;
+    }
+  }
 }
 
-.App-link {
-  color: #61dafb;
-}
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.integrations {
+  width: 80%;
+  margin-top: 40px;
+  margin-left: auto;
+
+  .popular {
+    width: 80%;
+    margin: 0 40px;
+
+    .row {
+      padding: 20px;
+      border: 1px solid #eee;
+
+      .row-head {
+        display: flex;
+        justify-content: space-between;
+        background-color: #fafafa;
+        padding: 10px;
+        .name {
+          flex: 3;
+        }
+
+        .status,
+        .connected {
+          flex: 1;
+        }
+      }
+      .row-body {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+
+        div {
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #fafafa;
+          }
+        }
+
+        .name {
+          flex: 3;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .status {
+          button {
+            padding: 5px;
+            border: none;
+            font-size: 12px;
+          }
+        }
+
+        .connected {
+          justify-content: space-between;
+        }
+
+        .status,
+        .connected {
+          flex: 1;
+        }
+      }
+    }
   }
-  to {
-    transform: rotate(360deg);
+}
+
+.customers {
+  margin-top: 40px;
+  width: 80%;
+  margin-left: auto;
+
+  .popular {
+    width: 80%;
+    margin: 0 40px;
+
+    .row {
+      padding: 20px;
+      border: 1px solid #eee;
+
+      .row-head {
+        display: flex;
+        justify-content: space-between;
+        background-color: #fafafa;
+        padding: 10px;
+
+        .column {
+          flex: 1;
+        }
+
+      }
+      .row-body {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+
+        div {
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #fafafa;
+          }
+        }
+
+        .name {
+          flex: 3;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .status {
+          button {
+            padding: 5px;
+            border: none;
+            font-size: 12px;
+          }
+        }
+
+        .connected {
+          justify-content: space-between;
+        }
+
+        .status,
+        .connected {
+          flex: 1;
+        }
+      }
+    }
+  }
+  .search-row {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+
+    .search-box {
+      width: 30%;
+      margin-bottom: 10px;
+    }
+
+    .check-box {
+      width: 20%;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+
+    .search-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+      .button {
+        background-color: #36A2FF;
+        font-size: 14px;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        outline: none;
+        height: 30px;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .search-input {
+      width: 80%;
+      padding: 5px;
+      border-radius: 10px 0 0 10px;
+      border: none;
+      outline: none;
+      font-size: 12px;
+      background: none;
+    }
+    .search-button {
+      text-align: center;
+      height: 51px;
+      width: 40px;
+      outline: none;
+      cursor: pointer;
+      border: 4px solid #111d5e;
+      border-radius: 0 10px 10px 0;
+      border-left: none;
+      background: none;
+      font-size: 20px;
+      border-left: 4px solid #111d5e;
+    }
   }
 }

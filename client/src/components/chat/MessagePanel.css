@@ -1,14 +1,6 @@
-.rce-container-mlist {
-    width: inherit;
-    display: block;
-  }
-  
-  .rce-container-mlist {
-    height: 500px;
-  }
 
   .message-list {
-      height:  calc(100vh - 240px);
+      height:  calc(100vh - 200px);
       width: 100%;
   }
 
@@ -16,12 +8,11 @@
       width: 110vh;
   }
 
-  .rce-mlist {
-    width: inherit;
-  }
-
-  .rce-citem {
-    -webkit-user-select: all;
-    -ms-user-select: all;
-    user-select: all;
+  .empty-panel {
+    color: #cccccc;
+    font-style: italic;
+    font-size: 20px;
+    text-align: center;
+    margin: 20px;
+    display: block !important;
   }

@@ -83,7 +83,7 @@ export class Chat extends React.Component {
             let data = await response.json();
             channel.messages = data.messages;
             channels.forEach((c) => {
-                if (c.userAddress === channel.userAddress) {
+                if (c.userAddress == channel.userAddress) {
                         c.unread = 0  
                 }
             });
@@ -100,16 +100,17 @@ export class Chat extends React.Component {
             address: address,
             accessToken: this.state.accessToken,
             message: text,
-            to: "0xe97",
+            to: address,
             from: "support",
             timestamp: + new Date()
         });
     };
 
     render() {
+        console.log(this.props);
         return (
-            <div className="chat-app">
-                <ChannelList channels={this.state.channels} onSelectChannel={this.handleChannelSelect} />
+            <div className="chat-app" >
+                <ChannelList channels={this.state.channels} onSelectChannel={this.handleChannelSelect} type={this.props.type}/>
                 <MessagesPanel onSendMessage={this.handleSendMessage} channel={this.state.channel} />
             </div>
         );

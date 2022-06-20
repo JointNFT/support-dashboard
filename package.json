@@ -5,19 +5,25 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd client && npm install && npm run build",
+    "build": "cd client && npm install --force && npm run build",
     "quick-build": "cd client && npm run build",
     "start": "node server.js"
+  },
+  "engines": {
+    "node": "17.x"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@chatscope/chat-ui-kit-react": "^1.9.3",
+    "@chatscope/chat-ui-kit-styles": "^1.2.3",
     "abi-decoder": "^2.4.0",
     "aws-sdk": "^2.1150.0",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "cros": "^1.0.1",
+    "discord.js": "^13.8.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "sass": "^1.52.2",

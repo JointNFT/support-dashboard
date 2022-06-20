@@ -3,15 +3,22 @@ const path = require('path');
 const cors = require('cors');
 require("dotenv").config({path: './.env'});
 const chatHandlers = require("./utils/chatHandlers");
+const { Client, Intents } = require("discord.js");
 const Web3 = require("web3");
 const utils = require("./utils/transactionDecoders");
 const axios = require("axios");
 const { start } = require("repl");
-
+const discord_token = process.env.DISCORD_TOKEN;
 
 var app = express()
 
 const w3 = new Web3(new Web3.providers.HttpProvider('https://rpcapi.fantom.network'))
+
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+client.login(discord_token);
+client.on("ready", () => {
+    console.log("client is ready");
+});
 
 // Middleware
 app.use(express.static(path.resolve(__dirname, "./client/build")));
@@ -54,6 +61,7 @@ io.on('connection', (socket) => { // socket object may be used to send specific 
             io.emit('message', 'errored out');
         }
         chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
+        chatHandlers.pushToDiscord(data, client);
         io.emit('message', data);
     });
 
@@ -120,13 +128,15 @@ app.get('/transactions', async function (req, res) {
     res.send(JSON.stringify({filteredTransactions: populatedTransactions}))
 })
 
+app.get('/test', (req, res) => {
+    chatHandlers.pushToDiscord({accessToken: "some-token", message:"need help", "to":"support", from:"0xe95", userAddress:"0xe95"}, client);
+    res.send('hehe');
+})
+
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
-
-
-
 
 server.listen(port, () => {
     console.log(`listening on *:${port}`);
