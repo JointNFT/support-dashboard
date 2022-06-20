@@ -1,7 +1,12 @@
 .chat-app {
-    width: 80%;
+    ::-webkit-scrollbar {
+        display: none;
+      }
+    width: 300px;
+    height: 550px;
     display: flex;
-
+    border: 0;
+   
     .no-content-message {
         color: #cccccc;
         font-style: italic;
@@ -18,9 +23,6 @@
         border-right: none;
         height: calc(100% - 22px);
     }
-    .bordered{
-        border: 3px solid red;
-      }
 
     .channel-item {
         border-bottom: 1px solid rgb(224, 224, 224);
@@ -40,60 +42,82 @@
         }
     }
     
-    .meesage-list {
-        width: inherit;
-    }
 
     .messages-panel {
-        width: calc(65% - 12px);
-        // border: 1px solid rgb(224, 224, 224);
-        margin: 10px;
+        width: 300px;
         margin-left: 0;
-        height: calc(100% - 22px);
+       // height: calc(100% - 22px);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        
+        .header{
+            width: 300px;
+            background-color: #1890FF;
+            border:0;
+            border-radius: 0%;
+            color: white;
+            font-weight: lighter;
+            .title{
+                //font-size:x-large;
+                padding-top:2%;
+                font-weight:500px;                
+              }
+            .subtitle{ 
+              font-weight:lighter;
+              padding-top:2%
+               // font-size: medium;
+              }
+              .online-header{
+                padding:0;
+                background-color: #72b6f6;
+              }
+        }       
 
-        .meesage-list {
+        .meesages-list {
             align-self: stretch;
-            width: inherit;
             height: 100%;
         }
 
         .messages-input {
             width: 100%;
-            height: 40px;
+            height: 45px;
             border-top: 1px solid rgb(224, 224, 224);
-            background-color: #f0f0f0;
+           // background-color: #f0f0f0;
             display: flex;
-
+            
             input {
-                margin: auto;
+               
                 height: 20px;
                 width: 100%;
                 margin-left: 15px;
-                border-radius: 15px;
+               // border-radius: 15px;
                 border: 1px solid rgb(224, 224, 224);
 
                 &:focus {
                     border-radius: 15px;
-                    border: 2px solid #66a6ff;
+                    border: 2px solid #1890FF;
                     outline: none;
                 }
             }
 
-            button {
-                width: 60px;
+            .button {
+              //  width: 60px;
                 margin: auto 10px;
-                background-color: #0e62da;
+                display:block;
+                height: 40px;
+                width: 40px;
+                border:none;
+                border-radius: 50%;
+                background-color: #1890FF;
                 color: white;
-                border: 1px solid;
-                border-radius: 10px;
-                padding: 5px 13px;
+               // border: 1px solid;
+               
+                //padding: 5px 13px;
 
                 &:hover {
                     cursor: pointer;
-                    background-color: #66a6ff;
+                 //   background-color: #1890FF;
                 }
             }
         }

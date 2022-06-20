@@ -12,6 +12,6 @@ code {
     monospace;
 }
 
-.navbar-brand {
-  margin-left: 50px
+.rce-container-mlist {
+  display: contents !important;
 }

@@ -1,25 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 import { Chat } from "./components/chat/Chat";
 import Transaction from "./components/transaction/transaction";
-import { Container, Row, Col, Nav } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Amplify, Auth } from "aws-amplify";
-import awsExports from "./aws-exports";
-import UserState from "./contexts/user/UserState";
-Amplify.configure(awsExports);
-Auth.configure(awsExports);
+import { Container, Row, Col } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-        <UserState>
-            <App />
-        </UserState>
-    </React.StrictMode>
+  <React.StrictMode>
+                <Chat />
+    </React.StrictMode>,
     // document.getElementById("root")
 );
 
