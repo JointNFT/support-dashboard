@@ -12,11 +12,9 @@ import Me from "./pages/conversations/Me";
 import Prioritized from "./pages/conversations/Prioritized";
 import Customers from "./pages/Customers";
 import Integrations from "./pages/Integrations";
-import { withAuthenticator, Button, Heading } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
-import UserContext from "./contexts/user/UserContext";
-const SERVER = "http://127.0.0.1:3000";
 import Organizations from "./pages/Organizations";
+
+const SERVER = "http://127.0.0.1:3000";
 
 function App({ signOut, user }) {
   const [data, setData] = useState(null);
