@@ -121,7 +121,6 @@
         .column {
           flex: 1;
         }
-
       }
       .row-body {
         display: flex;
@@ -180,14 +179,13 @@
       justify-content: flex-start;
     }
 
-
     .search-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       margin-left: auto;
       .button {
-        background-color: #36A2FF;
+        background-color: #36a2ff;
         font-size: 14px;
         color: #fff;
         padding: 10px;
@@ -222,4 +220,64 @@
       border-left: 4px solid #111d5e;
     }
   }
+}
+
+// orginazations page styling
+.organizations {
+  width: 100%;
+  background-color: #fff;
+  height: auto;
+
+  h3 {
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .row-center {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    align-items: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    gap: 30px;
+    position: relative;
+
+    .custom-btn {
+      position: absolute;
+      right: 0;
+      top: -10%;
+      padding: 5px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+    }
+    .org-card {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      border: 1px solid #aaa;
+      padding: 10px;
+      text-decoration: none;
+      color: #000;
+
+      img {
+        width: 80%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  }
+}
+
+.icon {
+  padding: 3px;
+  border: 1px solid #aaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 3px;
 }

@@ -1,15 +1,12 @@
+import { Amplify, Auth } from "aws-amplify";
+import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { Chat } from "./components/chat/Chat";
-import Transaction from "./components/transaction/transaction";
-import { Container, Row, Col, Nav } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Amplify, Auth } from "aws-amplify";
 import awsExports from "./aws-exports";
 import UserState from "./contexts/user/UserState";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 Amplify.configure(awsExports);
 Auth.configure(awsExports);
 

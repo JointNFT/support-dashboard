@@ -1,4 +1,9 @@
-import { AiOutlineMail, AiFillSmile, AiOutlineLogout, AiOutlinePlus } from "react-icons/ai";
+import {
+  AiOutlineMail,
+  AiFillSmile,
+  AiOutlineLogout,
+  AiOutlinePlus,
+} from "react-icons/ai";
 import { TbPlugConnected } from "react-icons/tb";
 import { FiSettings, FiUsers, FiKey } from "react-icons/fi";
 import { TbWorld } from "react-icons/tb";
@@ -27,7 +32,7 @@ const Sidebar = (props) => {
       <div className="small">
         <div className="top">
           <Link
-            to="/"
+            to="/getstarted"
             className={`link ${activeLink === 0 && "active"}`}
             tabIndex={0}
             onClick={handleClick}
@@ -41,7 +46,7 @@ const Sidebar = (props) => {
             />
           </Link>
           <Link
-            to="/conversations/"
+            to="/conversations/all?accessToken=some-token"
             className={`link ${activeLink === 1 && "active"}`}
             tabIndex={1}
             onClick={handleClick}
@@ -86,7 +91,7 @@ const Sidebar = (props) => {
               onClick={handleClick}
               style={{ userSelect: "none", outline: "none" }}
             />
-          <div className="span hover">Customers</div>
+            <div className="span hover">Customers</div>
           </Link>
           <Link
             to="/accessKeys"
@@ -101,7 +106,7 @@ const Sidebar = (props) => {
               onClick={handleClick}
               style={{ userSelect: "none", outline: "none" }}
             />
-          <div className="span hover">Access Keys</div>
+            <div className="span hover">Access Keys</div>
           </Link>
         </div>
         <div className="bottom">
@@ -133,7 +138,10 @@ const Sidebar = (props) => {
           </div>
         </div>
       </div>
-      <div className={`expaned ${activeLink === 1 && "active"}`} onMouseLeave={() => setActiveLink(0)}>
+      <div
+        className={`expaned ${activeLink === 1 && "active"}`}
+        onMouseLeave={() => setActiveLink(0)}
+      >
         <div className={`tab ${conversationTab && "active"}`}>
           <div
             className="tab-title"

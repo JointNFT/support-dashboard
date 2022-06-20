@@ -1,20 +1,23 @@
-import { useEffect, useContext, useState } from "react";
+import { withAuthenticator } from "@aws-amplify/ui-react";
+import "@aws-amplify/ui-react/styles.css";
+import { useContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.scss";
-import Sidebar from "./components/layout/Sidebar/Sidebar";
+import UserContext from "./contexts/user/UserContext";
+import AccessKeys from "./pages/AccessKeys";
 import All from "./pages/conversations/All";
 import Closed from "./pages/conversations/Closed";
 import GetStarted from "./pages/conversations/GetStarted";
 import Me from "./pages/conversations/Me";
 import Prioritized from "./pages/conversations/Prioritized";
 import Customers from "./pages/Customers";
-import AccessKeys from "./pages/AccessKeys";
-import Home from "./pages/Home";
 import Integrations from "./pages/Integrations";
 import { withAuthenticator, Button, Heading } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import UserContext from "./contexts/user/UserContext";
-const SERVER = "http://localhost:3000";
+const SERVER = "http://127.0.0.1:3000";
+import Organizations from "./pages/Organizations";
+
 function App({ signOut, user }) {
   const [data, setData] = useState(null);
   const { loginUser } = useContext(UserContext);
@@ -31,19 +34,39 @@ function App({ signOut, user }) {
 
   return (
     <Router>
-      <div className="wrapp">
-        <Sidebar signOut={signOut} />
+        {/*<Sidebar signOut={signOut}/>*/}
         <Routes>
-          <Route path="/" element={<GetStarted />} />
-          <Route path="/conversations/all" element={<All />} />
-          <Route path="/conversations/me" element={<Me />} />
-          <Route path="/conversations/prioritized" element={<Prioritized />} />
-          <Route path="/conversations/closed" element={<Closed />} />
-          <Route path="/integrations" element={<Integrations />} />
-          <Route path="/customers" element={<Customers />} />
-          <Route path="/accessKeys" element={<AccessKeys />} />
+          <Route path="/" element={<Organizations />} />
+          <Route
+            path="/getstarted"
+            element={<GetStarted signOut={signOut} />}
+          />
+          <Route
+            path="/conversations/all"
+            element={<All signOut={signOut} />}
+          />
+          <Route path="/conversations/me" element={<Me signOut={signOut} />} />
+          <Route
+            path="/conversations/prioritized"
+            element={<Prioritized signOut={signOut} />}
+          />
+          <Route
+            path="/conversations/closed"
+            element={<Closed />}
+            signOut={signOut}
+          />
+          <Route
+            path="/integrations"
+            element={<Integrations />}
+            signOut={signOut}
+          />
+          <Route path="/customers" element={<Customers />} signOut={signOut} />
+          <Route
+            path="/accessKeys"
+            element={<AccessKeys />}
+            signOut={signOut}
+          />
         </Routes>
-      </div>
     </Router>
   );
 }
