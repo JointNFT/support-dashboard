@@ -3,7 +3,7 @@ const path = require("path");
 const cors = require("cors");
 require("dotenv").config({ path: "./.env" });
 const chatHandlers = require("./utils/chatHandlers");
-// const { Client, Intents } = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const Web3 = require("web3");
 const utils = require("./utils/transactionDecoders");
 const axios = require("axios");
@@ -16,13 +16,13 @@ const w3 = new Web3(
   new Web3.providers.HttpProvider("https://rpcapi.fantom.network")
 );
 
-// const client = new Client({
-//   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
-// });
-// client.login(discord_token);
-// client.on("ready", () => {
-//   console.log("client is ready");
-// });
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+});
+client.login(discord_token);
+client.on("ready", () => {
+  console.log("client is ready");
+});
 
 // Middleware
 app.use(express.static(path.resolve(__dirname, "./client/build")));
@@ -79,8 +79,8 @@ io.on("connection", (socket) => {
       data.to,
       data.from
     );
-    // chatHandlers.pushToDiscord(data, client);
-    console.log(sockets, socket.id, data.address);
+
+    chatHandlers.pushToDiscord(data, client);
     io.to(socket.id).emit("message", data);
     io.to(sockets[data.to]).emit("message", data);
     // io.to(data.userAddress).emit("message", data);
@@ -165,16 +165,16 @@ app.get("/transactions", async function (req, res) {
 });
 
 app.get("/test", (req, res) => {
-  //   chatHandlers.pushToDiscord(
-  //     {
-  //       accessToken: "some-token",
-  //       message: "need help",
-  //       to: "support",
-  //       from: "0xe95",
-  //       userAddress: "0xe95",
-  //     },
-  //     client
-  //   );
+  chatHandlers.pushToDiscord(
+    {
+      accessToken: "some-token",
+      message: "need help",
+      to: "support",
+      from: "0xe95",
+      userAddress: "0xe95",
+    },
+    client
+  );
   res.send("hehe");
 });
 
