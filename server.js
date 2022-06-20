@@ -12,16 +12,14 @@ const discord_token = process.env.DISCORD_TOKEN;
 
 var app = express();
 
-const w3 = new Web3(
-  new Web3.providers.HttpProvider("https://rpcapi.fantom.network")
-);
+const w3 = new Web3(new Web3.providers.HttpProvider("https://rpcapi.fantom.network"));
 
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 client.login(discord_token);
 client.on("ready", () => {
-  console.log("client is ready");
+    console.log("client is ready");
 });
 
 // Middleware
@@ -33,91 +31,76 @@ const port = process.env.PORT || 3000;
 var server = require("http").createServer(app);
 
 var io = require("socket.io")(server, {
-  cors: {
-    origin: "*",
-  },
+    cors: {
+        origin: "*",
+    },
 }).listen(server);
+
 var sockets = {};
 
 io.on("connection", (socket) => {
-  // socket object may be used to send specific messages to the new connected client
-  console.log("new client connected", socket);
-  socket.emit("connection", null);
+    // socket object may be used to send specific messages to the new connected client
+    console.log("new client connected", socket);
+    socket.emit("connection", null);
 
-  socket.on("test", (arg) => {
-    socket.emit("response", "online");
-  });
-
-  socket.on("create-account", (data) => {
-    // console.log("create account", data);
-    if (data == null || data.userAddress == null || data.accessToken == null) {
-      return;
-    }
-    chatHandlers.createNewUser(data.userAddress, data.accessToken);
-    io.emit("new-account", {
-      userAddress: data.userAddress,
-      accessToken: data.accessToken,
+    socket.on("test", (arg) => {
+        socket.emit("response", "online");
     });
-    sockets[data.userAddress] = socket.id;
 
-    // console.log(sockets);
-  });
+    socket.on("create-account", (data) => {
+        // console.log("create account", data);
+        if (data == null || data.userAddress == null || data.accessToken == null) {
+            return;
+        }
+        chatHandlers.createNewUser(data.userAddress, data.accessToken);
+        io.emit("new-account", {
+            userAddress: data.userAddress,
+            accessToken: data.accessToken,
+        });
+        sockets[data.userAddress] = socket.id;
 
-  socket.on("send-message", (data) => {
-    if (
-      data == null ||
-      data.accessToken == null ||
-      data.message == null ||
-      data.to == null
-    ) {
-      io.emit("message", "errored out");
-    }
-    chatHandlers.handleCustomerMessage(
-      data.address,
-      data.message,
-      data.accessToken,
-      data.to,
-      data.from
-    );
-    chatHandlers.pushToDiscord(data, client);
-    console.log(sockets, socket.id, data.address);
-    io.to(socket.id).emit("message", data);
-    io.to(sockets[data.to]).emit("message", data);
-    // io.to(data.userAddress).emit("message", data);
-    // io.emit("message", data);
-  });
+        // console.log(sockets);
+    });
 
-  socket.on("disconnect", () => {
-    io.emit("userDisconnected");
-  });
+    socket.on("send-message", (data) => {
+        if (data == null || data.accessToken == null || data.message == null || data.to == null) {
+            io.emit("message", "errored out");
+        }
+        chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
+        chatHandlers.pushToDiscord(data, client);
+        console.log(sockets, socket.id, data.address);
+        io.to(socket.id).emit("message", data);
+        io.to(sockets[data.to]).emit("message", data);
+        // io.to(data.userAddress).emit("message", data);
+        // io.emit("message", data);
+    });
 
-  socket.on("connect", (d) => {
-    console.log("connected", d);
-  });
+    socket.on("disconnect", () => {
+        io.emit("userDisconnected");
+    });
+
+    socket.on("connect", (d) => {
+        console.log("connected", d);
+    });
 });
 
 /**
  * @description This methos retirves the static channels
  */
 app.get("/getChannels", (req, res) => {
-  res.json({
-    channels: STATIC_CHANNELS,
-  });
+    res.json({
+        channels: STATIC_CHANNELS,
+    });
 });
 
 app.get("/getUsers", async (req, res) => {
-  console.log("getting users", req.query);
-  const users = await chatHandlers.getUsers(req.query.accessToken);
-  res.send(JSON.stringify({ users: users }));
+    const users = await chatHandlers.getUsers(req.query.accessToken);
+    res.send(JSON.stringify({ users: users }));
 });
 
 app.get("/getMessages", async (req, res) => {
-  chatMessages = await chatHandlers.getMessages(
-    req.query.address,
-    req.query.accessToken
-  );
-
-  res.send(JSON.stringify({ messages: chatMessages }));
+    chatMessages = await chatHandlers.getMessages(req.query.address, req.query.accessToken);
+    res.send(JSON.stringify({ messages: chatMessages }));
 });
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "./client/build")));
@@ -128,61 +111,51 @@ app.get("/", (req, res) => {
 });*/
 
 app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
+    res.json({ message: "Hello from server!" });
 });
 
 app.get("/transactions", async function (req, res) {
-  let contractAddresses = req?.query?.contractAddresses.split(",");
+    let contractAddresses = req?.query?.contractAddresses.split(",");
 
-  let address = req?.query?.userAddress;
-  let chain = req?.query?.chain;
-  if (address == null) {
-    res.send({ error: "Please enter the address" });
-    return;
-  }
-  let startBlock = "0";
+    let address = req?.query?.userAddress;
+    let chain = req?.query?.chain;
+    if (address == null) {
+        res.send({ error: "Please enter the address" });
+        return;
+    }
+    let startBlock = "0";
 
-  const userTransactions = await utils.getTransactions(
-    address,
-    startBlock,
-    chain
-  );
+    const userTransactions = await utils.getTransactions(address, startBlock, chain);
 
-  if (userTransactions == null) {
-    res.send({ error: "couldnt fetch transactions for user" });
-  }
+    if (userTransactions == null) {
+        res.send({ error: "couldnt fetch transactions for user" });
+    }
 
-  let filteredTransactions = utils.filter_for_useful_transactions(
-    userTransactions,
-    contractAddresses
-  );
+    let filteredTransactions = utils.filter_for_useful_transactions(userTransactions, contractAddresses);
 
-  let populatedTransactions = await utils.populateTransactions(
-    filteredTransactions,
-    chain
-  );
-  res.send(JSON.stringify({ filteredTransactions: populatedTransactions }));
+    let populatedTransactions = await utils.populateTransactions(filteredTransactions, chain);
+    res.send(JSON.stringify({ filteredTransactions: populatedTransactions }));
 });
 
 app.get("/test", (req, res) => {
-  chatHandlers.pushToDiscord(
-    {
-      accessToken: "some-token",
-      message: "need help",
-      to: "support",
-      from: "0xe95",
-      userAddress: "0xe95",
-    },
-    client
-  );
-  res.send("hehe");
+    chatHandlers.pushToDiscord(
+        {
+            accessToken: "some-token",
+            message: "need help",
+            to: "support",
+            from: "0xe95",
+            userAddress: "0xe95",
+        },
+        client
+    );
+    res.send("hehe");
 });
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 
 server.listen(port, () => {
-  console.log(`listening on *:${port}`);
+    console.log(`listening on *:${port}`);
 });
