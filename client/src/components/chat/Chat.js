@@ -22,12 +22,12 @@ export class Chat extends React.Component {
 
     configureSocket = () => {
         var socket = socketClient();
-        /*
+        
         socket.on("testingIfServerOnline",(arg)=>{
             console.log(arg);
             socket.emit('responseFromServer','online');
         })
-*/
+
         socket.on("connection", () => {
             if (this.state.channel) {
                 this.handleChannelSelect(this.state.channel.id);
