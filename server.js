@@ -33,9 +33,11 @@ io.on('connection', (socket) => { // socket object may be used to send specific 
     console.log('new client connected');
     socket.emit('connection', null);
 
-    socket.on('test',(arg)=>{
-        socket.emit('response','online');
-    })
+    /*
+    socket.on('testingIfServerOnline',(arg)=>{
+        console.log(arg)
+        socket.emit('responseFromServer','online');
+    })*/
     
     socket.on('create-account', data => {
         console.log('create account', data);
