@@ -6,7 +6,7 @@ import { MessagesPanel } from "./MessagesPanel";
 import socketClient, { io } from "socket.io-client";
 import { useEffect, useContext, useState } from "react";
 import UserContext from "../../contexts/user/UserContext";
-const SERVER = "http://127.0.0.1:3000";
+const SERVER = "http://dashboard.highfi.me";
 
 const Chat = (props) => {
     const { accessToken } = useContext(UserContext);
@@ -66,28 +66,28 @@ const Chat = (props) => {
         });
     }
 
-    function handleUserTag(tag){
+    function handleUserTag(tag) {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        var userAdderss=channel.userAddress;
-        var accessToken =channel.accessToken;
+        var userAdderss = channel.userAddress;
+        var accessToken = channel.accessToken;
         var raw = JSON.stringify({
-        "userAddress": userAdderss,
-        "accessToken": accessToken,
-        "tag": tag,
+            userAddress: userAdderss,
+            accessToken: accessToken,
+            tag: tag,
         });
 
         var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
         };
 
         fetch("/updateUserTag", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.log("error", error));
     }
 
     async function loadChannels() {
