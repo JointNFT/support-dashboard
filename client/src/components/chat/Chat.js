@@ -66,6 +66,29 @@ const Chat = (props) => {
         });
     }
 
+    function userTag(){
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+        "userAddress": "0x390A19fcef7fc0B7De17E1C4e3feC52B4f9E1665",
+        "accessToken": "some-token",
+        "tag": "prioritized"
+        });
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("/updateUserTag", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+    }
+
     async function loadChannels() {
         console.log("accessToken - ", accessToken);
         fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(async (response) => {
