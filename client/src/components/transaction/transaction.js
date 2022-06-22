@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./transaction.css";
 import AddressForm from "./addressForm";
 import TransactionList from "./transactionList";
-const SERVER = "http://127.0.0.1:3000";
+const SERVER = "https://dashboard.highfi.me";
 const Transaction = () => {
     let [transactions, setTransactions] = useState([]);
 
