@@ -15,8 +15,10 @@ const Chat = (props) => {
     const [channel, setChannel] = useState(null);
     const [loading, setLoading] = useState(null);
 
-    loadChannels();
-    configureSocket();
+    useEffect(() => {
+        loadChannels();
+        configureSocket();
+    }, []);
 
     function configureSocket() {
         if (socket) {
@@ -70,12 +72,11 @@ const Chat = (props) => {
             let data = await response.json();
             console.log("chaneel list", data);
             setChannels(data.users);
-            console.log('channels list ='+ channels)
+            console.log("channels list =" + channels);
         });
     }
 
     function handleChannelSelect(address) {
-        console.log(accessToken);
         let channelsCopy = channels;
         let channel = channelsCopy.find((c) => {
             return c.userAddress === address;
@@ -94,13 +95,13 @@ const Chat = (props) => {
                 }
             });
             setChannel(channel);
+            setChannels(channelsCopy);
         });
 
-        setChannels(channelsCopy);
         // this.socket.emit('create-account', {'address':'0xe96', accessToken: "some-token"});
     }
 
-    function handleSendMessage (address, text)  {
+    function handleSendMessage(address, text) {
         socket.emit("send-message", {
             id: Date.now(),
             address: address,
@@ -110,7 +111,7 @@ const Chat = (props) => {
             from: "support",
             timestamp: +new Date(),
         });
-    };
+    }
 
     return (
         <div className="chat-app">
@@ -133,7 +134,7 @@ const Chat = (props) => {
                     Socket Connecting...
                 </div>
             )} */}
-            <ChannelList channels={channels} onSelectChannel={handleChannelSelect} type={props.type} accessToken={accessToken}/>
+            <ChannelList channels={channels} onSelectChannel={handleChannelSelect} type={props.type} accessToken={accessToken} />
             <MessagesPanel onSendMessage={handleSendMessage} channel={channel} />
         </div>
     );
