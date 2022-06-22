@@ -101,5 +101,19 @@ const getMessages = async (userAddress, accesToken) => {
   const messages = (await res)?.Items;
   return messages;
 };
+/*
+const storeHeaderDetails = async ( accessToken, heading, subheading) => {
+  const params = {
+      TableName: "HeaderDetails",
+      Item: {
+          accessToken: accessToken,
+          heading: heading,
+          subheading: subheading
+      },
+  };
+  let response = await db.put(params).promise();
+ 
+  return await response;
+};*/
 
 module.exports = {getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings};

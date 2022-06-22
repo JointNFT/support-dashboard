@@ -1,4 +1,4 @@
-import { AiOutlineMail, AiFillSmile, AiOutlineLogout, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineMail, AiFillSmile, AiOutlineLogout, AiOutlinePlus, AiOutlineForm } from "react-icons/ai";
 import { TbPlugConnected } from "react-icons/tb";
 import { FiSettings, FiUsers, FiKey } from "react-icons/fi";
 import { TbWorld } from "react-icons/tb";
@@ -86,7 +86,7 @@ const Sidebar = (props) => {
               onClick={handleClick}
               style={{ userSelect: "none", outline: "none" }}
             />
-          <div className="span hover">Customers</div>
+            <div className="span hover">Customers</div>
           </Link>
           <Link
             to="/accessKeys"
@@ -102,6 +102,21 @@ const Sidebar = (props) => {
               style={{ userSelect: "none", outline: "none" }}
             />
           <div className="span hover">Access Keys</div>
+          </Link>
+          <Link
+            to="/HeaderForm"
+            className={`link ${activeLink === 4 && "active"}`}
+            tabIndex={6}
+            onClick={handleClick}
+          >
+            <AiOutlineForm
+              size={20}
+              color={"white"}
+              tabIndex={6}
+              onClick={handleClick}
+              style={{ userSelect: "none", outline: "none" }}
+            />
+          <div className="span hover">Header Form</div>
           </Link>
         </div>
         <div className="bottom">

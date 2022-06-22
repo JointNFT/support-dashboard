@@ -9,6 +9,7 @@ import Me from "./pages/conversations/Me";
 import Prioritized from "./pages/conversations/Prioritized";
 import Customers from "./pages/Customers";
 import AccessKeys from "./pages/AccessKeys";
+import HeaderForm from "./pages/HeaderForm";
 import Home from "./pages/Home";
 import Integrations from "./pages/Integrations";
 import { withAuthenticator, Button, Heading } from '@aws-amplify/ui-react';
@@ -43,6 +44,7 @@ function App({ signOut, user }) {
           <Route path="/integrations" element={<Integrations />} />
           <Route path="/customers" element={<Customers />} />
           <Route path="/accessKeys" element={<AccessKeys />}/> 
+          <Route path="/HeaderForm" element={<HeaderForm/>}/>
         </Routes>
       </div>
     </Router>

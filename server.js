@@ -80,6 +80,8 @@ app.get('/getChannels', (req, res) => {
     })
 });
 
+
+
 app.get('/getUsers', async (req, res) => {
     console.log('getting users', req.query);
     const users = await chatHandlers.getUsers(req.query.accessToken);
@@ -99,6 +101,11 @@ app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });*/
+
+app.get('/HeaderForm',async(req,res)=>{
+    console.log(req.query);
+
+})
 
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
