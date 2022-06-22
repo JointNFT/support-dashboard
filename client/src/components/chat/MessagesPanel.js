@@ -5,7 +5,7 @@ import {
   Message,
   MessageList,
 } from "@chatscope/chat-ui-kit-react";
-import React from "react";
+import React, {useState} from "react";
 import { AiOutlineStar } from "react-icons/ai";
 import { BiTrashAlt } from "react-icons/bi";
 import {
@@ -18,7 +18,10 @@ import "./MessagePanel.css";
 const messageListReferance = React.createRef();
 
 export class MessagesPanel extends React.Component {
-  state = { input_value: "" };
+
+  state = { input_value: "" ,
+            tag: "",
+   };
   send = () => {
     if (this.state.input_value && this.state.input_value != "") {
       this.props.onSendMessage(
@@ -39,9 +42,7 @@ export class MessagesPanel extends React.Component {
       this.send();
     }
   };
-  markFavorite=(e)=>{
-    console.log("you just clicked")
-  }
+  
 
   style = {
     width: "inherit",
@@ -49,6 +50,17 @@ export class MessagesPanel extends React.Component {
   };
 
   render() {
+    
+   const markFavorite=()=>{
+      this.setState({tag: "favorite"});
+      
+    };
+    const markCompleted=()=>{
+      this.setState({tag: "completed"})
+    };
+    const deleteConversation=()=>{
+      this.setState({tag: "deleted"})
+    };
     let list = [];
     if (this.props.channel && this.props.channel.messages) {
       list = this.props.channel.messages.map((m) => {
@@ -83,14 +95,14 @@ export class MessagesPanel extends React.Component {
                 userName={this.props.channel.userAddress}
               />
               <ConversationHeader.Actions>
-                <div className="icon" onClick={markFavorite}>
-                  <AiOutlineStar size={20}/>
+                <div className="icon">
+                  <button onClick={markFavorite}><AiOutlineStar size={20}/></button>
                 </div>
                 <div className="icon">
-                  <RiCheckFill size={20}  />
+                  <button onClick={markCompleted}><RiCheckFill size={20}  /></button>
                 </div>
                 <div className="icon">
-                  <BiTrashAlt size={20} />
+                  <button onClick={deleteConversation}><BiTrashAlt size={20} /></button>
                 </div>
               </ConversationHeader.Actions>
             </ConversationHeader>

@@ -6,6 +6,7 @@ const chatHandlers = require("./utils/chatHandlers");
 const { Client, Intents } = require("discord.js");
 const Web3 = require("web3");
 const utils = require("./utils/transactionDecoders");
+const db = require("./utils/db");
 const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
@@ -113,6 +114,15 @@ app.get("/", (req, res) => {
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
+
+app.post("/updateUserTag",async function(req, res){
+    console.log(req);
+    var Accesstoken = 'accessToken' 
+    var address = 'address'
+    var tag = 'favorite'
+    await db.updateUserTag(address, Accesstoken, tag)
+    res.send("hey");
+})
 
 app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");

@@ -25,6 +25,7 @@ const updateUser = async (userAddress, accessToken, lastMessage = {}) => {
     return await response;
 };
 
+
 const getUser = async (userAddress, accessToken) => {
     const params = {
         TableName: "ChatUsers",
@@ -107,7 +108,7 @@ const updateUserTag = async (userAddress, accessToken, newTag) => {
         Item: {
             userAddress: userAddress,
             accessToken: accessToken,
-            lastMessage: lastMessage,
+            tag: newTag, 
         },
     };
 
@@ -116,4 +117,4 @@ const updateUserTag = async (userAddress, accessToken, newTag) => {
     return await response;
 };
 
-module.exports = { getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, db };
+module.exports = { getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, db, updateUserTag };
