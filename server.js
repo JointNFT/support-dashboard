@@ -12,6 +12,7 @@ const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
 
 var app = express();
+app.use(express.json());
 
 const w3 = new Web3(new Web3.providers.HttpProvider("https://rpcapi.fantom.network"));
 
@@ -116,12 +117,13 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/updateUserTag",async function(req, res){
-    console.log(req);
-    var Accesstoken = 'accessToken' 
-    var address = 'address'
-    var tag = 'favorite'
-    await db.updateUserTag(address, Accesstoken, tag)
-    res.send("hey");
+    var payload = req.body
+    var accessToken = payload.accessToken
+    var userAddress = payload.userAddress
+    var tag = payload.tag
+    if (accessToken != '' && userAddress != '')
+        await db.updateUserTag(userAddress, accessToken, tag)
+    res.send({'status': 'success'});
 })
 
 app.get("/transactions", async function (req, res) {
