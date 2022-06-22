@@ -107,13 +107,7 @@ export class MessagesPanel extends React.Component {
               </ConversationHeader.Actions>
             </ConversationHeader>
           )}
-          {/* <Container>
-                        <Row>
-                            <Col> Status : xyz</Col>
-                            <Col></Col>
-                            <Col></Col>
-                        </Row>
-                    </Container> */}
+          
           <MessageList className="message-list">
             {list.map((messageInfo) => (
               <Message
@@ -180,6 +174,7 @@ export class MessagesPanel extends React.Component {
           </button>
         </div>
       );
+      
     }
   }
 }

@@ -4,7 +4,6 @@ import { ConversationList, Conversation, Avatar } from "@chatscope/chat-ui-kit-r
 import { format } from "timeago.js";
 
 export class ChannelList extends React.Component {
-    queryParams = new URLSearchParams(window.location.search);
     handleClick = (channelId) => {
         this.props.onSelectChannel(channelId);
     };
