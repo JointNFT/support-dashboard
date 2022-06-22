@@ -14,13 +14,12 @@ import {
   RiCheckFill,
 } from "react-icons/ri";
 import { format } from "timeago.js";
-import "./MessagePanel.css";
+import "./MessagePanel.scss";
 const messageListReferance = React.createRef();
 
 export class MessagesPanel extends React.Component {
 
   state = { input_value: "" ,
-            tag: "",
    };
   send = () => {
     if (this.state.input_value && this.state.input_value != "") {
@@ -51,15 +50,20 @@ export class MessagesPanel extends React.Component {
 
   render() {
     
-   const markFavorite=()=>{
-      this.setState({tag: "favorite"});
-      
+   const markPrioritized=()=>{
+      var property = document.getElementById('button1');
+      property.style.backgroundColor = 'pink'
+      this.props.onTagClick("prioritized");
     };
     const markCompleted=()=>{
-      this.setState({tag: "completed"})
+      var property = document.getElementById('button1');
+      property.style.backgroundColor = 'pink'
+      this.props.onTagClick("completed");
     };
     const deleteConversation=()=>{
-      this.setState({tag: "deleted"})
+      var property = document.getElementById('button1');
+      property.style.backgroundColor = 'pink'
+      this.props.onTagClick("deleted");
     };
     let list = [];
     if (this.props.channel && this.props.channel.messages) {
@@ -96,13 +100,13 @@ export class MessagesPanel extends React.Component {
               />
               <ConversationHeader.Actions>
                 <div className="icon">
-                  <button onClick={markFavorite}><AiOutlineStar size={20}/></button>
+                  <button className="button1" id="button1" onClick={markPrioritized}><AiOutlineStar size={20}/></button>
                 </div>
                 <div className="icon">
-                  <button onClick={markCompleted}><RiCheckFill size={20}  /></button>
+                  <button className="button2" id="button2" onClick={markCompleted}><RiCheckFill size={20}  /></button>
                 </div>
                 <div className="icon">
-                  <button onClick={deleteConversation}><BiTrashAlt size={20} /></button>
+                  <button className="button3" id="button3" onClick={deleteConversation}><BiTrashAlt size={20} /></button>
                 </div>
               </ConversationHeader.Actions>
             </ConversationHeader>

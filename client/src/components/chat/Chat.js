@@ -66,14 +66,15 @@ const Chat = (props) => {
         });
     }
 
-    function userTag(){
+    function handleUserTag(tag){
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-
+        var userAdderss=channel.userAddress;
+        var accessToken =channel.accessToken;
         var raw = JSON.stringify({
-        "userAddress": "0x390A19fcef7fc0B7De17E1C4e3feC52B4f9E1665",
-        "accessToken": "some-token",
-        "tag": "prioritized"
+        "userAddress": userAdderss,
+        "accessToken": accessToken,
+        "tag": tag,
         });
 
         var requestOptions = {
@@ -158,7 +159,7 @@ const Chat = (props) => {
                 </div>
             )} */}
             <ChannelList channels={channels} onSelectChannel={handleChannelSelect} type={props.type} accessToken={accessToken} />
-            <MessagesPanel onSendMessage={handleSendMessage} channel={channel} />
+            <MessagesPanel onSendMessage={handleSendMessage} onTagClick={handleUserTag} channel={channel} />
         </div>
     );
 };
