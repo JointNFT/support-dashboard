@@ -18,7 +18,7 @@ export class ChannelList extends React.Component {
               else if (this.props.type == null || this.props.type == "all") return true;
               else return false;
             } ).map((c) => {
-                if (c.accessToken == this.queryParams.get("accessToken")) {
+                if (c.accessToken == this.props.accessToken) {
                         return {
                             avatar:
                                 "https://storage.googleapis.com/opensea-static/opensea-profile/" +

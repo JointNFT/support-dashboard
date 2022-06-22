@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Col, Nav, Row } from "react-bootstrap";
-import { Chat } from "../../components/chat/Chat";
+import Chat from "../../components/chat/Chat";
 import Sidebar from "../../components/layout/Sidebar/Sidebar";
 import Transaction from "../../components/transaction/transaction";
 
