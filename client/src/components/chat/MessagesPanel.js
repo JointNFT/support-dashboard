@@ -39,6 +39,9 @@ export class MessagesPanel extends React.Component {
       this.send();
     }
   };
+  markFavorite=(e)=>{
+    console.log("you just clicked")
+  }
 
   style = {
     width: "inherit",
@@ -80,7 +83,7 @@ export class MessagesPanel extends React.Component {
                 userName={this.props.channel.userAddress}
               />
               <ConversationHeader.Actions>
-                <div className="icon">
+                <div className="icon" onClick={markFavorite}>
                   <AiOutlineStar size={20}/>
                 </div>
                 <div className="icon">
