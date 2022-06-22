@@ -6,7 +6,7 @@ import { MessagesPanel } from "./MessagesPanel";
 import socketClient, { io } from "socket.io-client";
 import { useEffect, useContext, useState } from "react";
 import UserContext from "../../contexts/user/UserContext";
-const SERVER = "http://dashboard.highfi.me";
+const SERVER = "https://dashboard.highfi.me";
 
 const Chat = (props) => {
     const { accessToken } = useContext(UserContext);
