@@ -5,7 +5,7 @@ import "./chat.scss";
 import { MessagesPanel } from "./MessagesPanel";
 import { io } from "socket.io-client";
 import UserContext from "../../contexts/user/UserContext";
-const SERVER = "http://127.0.0.1:3000";
+const SERVER = "https://dashboard.highfi.me";
 
 const Chat = (props) => {
     const { accessToken } = useContext(UserContext);
