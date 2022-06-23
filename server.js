@@ -96,6 +96,7 @@ app.get("/getChannels", (req, res) => {
 });
 
 app.get("/getUsers", async (req, res) => {
+    console.log(req.query.accessToken);
     const users = await chatHandlers.getUsers(req.query.accessToken);
     res.send(JSON.stringify({ users: users }));
 });
