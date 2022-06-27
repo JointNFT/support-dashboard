@@ -7,6 +7,7 @@ function ModalForm() {
   const [show, setShow] = useState(false);
   const [emailCount, setEmailCount] = useState(1);
 
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -23,6 +24,7 @@ function ModalForm() {
     e.preventDefault();
     setEmailCount(emailCount - 1);
   };
+
 
   return (
     <>
@@ -43,10 +45,10 @@ function ModalForm() {
           <Modal.Title>Add new organization</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form form action="/formData" enctype="multipart/form-data" method="post">
             <Form.Group className="mb-3" controlId="formBasicImage">
               <Form.Label>Logo</Form.Label>
-              <Form.Control type="file" placeholder="Logo" />
+              <Form.Control type="file" placeholder="Logo" name="imageURL"/>
               <Form.Text className="text-muted">
                 Insert logo of your organization
               </Form.Text>
@@ -54,7 +56,7 @@ function ModalForm() {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Organization name</Form.Label>
-              <Form.Control type="text" placeholder="Enter organization name" />
+              <Form.Control type="text" placeholder="Enter organization name" name="organizationName"/>
               <Form.Text className="text-muted">
                 Insert organization name
               </Form.Text>
@@ -78,7 +80,7 @@ function ModalForm() {
               >
                 <GrAddCircle size={20} />{" "}
               </button>
-              <Form.Label>Email list </Form.Label>
+              <Form.Label>Address list </Form.Label>
               {count.length &&
                 count.map((el) => (
                   <React.Fragment key={el}>
@@ -94,11 +96,11 @@ function ModalForm() {
                       <IoMdRemoveCircleOutline size={20} />{" "}
                     </button>
                     <Form.Control
-                      type="email"
-                      placeholder="Enter email"
+                      placeholder="Enter address"
                       required
+                      name="address"
                     />
-                    <Form.Text className="text-muted">Insert email</Form.Text>
+                    <Form.Text className="text-muted">Insert address</Form.Text>
                   </React.Fragment>
                 ))}
             </Form.Group>

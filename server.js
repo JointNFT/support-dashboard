@@ -7,9 +7,12 @@ const { Client, Intents } = require("discord.js");
 const Web3 = require("web3");
 const utils = require("./utils/transactionDecoders");
 const db = require("./utils/db");
+const s3 = require("./utils/s3");
 const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
+const multer  = require('multer');
+const upload = multer({ dest: 'images' })
 
 var app = express();
 app.use(express.json());
@@ -124,7 +127,17 @@ app.post("/updateUserTag",async function(req, res){
     if (accessToken != '' && userAddress != '')
         await db.updateUserTag(userAddress, accessToken, tag)
     res.send({'status': 'success'});
-})
+});
+
+app.post('/formData', upload.single('imageURL'), async function (req, res) {
+    var name = req.body.organizationName
+    var address = req.body.address
+    var imageURL = 'http://127.0.0.1:3000/' + req.file.path;
+    var key = await s3.uploadImage(imageURL, address);
+    await db.addNewOrganization(name, address, key)
+    res.send({'status': 'success'});
+});
+
 
 app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");

@@ -117,4 +117,18 @@ const updateUserTag = async (userAddress, accessToken, newTag) => {
     return await response;
 };
 
-module.exports = { getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, db, updateUserTag };
+const addNewOrganization = async (organizationName, address, image) => {
+    let dbParams = {
+        TableName: "Organizations",
+        Item: {
+            identifier: address,
+            organizationId: address,
+            image: image,
+            name: organizationName,
+        },
+    };
+
+    let response = await db.put(dbParams).promise();
+    return await response;
+};
+module.exports = { getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, db, updateUserTag, addNewOrganization };
