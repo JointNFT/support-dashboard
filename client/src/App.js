@@ -51,7 +51,7 @@ function App({ signOut, user }) {
 
     return (
         <>
-        { (address) ?  (
+        { (address) ?  
           <>
             <Router>
             {/*<Sidebar signOut={signOut}/>*/}
@@ -68,14 +68,14 @@ function App({ signOut, user }) {
             </Routes>
         </Router>
           </>
-        ) : 
-          (<SignIn
+         : 
+          <SignIn
             web3Loading={web3Loading}
             web3Provider={web3Provider}
             connectHandler={connectHandler}
             disconnectHandler={disconnectHandler}
             web3DisplayMessage={web3DisplayMessage}
-          />)
+          />
         }
       </>
         

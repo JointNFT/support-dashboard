@@ -6,15 +6,20 @@ import UserState from "./contexts/user/UserState";
 import Web3State from "./contexts/web3/Web3State";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import { ChakraProvider } from '@chakra-ui/react'
+
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
+        <ChakraProvider>
         <Web3State>
             <UserState>
                 <App />
             </UserState>
         </Web3State>
+        </ChakraProvider>
     </React.StrictMode>
     // document.getElementById("root")
 );
