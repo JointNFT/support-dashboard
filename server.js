@@ -10,7 +10,6 @@ const db = require("./utils/db");
 const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
-
 var app = express();
 app.use(express.json());
 
@@ -19,6 +18,7 @@ const w3 = new Web3(new Web3.providers.HttpProvider("https://rpcapi.fantom.netwo
 const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
+
 client.login(discord_token);
 client.on("ready", () => {
     console.log("client is ready");
@@ -54,14 +54,16 @@ io.on("connection", (socket) => {
         if (data == null || data.userAddress == null || data.accessToken == null) {
             return;
         }
-        chatHandlers.createNewUser(data.userAddress, data.accessToken);
+        console.log('does it even reach here ?');
+        if (data.userAddress != 'support'){
+            chatHandlers.createNewUser(data.userAddress, data.accessToken);
+        }
         io.emit("new-account", {
             userAddress: data.userAddress,
             accessToken: data.accessToken,
         });
         sockets[data.userAddress] = socket.id;
-
-        // console.log(sockets);
+        io.to('support').emit("new-account", data);
     });
 
     socket.on("send-message", (data) => {
@@ -70,7 +72,6 @@ io.on("connection", (socket) => {
         }
         chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
         chatHandlers.pushToDiscord(data, client);
-        console.log(sockets, socket.id, data.address);
         io.to(socket.id).emit("message", data);
         io.to(sockets[data.to]).emit("message", data);
         // io.to(data.userAddress).emit("message", data);

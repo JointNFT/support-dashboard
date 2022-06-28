@@ -5,7 +5,7 @@ import "./chat.scss";
 import { MessagesPanel } from "./MessagesPanel";
 import { io } from "socket.io-client";
 import UserContext from "../../contexts/user/UserContext";
-const SERVER = "https://dashboard.highfi.me";
+const SERVER = "http://localhost:3000";
 
 const Chat = (props) => {
     const { accessToken } = useContext(UserContext);
@@ -22,7 +22,14 @@ const Chat = (props) => {
     }, []);
 
     function configureSocket() {
-        socket.current = io(SERVER);
+        socket.current = io(SERVER, {
+            userAdderss: "support",
+            accessToken: accessToken
+        });
+        socket.current.emit("create-account", {
+            userAddress: "support",
+            accessToken: accessToken
+        });
         if (socket == null) {
             return;
         }
@@ -46,6 +53,7 @@ const Chat = (props) => {
         });
 
         socket.current.on("new-account", (data) => {
+            if (data.userAddress == "support") return;
             setNewAccount(data);
         });
     }
@@ -77,7 +85,7 @@ const Chat = (props) => {
             }
         });
         setChannels(channelCopy);
-        const newChannel = channelCopy.find((c) => c.userAddress === channel.userAddress);
+        const newChannel = channelCopy.find((c) => c.userAddress === arrivalMessage.userAddress);
         setChannel(newChannel);
     }, [arrivalMessage]);
 
