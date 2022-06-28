@@ -13,6 +13,7 @@ const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
 const multer  = require('multer');
 const upload = multer({ dest: 'images' })
+const SERVER = 'http://localhost:3000/';
 
 var app = express();
 app.use(express.json());
@@ -129,13 +130,13 @@ app.post("/updateUserTag",async function(req, res){
     res.send({'status': 'success'});
 });
 
-app.post('/formData', upload.single('imageURL'), async function (req, res) {
+app.post('/createOrganization', upload.single('imageURL'), async function (req, res) {
     var name = req.body.organizationName
     var address = req.body.address
-    var imageURL = 'http://127.0.0.1:3000/' + req.file.path;
+    var imageURL = SERVER + req.file.path
     var key = await s3.uploadImage(imageURL, address);
-    await db.addNewOrganization(name, address, key)
-    res.send({'status': 'success'});
+    await db.addNewOrganization(name, address, key)  
+    res.redirect('/');
 });
 
 

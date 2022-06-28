@@ -122,7 +122,8 @@ const addNewOrganization = async (organizationName, address, image) => {
         TableName: "Organizations",
         Item: {
             identifier: address,
-            organizationId: address,
+            organizationId: JSON.stringify(+new Date()) ,
+            createdBy: address,
             image: image,
             name: organizationName,
         },

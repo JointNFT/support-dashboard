@@ -2,8 +2,11 @@ import React, { useMemo, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { GrAddCircle } from "react-icons/gr";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
+import {useNavigate} from 'react-router-dom';
+
 
 function ModalForm() {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [emailCount, setEmailCount] = useState(1);
 
@@ -25,7 +28,7 @@ function ModalForm() {
     setEmailCount(emailCount - 1);
   };
 
-
+ 
   return (
     <>
       <button
@@ -45,7 +48,7 @@ function ModalForm() {
           <Modal.Title>Add new organization</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form form action="/formData" enctype="multipart/form-data" method="post">
+          <Form form action="/createOrganization" enctype="multipart/form-data" method="post">
             <Form.Group className="mb-3" controlId="formBasicImage">
               <Form.Label>Logo</Form.Label>
               <Form.Control type="file" placeholder="Logo" name="imageURL"/>
@@ -105,7 +108,7 @@ function ModalForm() {
                 ))}
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" >
               Submit
             </Button>
           </Form>
