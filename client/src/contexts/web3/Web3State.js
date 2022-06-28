@@ -1,6 +1,7 @@
 import {useReducer} from 'react';
 import Web3Context from "./Web3Context";
 import Web3Reducer, {initialState} from "./Web3Reducer";
+import { FaRocketchat } from "react-icons/fa";
 import Web3 from 'web3'
 
 import Onboard from '@web3-onboard/core'
@@ -19,7 +20,27 @@ const onboard = Onboard({
 			label: 'Ethereum Mainnet',
 			rpcUrl: MAINNET_RPC_URL
 		}
-	]
+	],
+	appMetadata: {
+		name: 'Token Swap',
+		icon: FaRocketchat.toString(),
+		description: 'Swap tokens for other tokens',
+		recommendedInjectedWallets: [
+		  { name: 'MetaMask', url: 'https://metamask.io' }
+		]
+	  },
+	  accountCenter: {
+		desktop: {
+		  position: 'topRight',
+		  enabled: true,
+		  minimal: true
+		},
+		mobile: {
+		  position: 'topRight',
+		  enabled: true,
+		  minimal: true
+		}
+	  },
 });
 
 
