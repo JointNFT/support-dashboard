@@ -1,5 +1,3 @@
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import "@aws-amplify/ui-react/styles.css";
 import { useContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.scss";
@@ -13,12 +11,33 @@ import Prioritized from "./pages/conversations/Prioritized";
 import Customers from "./pages/Customers";
 import Integrations from "./pages/Integrations";
 import Organizations from "./pages/Organizations";
+import Web3Context from "./contexts/web3/Web3Context";
+import SignIn from "./components/SignIn";
 
 const SERVER = "http://127.0.0.1:3000";
 
 function App({ signOut, user }) {
     const [data, setData] = useState(null);
     const { loginUser } = useContext(UserContext);
+    const {web3DisplayMessage, web3Loading, address, web3Provider, connect, disconnect, provider, removeListeners } = useContext(Web3Context);
+  
+    const connectHandler = async (e) => {
+      await connect();
+    };
+  
+    const disconnectHandler = async (e) => {  
+      disconnect();
+    };
+  
+    useEffect(() => {
+      if (provider?.on) {
+        // Subscription Cleanup
+        return () => {
+          console.log('...');
+          //remove the listeners here
+        }
+      }
+    }, [provider, disconnect])
 
     useEffect(() => {
         fetch(SERVER + "/api")
@@ -31,7 +50,10 @@ function App({ signOut, user }) {
     }, [user]);
 
     return (
-        <Router>
+        <>
+        { (address) ?  (
+          <>
+            <Router>
             {/*<Sidebar signOut={signOut}/>*/}
             <Routes>
                 <Route path="/" element={<Organizations />} />
@@ -45,7 +67,19 @@ function App({ signOut, user }) {
                 <Route path="/accessKeys" element={<AccessKeys />} signOut={signOut} />
             </Routes>
         </Router>
+          </>
+        ) : 
+          (<SignIn
+            web3Loading={web3Loading}
+            web3Provider={web3Provider}
+            connectHandler={connectHandler}
+            disconnectHandler={disconnectHandler}
+            web3DisplayMessage={web3DisplayMessage}
+          />)
+        }
+      </>
+        
     );
 }
 
-export default withAuthenticator(App);
+export default App;
