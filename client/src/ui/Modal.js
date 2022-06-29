@@ -2,14 +2,12 @@ import React, { useMemo, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { GrAddCircle } from "react-icons/gr";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
-import {useNavigate} from 'react-router-dom';
 
 
 function ModalForm() {
-  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [emailCount, setEmailCount] = useState(1);
-
+  
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -101,14 +99,14 @@ function ModalForm() {
                     <Form.Control
                       placeholder="Enter address"
                       required
-                      name="address"
+                      name="address[count]"
                     />
                     <Form.Text className="text-muted">Insert address</Form.Text>
                   </React.Fragment>
                 ))}
             </Form.Group>
 
-            <Button variant="primary" type="submit" >
+            <Button variant="primary" type="submit">
               Submit
             </Button>
           </Form>
