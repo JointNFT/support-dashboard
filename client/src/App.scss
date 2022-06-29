@@ -11,6 +11,7 @@
   display: flex;
 
   .sidebar {
+    width: 20%;
     background-color: #fff;
 
     &.active {
@@ -19,7 +20,7 @@
   }
   .content {
     height: 100%;
-    width: 100%;
+    width: 80%;
     margin-left: auto;
 
     .content-row {

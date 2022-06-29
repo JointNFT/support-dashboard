@@ -1,20 +1,19 @@
-import React, { Component, useEffect, useContext, useState, useRef } from "react";
+import React, { Component } from "react";
 import { Nav } from "react-bootstrap";
 import { ChannelList } from "./ChannelList";
 import "./chat.scss";
 import { MessagesPanel } from "./MessagesPanel";
-import { io } from "socket.io-client";
+import socketClient, { io } from "socket.io-client";
+import { useEffect, useContext, useState } from "react";
 import UserContext from "../../contexts/user/UserContext";
 const SERVER = "https://dashboard.highfi.me";
 
 const Chat = (props) => {
     const { accessToken } = useContext(UserContext);
     const [channels, setChannels] = useState([]);
-    const [arrivalMessage, setArrivalMessage] = useState({});
-    const [newAccount, setNewAccount] = useState({});
-    const socket = useRef();
+    let socket = null;
     const [channel, setChannel] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(null);
 
     useEffect(() => {
         loadChannels();
@@ -22,72 +21,50 @@ const Chat = (props) => {
     }, []);
 
     function configureSocket() {
-        socket.current = io(SERVER, {
-            userAdderss: "support",
-            accessToken: accessToken
-        });
-        socket.current.emit("create-account", {
-            userAddress: "support",
-            accessToken: accessToken
-        });
-        if (socket == null) {
+        if (socket) {
             return;
         }
+        socket = io(SERVER);
+        socket.on("connection", () => {
+            setLoading(true);
 
-        socket.current.on("connection", () => {
-            setLoading(false);
-            console.log("connection happened");
             if (channel) {
                 handleChannelSelect(channel.id);
             }
         });
 
-        socket.current.on("test", (arg) => {
+        socket.on("test", (arg) => {
             console.log(arg);
         });
 
-        socket.current.on("message", (message) => {
+        socket.on("message", (message) => {
             console.log("message", message);
-            console.log(channels);
-            setArrivalMessage(message);
-        });
-
-        socket.current.on("new-account", (data) => {
-            if (data.userAddress == "support") return;
-            setNewAccount(data);
-        });
-    }
-
-    useEffect(() => {
-        if (newAccount != null && Object.keys(newAccount).length == 0) return;
-        let newChannels = [...channels];
-        let tempChannel = newChannels.find((c) => {
-            return c.userAddress === newAccount.userAddress;
-        });
-        if (tempChannel == null) {
-            newChannels.push(newAccount);
-        }
-        setChannels(newChannels);
-    }, [newAccount]);
-
-    useEffect(() => {
-        if (arrivalMessage != null && Object.keys(arrivalMessage).length == 0) return;
-        let channelCopy = [...channels];
-        channelCopy.forEach((c) => {
-            if (c.userAddress === arrivalMessage.address) {
-                if (!c.messages) {
-                    c.messages = [arrivalMessage];
-                    c.unread = 1;
-                } else {
-                    c.messages.push(arrivalMessage);
-                    c.unread = c.unread + 1;
+            let channelsCopy = channels;
+            channelsCopy.forEach((c) => {
+                if (c.userAddress === message.address) {
+                    if (!c.messages) {
+                        c.messages = [message];
+                        c.unread = 1;
+                    } else {
+                        c.messages.push(message);
+                        c.unread = c.unread + 1;
+                    }
                 }
+            });
+            setChannels(channelsCopy);
+        });
+
+        socket.on("new-account", (data) => {
+            let channelsCopy = channels;
+            let tempChannel = channelsCopy.find((c) => {
+                return c.userAddress === data.userAddress;
+            });
+            if (tempChannel == null) {
+                channels.push(channelsCopy);
+                setChannels(channels);
             }
         });
-        setChannels(channelCopy);
-        const newChannel = channelCopy.find((c) => c.userAddress === arrivalMessage.userAddress);
-        setChannel(newChannel);
-    }, [arrivalMessage]);
+    }
 
     function handleUserTag(tag) {
         var myHeaders = new Headers();
@@ -117,7 +94,7 @@ const Chat = (props) => {
         console.log("accessToken - ", accessToken);
         fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(async (response) => {
             let data = await response.json();
-            console.log("channel list", data);
+            console.log("chaneel list", data);
             setChannels(data.users);
             console.log("channels list =" + channels);
         });
@@ -125,8 +102,6 @@ const Chat = (props) => {
 
     function handleChannelSelect(address) {
         let channelsCopy = channels;
-        console.log("first handle channel select", channels);
-
         let channel = channelsCopy.find((c) => {
             return c.userAddress === address;
         });
@@ -151,7 +126,7 @@ const Chat = (props) => {
     }
 
     function handleSendMessage(address, text) {
-        socket.current.emit("send-message", {
+        socket.emit("send-message", {
             id: Date.now(),
             address: address,
             accessToken: accessToken,

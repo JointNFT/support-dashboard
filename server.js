@@ -23,7 +23,6 @@ const w3 = new Web3(new Web3.providers.HttpProvider("https://rpcapi.fantom.netwo
 const client = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
-
 client.login(discord_token);
 client.on("ready", () => {
     console.log("client is ready");
@@ -59,16 +58,14 @@ io.on("connection", (socket) => {
         if (data == null || data.userAddress == null || data.accessToken == null) {
             return;
         }
-        console.log('does it even reach here ?');
-        if (data.userAddress != 'support'){
-            chatHandlers.createNewUser(data.userAddress, data.accessToken);
-        }
+        chatHandlers.createNewUser(data.userAddress, data.accessToken);
         io.emit("new-account", {
             userAddress: data.userAddress,
             accessToken: data.accessToken,
         });
         sockets[data.userAddress] = socket.id;
-        io.to('support').emit("new-account", data);
+
+        // console.log(sockets);
     });
 
     socket.on("send-message", (data) => {
@@ -77,6 +74,7 @@ io.on("connection", (socket) => {
         }
         chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
         chatHandlers.pushToDiscord(data, client);
+        console.log(sockets, socket.id, data.address);
         io.to(socket.id).emit("message", data);
         io.to(sockets[data.to]).emit("message", data);
         // io.to(data.userAddress).emit("message", data);
@@ -102,7 +100,6 @@ app.get("/getChannels", (req, res) => {
 });
 
 app.get("/getUsers", async (req, res) => {
-    console.log(req.query.accessToken);
     const users = await chatHandlers.getUsers(req.query.accessToken);
     res.send(JSON.stringify({ users: users }));
 });
