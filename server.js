@@ -135,16 +135,11 @@ app.post("/updateUserTag",async function(req, res){
 
 app.post('/createOrganization', upload.single('imageURL'), async function (req, res) {
     var name = req.body.organizationName
-    var address = JSON.stringify(req.body.address.count)
+    var address = req.body.address
     var imageURL = SERVER + req.file.path
-    var organizationId = +new Date()
-    
-    var logoKey = await s3.uploadImage(imageURL, address);
-    await db.addNewOrganization(name, address, logoKey, organizationId)  
-    for(let i=0; i<req.body.address.count.length; i++ ){
-        await db.addNewOrganizationStaff(organizationId, req.body.address.count[i])
-    }
-    res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
+    var key = await s3.uploadImage(imageURL, address);
+    await db.addNewOrganization(name, address, key)  
+    res.redirect('/');
 });
 
 

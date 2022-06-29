@@ -117,33 +117,19 @@ const updateUserTag = async (userAddress, accessToken, newTag) => {
     return await response;
 };
 
-const addNewOrganization = async (organizationName, address, image, organizationId) => {
+const addNewOrganization = async (organizationName, address, image) => {
     let dbParams = {
-        TableName: "Organization",
+        TableName: "Organizations",
         Item: {
-            organizationId: organizationId ,
-            address: address,
+            identifier: address,
+            organizationId: JSON.stringify(+new Date()) ,
+            createdBy: address,
             image: image,
             name: organizationName,
-            accessToken: 'some-token'
         },
     };
 
     let response = await db.put(dbParams).promise();
     return await response;
 };
-
-const addNewOrganizationStaff = async (organizationId, address) => {
-
-    let dbParams = {
-        TableName: "OrganizationStaff",
-        Item: {
-            organizationId: organizationId ,
-            address: address,
-        },
-    };
-
-    let response = await db.put(dbParams).promise();
-    return await response;
-};
-module.exports = { getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, db, updateUserTag, addNewOrganization, addNewOrganizationStaff };
+module.exports = { getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, db, updateUserTag, addNewOrganization };
