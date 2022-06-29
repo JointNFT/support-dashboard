@@ -18,6 +18,8 @@
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^1.9.3",
     "@chatscope/chat-ui-kit-styles": "^1.2.3",
+    "@web3-onboard/core": "^2.3.0",
+    "@web3-onboard/injected-wallets": "^2.0.10",
     "abi-decoder": "^2.4.0",
     "aws-sdk": "^2.1150.0",
     "axios": "^0.27.2",
@@ -25,6 +27,7 @@
     "cros": "^1.0.1",
     "discord.js": "^13.8.0",
     "dotenv": "^16.0.1",
+    "ethers": "^5.6.9",
     "express": "^4.18.1",
     "fetch": "^1.1.0",
     "multer": "^1.4.5-lts.1",

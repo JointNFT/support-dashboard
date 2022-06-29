@@ -45,7 +45,7 @@
     }
 
     .messages-panel {
-        width: calc(65% - 12px);
+        width: calc(85% - 12px);
         // border: 1px solid rgb(224, 224, 224);
         margin: 10px;
         margin-left: 0;
@@ -83,7 +83,7 @@
             }
 
             button {
-                width: 60px;
+                width: auto;
                 margin: auto 10px;
                 background-color: #0e62da;
                 color: white;

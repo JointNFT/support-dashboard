@@ -1,21 +1,25 @@
-import { Amplify, Auth } from "aws-amplify";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import awsExports from "./aws-exports";
 import UserState from "./contexts/user/UserState";
+import Web3State from "./contexts/web3/Web3State";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-Amplify.configure(awsExports);
-Auth.configure(awsExports);
+import { ChakraProvider } from '@chakra-ui/react'
+
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
-        <UserState>
-            <App />
-        </UserState>
+        <ChakraProvider>
+        <Web3State>
+            <UserState>
+                <App />
+            </UserState>
+        </Web3State>
+        </ChakraProvider>
     </React.StrictMode>
     // document.getElementById("root")
 );
