@@ -10,7 +10,36 @@ import injectedModule from '@web3-onboard/injected-wallets'
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/85db4049c00b4783a425412807ff92e9'
 
 const injected = injectedModule()
-
+console.log(injected);
+console.log({wallets: [injected],
+	chains: [
+		{
+			id: '0x1',
+			token: 'ETH',
+			label: 'Ethereum Mainnet',
+			rpcUrl: MAINNET_RPC_URL
+		}
+	],
+	appMetadata: {
+		name: 'Token Swap',
+		icon: FaRocketchat.toString(),
+		description: 'Swap tokens for other tokens',
+		recommendedInjectedWallets: [
+		  { name: 'MetaMask', url: 'https://metamask.io' }
+		]
+	  },
+	  accountCenter: {
+		desktop: {
+		  position: 'topRight',
+		  enabled: true,
+		  minimal: true
+		},
+		mobile: {
+		  position: 'topRight',
+		  enabled: true,
+		  minimal: true
+		}
+	  },})
 const onboard = Onboard({
 	wallets: [injected],
 	chains: [
