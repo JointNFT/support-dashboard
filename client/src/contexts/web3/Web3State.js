@@ -10,6 +10,7 @@ import injectedModule from '@web3-onboard/injected-wallets'
 const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/85db4049c00b4783a425412807ff92e9'
 
 const injected = injectedModule()
+<<<<<<< HEAD
 console.log(injected);
 console.log({wallets: [injected],
 	chains: [
@@ -40,6 +41,9 @@ console.log({wallets: [injected],
 		  minimal: true
 		}
 	  },})
+=======
+
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 const onboard = Onboard({
 	wallets: [injected],
 	chains: [

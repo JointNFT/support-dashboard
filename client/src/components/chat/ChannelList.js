@@ -32,7 +32,7 @@ export class ChannelList extends React.Component {
                 }
             });
 
-            console.log(list);
+            console.log('list',list);
         }
         if (list.length) {
             return (

@@ -61,7 +61,26 @@
     "@ethereumjs/common" "^2.6.4"
     "ethereumjs-util" "^7.1.5"
 
+<<<<<<< HEAD
 "@ethersproject/abi@^5.5.0":
+=======
+"@ethersproject/abi@^5.5.0", "@ethersproject/abi@5.5.0":
+  "integrity" "sha512-loW7I4AohP5KycATvc0MgujU6JyCHPqHdeoo9z3Nr9xEiNioxa65ccdm1+fsoJhkuhdRtfcL8cfyGamz2AxZ5w=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/abi/-/abi-5.5.0.tgz"
+  "version" "5.5.0"
+  dependencies:
+    "@ethersproject/address" "^5.5.0"
+    "@ethersproject/bignumber" "^5.5.0"
+    "@ethersproject/bytes" "^5.5.0"
+    "@ethersproject/constants" "^5.5.0"
+    "@ethersproject/hash" "^5.5.0"
+    "@ethersproject/keccak256" "^5.5.0"
+    "@ethersproject/logger" "^5.5.0"
+    "@ethersproject/properties" "^5.5.0"
+    "@ethersproject/strings" "^5.5.0"
+
+"@ethersproject/abi@^5.6.3":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-TTeZUlCeIHG6527/2goZA6gW5F8Emoc7MrZDC7hhP84aRGvW3TEdTnZR08Ls88YXM1m2SuK42Osw/jSi3uO8gg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/abi/-/abi-5.6.4.tgz"
   "version" "5.6.4"
@@ -91,6 +110,7 @@
     "@ethersproject/properties" "^5.0.3"
     "@ethersproject/strings" "^5.0.4"
 
+<<<<<<< HEAD
 "@ethersproject/abi@5.5.0":
   "integrity" "sha512-loW7I4AohP5KycATvc0MgujU6JyCHPqHdeoo9z3Nr9xEiNioxa65ccdm1+fsoJhkuhdRtfcL8cfyGamz2AxZ5w=="
   "resolved" "https://registry.npmjs.org/@ethersproject/abi/-/abi-5.5.0.tgz"
@@ -107,6 +127,37 @@
     "@ethersproject/strings" "^5.5.0"
 
 "@ethersproject/abstract-provider@^5.5.0", "@ethersproject/abstract-provider@^5.6.1":
+=======
+"@ethersproject/abi@5.6.4":
+  "integrity" "sha512-TTeZUlCeIHG6527/2goZA6gW5F8Emoc7MrZDC7hhP84aRGvW3TEdTnZR08Ls88YXM1m2SuK42Osw/jSi3uO8gg=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/abi/-/abi-5.6.4.tgz"
+  "version" "5.6.4"
+  dependencies:
+    "@ethersproject/address" "^5.6.1"
+    "@ethersproject/bignumber" "^5.6.2"
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/constants" "^5.6.1"
+    "@ethersproject/hash" "^5.6.1"
+    "@ethersproject/keccak256" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/properties" "^5.6.0"
+    "@ethersproject/strings" "^5.6.1"
+
+"@ethersproject/abstract-provider@^5.5.0", "@ethersproject/abstract-provider@5.5.1":
+  "integrity" "sha512-m+MA/ful6eKbxpr99xUYeRvLkfnlqzrF8SZ46d/xFB1A7ZVknYc/sXJG0RcufF52Qn2jeFj1hhcoQ7IXjNKUqg=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/abstract-provider/-/abstract-provider-5.5.1.tgz"
+  "version" "5.5.1"
+  dependencies:
+    "@ethersproject/bignumber" "^5.5.0"
+    "@ethersproject/bytes" "^5.5.0"
+    "@ethersproject/logger" "^5.5.0"
+    "@ethersproject/networks" "^5.5.0"
+    "@ethersproject/properties" "^5.5.0"
+    "@ethersproject/transactions" "^5.5.0"
+    "@ethersproject/web" "^5.5.0"
+
+"@ethersproject/abstract-provider@^5.6.1", "@ethersproject/abstract-provider@5.6.1":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-BxlIgogYJtp1FS8Muvj8YfdClk3unZH0vRMVX791Z9INBNT/kuACZ9GzaY1Y4yFq+YSy6/w4gzj3HCRKrK9hsQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/abstract-provider/-/abstract-provider-5.6.1.tgz"
   "version" "5.6.1"
@@ -119,6 +170,7 @@
     "@ethersproject/transactions" "^5.6.2"
     "@ethersproject/web" "^5.6.1"
 
+<<<<<<< HEAD
 "@ethersproject/abstract-provider@5.5.1":
   "integrity" "sha512-m+MA/ful6eKbxpr99xUYeRvLkfnlqzrF8SZ46d/xFB1A7ZVknYc/sXJG0RcufF52Qn2jeFj1hhcoQ7IXjNKUqg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/abstract-provider/-/abstract-provider-5.5.1.tgz"
@@ -133,6 +185,20 @@
     "@ethersproject/web" "^5.5.0"
 
 "@ethersproject/abstract-signer@^5.5.0", "@ethersproject/abstract-signer@^5.6.2":
+=======
+"@ethersproject/abstract-signer@^5.5.0", "@ethersproject/abstract-signer@5.5.0":
+  "integrity" "sha512-lj//7r250MXVLKI7sVarXAbZXbv9P50lgmJQGr2/is82EwEb8r7HrxsmMqAjTsztMYy7ohrIhGMIml+Gx4D3mA=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/abstract-signer/-/abstract-signer-5.5.0.tgz"
+  "version" "5.5.0"
+  dependencies:
+    "@ethersproject/abstract-provider" "^5.5.0"
+    "@ethersproject/bignumber" "^5.5.0"
+    "@ethersproject/bytes" "^5.5.0"
+    "@ethersproject/logger" "^5.5.0"
+    "@ethersproject/properties" "^5.5.0"
+
+"@ethersproject/abstract-signer@^5.6.2", "@ethersproject/abstract-signer@5.6.2":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-n1r6lttFBG0t2vNiI3HoWaS/KdOt8xyDjzlP2cuevlWLG6EX0OwcKLyG/Kp/cuwNxdy/ous+R/DEMdTUwWQIjQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/abstract-signer/-/abstract-signer-5.6.2.tgz"
   "version" "5.6.2"
@@ -143,6 +209,7 @@
     "@ethersproject/logger" "^5.6.0"
     "@ethersproject/properties" "^5.6.0"
 
+<<<<<<< HEAD
 "@ethersproject/abstract-signer@5.5.0":
   "integrity" "sha512-lj//7r250MXVLKI7sVarXAbZXbv9P50lgmJQGr2/is82EwEb8r7HrxsmMqAjTsztMYy7ohrIhGMIml+Gx4D3mA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/abstract-signer/-/abstract-signer-5.5.0.tgz"
@@ -155,6 +222,9 @@
     "@ethersproject/properties" "^5.5.0"
 
 "@ethersproject/address@^5.0.4", "@ethersproject/address@^5.5.0", "@ethersproject/address@^5.6.1":
+=======
+"@ethersproject/address@^5.0.4", "@ethersproject/address@^5.6.1", "@ethersproject/address@5.6.1":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-uOgF0kS5MJv9ZvCz7x6T2EXJSzotiybApn4XlOgoTX0xdtyVIJ7pF+6cGPxiEq/dpBiTfMiw7Yc81JcwhSYA0Q=="
   "resolved" "https://registry.npmjs.org/@ethersproject/address/-/address-5.6.1.tgz"
   "version" "5.6.1"
@@ -165,7 +235,11 @@
     "@ethersproject/logger" "^5.6.0"
     "@ethersproject/rlp" "^5.6.1"
 
+<<<<<<< HEAD
 "@ethersproject/address@5.5.0":
+=======
+"@ethersproject/address@^5.5.0", "@ethersproject/address@5.5.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-l4Nj0eWlTUh6ro5IbPTgbpT4wRbdH5l8CQf7icF7sb/SI3Nhd9Y9HzhonTSTi6CefI0necIw7LJqQPopPLZyWw=="
   "resolved" "https://registry.npmjs.org/@ethersproject/address/-/address-5.5.0.tgz"
   "version" "5.5.0"
@@ -183,7 +257,11 @@
   dependencies:
     "@ethersproject/bytes" "^5.5.0"
 
+<<<<<<< HEAD
 "@ethersproject/base64@^5.6.1":
+=======
+"@ethersproject/base64@^5.6.1", "@ethersproject/base64@5.6.1":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-qB76rjop6a0RIYYMiB4Eh/8n+Hxu2NIZm8S/Q7kNo5pmZfXhHGHmS4MinUainiBC54SCyRnwzL+KZjj8zbsSsw=="
   "resolved" "https://registry.npmjs.org/@ethersproject/base64/-/base64-5.6.1.tgz"
   "version" "5.6.1"
@@ -198,7 +276,19 @@
     "@ethersproject/bytes" "^5.5.0"
     "@ethersproject/properties" "^5.5.0"
 
+<<<<<<< HEAD
 "@ethersproject/bignumber@^5.0.7", "@ethersproject/bignumber@^5.5.0", "@ethersproject/bignumber@^5.6.2":
+=======
+"@ethersproject/basex@^5.6.1", "@ethersproject/basex@5.6.1":
+  "integrity" "sha512-a52MkVz4vuBXR06nvflPMotld1FJWSj2QT0985v7P/emPZO00PucFAkbcmq2vpVU7Ts7umKiSI6SppiLykVWsA=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/basex/-/basex-5.6.1.tgz"
+  "version" "5.6.1"
+  dependencies:
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/properties" "^5.6.0"
+
+"@ethersproject/bignumber@^5.0.7", "@ethersproject/bignumber@^5.6.2", "@ethersproject/bignumber@5.6.2":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-v7+EEUbhGqT3XJ9LMPsKvXYHFc8eHxTowFCG/HgJErmq4XHJ2WR7aeyICg3uTOAQ7Icn0GFHAohXEhxQHq4Ubw=="
   "resolved" "https://registry.npmjs.org/@ethersproject/bignumber/-/bignumber-5.6.2.tgz"
   "version" "5.6.2"
@@ -207,7 +297,11 @@
     "@ethersproject/logger" "^5.6.0"
     "bn.js" "^5.2.1"
 
+<<<<<<< HEAD
 "@ethersproject/bignumber@5.5.0":
+=======
+"@ethersproject/bignumber@^5.5.0", "@ethersproject/bignumber@5.5.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-6Xytlwvy6Rn3U3gKEc1vP7nR92frHkv6wtVr95LFR3jREXiCPzdWxKQ1cx4JGQBXxcguAwjA8murlYN2TSiEbg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/bignumber/-/bignumber-5.5.0.tgz"
   "version" "5.5.0"
@@ -216,28 +310,44 @@
     "@ethersproject/logger" "^5.5.0"
     "bn.js" "^4.11.9"
 
+<<<<<<< HEAD
 "@ethersproject/bytes@^5.0.4", "@ethersproject/bytes@^5.5.0", "@ethersproject/bytes@^5.6.1":
+=======
+"@ethersproject/bytes@^5.0.4", "@ethersproject/bytes@^5.6.1", "@ethersproject/bytes@5.6.1":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-NwQt7cKn5+ZE4uDn+X5RAXLp46E1chXoaMmrxAyA0rblpxz8t58lVkrHXoRIn0lz1joQElQ8410GqhTqMOwc6g=="
   "resolved" "https://registry.npmjs.org/@ethersproject/bytes/-/bytes-5.6.1.tgz"
   "version" "5.6.1"
   dependencies:
     "@ethersproject/logger" "^5.6.0"
 
+<<<<<<< HEAD
 "@ethersproject/bytes@5.5.0":
+=======
+"@ethersproject/bytes@^5.5.0", "@ethersproject/bytes@5.5.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-ABvc7BHWhZU9PNM/tANm/Qx4ostPGadAuQzWTr3doklZOhDlmcBqclrQe/ZXUIj3K8wC28oYeuRa+A37tX9kog=="
   "resolved" "https://registry.npmjs.org/@ethersproject/bytes/-/bytes-5.5.0.tgz"
   "version" "5.5.0"
   dependencies:
     "@ethersproject/logger" "^5.5.0"
 
+<<<<<<< HEAD
 "@ethersproject/constants@^5.0.4", "@ethersproject/constants@^5.5.0", "@ethersproject/constants@^5.6.1":
+=======
+"@ethersproject/constants@^5.0.4", "@ethersproject/constants@^5.6.1", "@ethersproject/constants@5.6.1":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-QSq9WVnZbxXYFftrjSjZDUshp6/eKp6qrtdBtUCm0QxCV5z1fG/w3kdlcsjMCQuQHUnAclKoK7XpXMezhRDOLg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/constants/-/constants-5.6.1.tgz"
   "version" "5.6.1"
   dependencies:
     "@ethersproject/bignumber" "^5.6.2"
 
+<<<<<<< HEAD
 "@ethersproject/constants@5.5.0":
+=======
+"@ethersproject/constants@^5.5.0", "@ethersproject/constants@5.5.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-2MsRRVChkvMWR+GyMGY4N1sAX9Mt3J9KykCsgUFd/1mwS0UH1qw+Bv9k1UJb3X3YJYFco9H20pjSlOIfCG5HYQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/constants/-/constants-5.5.0.tgz"
   "version" "5.5.0"
@@ -260,7 +370,27 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/transactions" "^5.5.0"
 
+<<<<<<< HEAD
 "@ethersproject/hash@^5.0.4", "@ethersproject/hash@^5.5.0", "@ethersproject/hash@^5.6.1":
+=======
+"@ethersproject/contracts@5.6.2":
+  "integrity" "sha512-hguUA57BIKi6WY0kHvZp6PwPlWF87MCeB4B7Z7AbUpTxfFXFdn/3b0GmjZPagIHS+3yhcBJDnuEfU4Xz+Ks/8g=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/contracts/-/contracts-5.6.2.tgz"
+  "version" "5.6.2"
+  dependencies:
+    "@ethersproject/abi" "^5.6.3"
+    "@ethersproject/abstract-provider" "^5.6.1"
+    "@ethersproject/abstract-signer" "^5.6.2"
+    "@ethersproject/address" "^5.6.1"
+    "@ethersproject/bignumber" "^5.6.2"
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/constants" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/properties" "^5.6.0"
+    "@ethersproject/transactions" "^5.6.2"
+
+"@ethersproject/hash@^5.0.4", "@ethersproject/hash@^5.6.1", "@ethersproject/hash@5.6.1":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-L1xAHurbaxG8VVul4ankNX5HgQ8PNCTrnVXEiFnE9xoRnaUcgfD12tZINtDinSllxPLCtGwguQxJ5E6keE84pA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/hash/-/hash-5.6.1.tgz"
   "version" "5.6.1"
@@ -274,7 +404,11 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.1"
 
+<<<<<<< HEAD
 "@ethersproject/hash@5.5.0":
+=======
+"@ethersproject/hash@^5.5.0", "@ethersproject/hash@5.5.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-dnGVpK1WtBjmnp3mUT0PlU2MpapnwWI0PibldQEq1408tQBAbZpPidkWoVVuNMOl/lISO3+4hXZWCL3YV7qzfg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/hash/-/hash-5.5.0.tgz"
   "version" "5.5.0"
@@ -306,6 +440,27 @@
     "@ethersproject/transactions" "^5.5.0"
     "@ethersproject/wordlists" "^5.5.0"
 
+<<<<<<< HEAD
+=======
+"@ethersproject/hdnode@^5.6.2", "@ethersproject/hdnode@5.6.2":
+  "integrity" "sha512-tERxW8Ccf9CxW2db3WsN01Qao3wFeRsfYY9TCuhmG0xNpl2IO8wgXU3HtWIZ49gUWPggRy4Yg5axU0ACaEKf1Q=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/hdnode/-/hdnode-5.6.2.tgz"
+  "version" "5.6.2"
+  dependencies:
+    "@ethersproject/abstract-signer" "^5.6.2"
+    "@ethersproject/basex" "^5.6.1"
+    "@ethersproject/bignumber" "^5.6.2"
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/pbkdf2" "^5.6.1"
+    "@ethersproject/properties" "^5.6.0"
+    "@ethersproject/sha2" "^5.6.1"
+    "@ethersproject/signing-key" "^5.6.2"
+    "@ethersproject/strings" "^5.6.1"
+    "@ethersproject/transactions" "^5.6.2"
+    "@ethersproject/wordlists" "^5.6.1"
+
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 "@ethersproject/json-wallets@^5.5.0", "@ethersproject/json-wallets@5.5.0":
   "integrity" "sha512-9lA21XQnCdcS72xlBn1jfQdj2A1VUxZzOzi9UkNdnokNKke/9Ya2xA9aIK1SC3PQyBDLt4C+dfps7ULpkvKikQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/json-wallets/-/json-wallets-5.5.0.tgz"
@@ -325,7 +480,30 @@
     "aes-js" "3.0.0"
     "scrypt-js" "3.0.1"
 
+<<<<<<< HEAD
 "@ethersproject/keccak256@^5.0.3", "@ethersproject/keccak256@^5.5.0", "@ethersproject/keccak256@^5.6.1":
+=======
+"@ethersproject/json-wallets@^5.6.1", "@ethersproject/json-wallets@5.6.1":
+  "integrity" "sha512-KfyJ6Zwz3kGeX25nLihPwZYlDqamO6pfGKNnVMWWfEVVp42lTfCZVXXy5Ie8IZTN0HKwAngpIPi7gk4IJzgmqQ=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/json-wallets/-/json-wallets-5.6.1.tgz"
+  "version" "5.6.1"
+  dependencies:
+    "@ethersproject/abstract-signer" "^5.6.2"
+    "@ethersproject/address" "^5.6.1"
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/hdnode" "^5.6.2"
+    "@ethersproject/keccak256" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/pbkdf2" "^5.6.1"
+    "@ethersproject/properties" "^5.6.0"
+    "@ethersproject/random" "^5.6.1"
+    "@ethersproject/strings" "^5.6.1"
+    "@ethersproject/transactions" "^5.6.2"
+    "aes-js" "3.0.0"
+    "scrypt-js" "3.0.1"
+
+"@ethersproject/keccak256@^5.0.3", "@ethersproject/keccak256@^5.6.1", "@ethersproject/keccak256@5.6.1":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-bB7DQHCTRDooZZdL3lk9wpL0+XuG3XLGHLh3cePnybsO3V0rdCAOQGpn/0R3aODmnTOOkCATJiD2hnL+5bwthA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/keccak256/-/keccak256-5.6.1.tgz"
   "version" "5.6.1"
@@ -333,7 +511,11 @@
     "@ethersproject/bytes" "^5.6.1"
     "js-sha3" "0.8.0"
 
+<<<<<<< HEAD
 "@ethersproject/keccak256@5.5.0":
+=======
+"@ethersproject/keccak256@^5.5.0", "@ethersproject/keccak256@5.5.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-5VoFCTjo2rYbBe1l2f4mccaRFN/4VQEYFwwn04aJV2h7qf4ZvI2wFxUE1XOX+snbwCLRzIeikOqtAoPwMza9kg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/keccak256/-/keccak256-5.5.0.tgz"
   "version" "5.5.0"
@@ -341,29 +523,57 @@
     "@ethersproject/bytes" "^5.5.0"
     "js-sha3" "0.8.0"
 
+<<<<<<< HEAD
 "@ethersproject/logger@^5.0.5", "@ethersproject/logger@^5.5.0", "@ethersproject/logger@^5.6.0":
+=======
+"@ethersproject/logger@^5.0.5", "@ethersproject/logger@^5.6.0", "@ethersproject/logger@5.6.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-BiBWllUROH9w+P21RzoxJKzqoqpkyM1pRnEKG69bulE9TSQD8SAIvTQqIMZmmCO8pUNkgLP1wndX1gKghSpBmg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/logger/-/logger-5.6.0.tgz"
   "version" "5.6.0"
 
+<<<<<<< HEAD
 "@ethersproject/logger@5.5.0":
+=======
+"@ethersproject/logger@^5.5.0", "@ethersproject/logger@5.5.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-rIY/6WPm7T8n3qS2vuHTUBPdXHl+rGxWxW5okDfo9J4Z0+gRRZT0msvUdIJkE4/HS29GUMziwGaaKO2bWONBrg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/logger/-/logger-5.5.0.tgz"
   "version" "5.5.0"
 
+<<<<<<< HEAD
 "@ethersproject/networks@^5.5.0", "@ethersproject/networks@^5.6.3":
+=======
+"@ethersproject/networks@^5.5.0", "@ethersproject/networks@5.5.2":
+  "integrity" "sha512-NEqPxbGBfy6O3x4ZTISb90SjEDkWYDUbEeIFhJly0F7sZjoQMnj5KYzMSkMkLKZ+1fGpx00EDpHQCy6PrDupkQ=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/networks/-/networks-5.5.2.tgz"
+  "version" "5.5.2"
+  dependencies:
+    "@ethersproject/logger" "^5.5.0"
+
+"@ethersproject/networks@^5.6.3":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-QZxRH7cA5Ut9TbXwZFiCyuPchdWi87ZtVNHWZd0R6YFgYtes2jQ3+bsslJ0WdyDe0i6QumqtoYqvY3rrQFRZOQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/networks/-/networks-5.6.3.tgz"
   "version" "5.6.3"
   dependencies:
     "@ethersproject/logger" "^5.6.0"
 
+<<<<<<< HEAD
 "@ethersproject/networks@5.5.2":
   "integrity" "sha512-NEqPxbGBfy6O3x4ZTISb90SjEDkWYDUbEeIFhJly0F7sZjoQMnj5KYzMSkMkLKZ+1fGpx00EDpHQCy6PrDupkQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/networks/-/networks-5.5.2.tgz"
   "version" "5.5.2"
   dependencies:
     "@ethersproject/logger" "^5.5.0"
+=======
+"@ethersproject/networks@5.6.4":
+  "integrity" "sha512-KShHeHPahHI2UlWdtDMn2lJETcbtaJge4k7XSjDR9h79QTd6yQJmv6Cp2ZA4JdqWnhszAOLSuJEd9C0PRw7hSQ=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/networks/-/networks-5.6.4.tgz"
+  "version" "5.6.4"
+  dependencies:
+    "@ethersproject/logger" "^5.6.0"
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 
 "@ethersproject/pbkdf2@^5.5.0", "@ethersproject/pbkdf2@5.5.0":
   "integrity" "sha512-SaDvQFvXPnz1QGpzr6/HToLifftSXGoXrbpZ6BvoZhmx4bNLHrxDe8MZisuecyOziP1aVEwzC2Hasj+86TgWVg=="
@@ -373,14 +583,30 @@
     "@ethersproject/bytes" "^5.5.0"
     "@ethersproject/sha2" "^5.5.0"
 
+<<<<<<< HEAD
 "@ethersproject/properties@^5.0.3", "@ethersproject/properties@^5.5.0", "@ethersproject/properties@^5.6.0":
+=======
+"@ethersproject/pbkdf2@^5.6.1", "@ethersproject/pbkdf2@5.6.1":
+  "integrity" "sha512-k4gRQ+D93zDRPNUfmduNKq065uadC2YjMP/CqwwX5qG6R05f47boq6pLZtV/RnC4NZAYOPH1Cyo54q0c9sshRQ=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/pbkdf2/-/pbkdf2-5.6.1.tgz"
+  "version" "5.6.1"
+  dependencies:
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/sha2" "^5.6.1"
+
+"@ethersproject/properties@^5.0.3", "@ethersproject/properties@^5.6.0", "@ethersproject/properties@5.6.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-szoOkHskajKePTJSZ46uHUWWkbv7TzP2ypdEK6jGMqJaEt2sb0jCgfBo0gH0m2HBpRixMuJ6TBRaQCF7a9DoCg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/properties/-/properties-5.6.0.tgz"
   "version" "5.6.0"
   dependencies:
     "@ethersproject/logger" "^5.6.0"
 
+<<<<<<< HEAD
 "@ethersproject/properties@5.5.0":
+=======
+"@ethersproject/properties@^5.5.0", "@ethersproject/properties@5.5.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-l3zRQg3JkD8EL3CPjNK5g7kMx4qSwiR60/uk5IVjd3oq1MZR5qUg40CNOoEJoX5wc3DyY5bt9EbMk86C7x0DNA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/properties/-/properties-5.5.0.tgz"
   "version" "5.5.0"
@@ -437,6 +663,35 @@
     "bech32" "1.1.4"
     "ws" "7.4.6"
 
+<<<<<<< HEAD
+=======
+"@ethersproject/providers@5.6.8":
+  "integrity" "sha512-Wf+CseT/iOJjrGtAOf3ck9zS7AgPmr2fZ3N97r4+YXN3mBePTG2/bJ8DApl9mVwYL+RpYbNxMEkEp4mPGdwG/w=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/providers/-/providers-5.6.8.tgz"
+  "version" "5.6.8"
+  dependencies:
+    "@ethersproject/abstract-provider" "^5.6.1"
+    "@ethersproject/abstract-signer" "^5.6.2"
+    "@ethersproject/address" "^5.6.1"
+    "@ethersproject/base64" "^5.6.1"
+    "@ethersproject/basex" "^5.6.1"
+    "@ethersproject/bignumber" "^5.6.2"
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/constants" "^5.6.1"
+    "@ethersproject/hash" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/networks" "^5.6.3"
+    "@ethersproject/properties" "^5.6.0"
+    "@ethersproject/random" "^5.6.1"
+    "@ethersproject/rlp" "^5.6.1"
+    "@ethersproject/sha2" "^5.6.1"
+    "@ethersproject/strings" "^5.6.1"
+    "@ethersproject/transactions" "^5.6.2"
+    "@ethersproject/web" "^5.6.1"
+    "bech32" "1.1.4"
+    "ws" "7.4.6"
+
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 "@ethersproject/random@^5.5.0", "@ethersproject/random@5.5.1":
   "integrity" "sha512-YaU2dQ7DuhL5Au7KbcQLHxcRHfgyNgvFV4sQOo0HrtW3Zkrc9ctWNz8wXQ4uCSfSDsqX2vcjhroxU5RQRV0nqA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/random/-/random-5.5.1.tgz"
@@ -445,7 +700,27 @@
     "@ethersproject/bytes" "^5.5.0"
     "@ethersproject/logger" "^5.5.0"
 
+<<<<<<< HEAD
 "@ethersproject/rlp@^5.5.0", "@ethersproject/rlp@^5.6.1":
+=======
+"@ethersproject/random@^5.6.1", "@ethersproject/random@5.6.1":
+  "integrity" "sha512-/wtPNHwbmng+5yi3fkipA8YBT59DdkGRoC2vWk09Dci/q5DlgnMkhIycjHlavrvrjJBkFjO/ueLyT+aUDfc4lA=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/random/-/random-5.6.1.tgz"
+  "version" "5.6.1"
+  dependencies:
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+
+"@ethersproject/rlp@^5.5.0", "@ethersproject/rlp@5.5.0":
+  "integrity" "sha512-hLv8XaQ8PTI9g2RHoQGf/WSxBfTB/NudRacbzdxmst5VHAqd1sMibWG7SENzT5Dj3yZ3kJYx+WiRYEcQTAkcYA=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/rlp/-/rlp-5.5.0.tgz"
+  "version" "5.5.0"
+  dependencies:
+    "@ethersproject/bytes" "^5.5.0"
+    "@ethersproject/logger" "^5.5.0"
+
+"@ethersproject/rlp@^5.6.1", "@ethersproject/rlp@5.6.1":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-uYjmcZx+DKlFUk7a5/W9aQVaoEC7+1MOBgNtvNg13+RnuUwT4F0zTovC0tmay5SmRslb29V1B7Y5KCri46WhuQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/rlp/-/rlp-5.6.1.tgz"
   "version" "5.6.1"
@@ -453,6 +728,7 @@
     "@ethersproject/bytes" "^5.6.1"
     "@ethersproject/logger" "^5.6.0"
 
+<<<<<<< HEAD
 "@ethersproject/rlp@5.5.0":
   "integrity" "sha512-hLv8XaQ8PTI9g2RHoQGf/WSxBfTB/NudRacbzdxmst5VHAqd1sMibWG7SENzT5Dj3yZ3kJYx+WiRYEcQTAkcYA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/rlp/-/rlp-5.5.0.tgz"
@@ -461,6 +737,8 @@
     "@ethersproject/bytes" "^5.5.0"
     "@ethersproject/logger" "^5.5.0"
 
+=======
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 "@ethersproject/sha2@^5.5.0", "@ethersproject/sha2@5.5.0":
   "integrity" "sha512-B5UBoglbCiHamRVPLA110J+2uqsifpZaTmid2/7W5rbtYVz6gus6/hSDieIU/6gaKIDcOj12WnOdiymEUHIAOA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/sha2/-/sha2-5.5.0.tgz"
@@ -470,7 +748,32 @@
     "@ethersproject/logger" "^5.5.0"
     "hash.js" "1.1.7"
 
+<<<<<<< HEAD
 "@ethersproject/signing-key@^5.5.0", "@ethersproject/signing-key@^5.6.2":
+=======
+"@ethersproject/sha2@^5.6.1", "@ethersproject/sha2@5.6.1":
+  "integrity" "sha512-5K2GyqcW7G4Yo3uenHegbXRPDgARpWUiXc6RiF7b6i/HXUoWlb7uCARh7BAHg7/qT/Q5ydofNwiZcim9qpjB6g=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/sha2/-/sha2-5.6.1.tgz"
+  "version" "5.6.1"
+  dependencies:
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+    "hash.js" "1.1.7"
+
+"@ethersproject/signing-key@^5.5.0", "@ethersproject/signing-key@5.5.0":
+  "integrity" "sha512-5VmseH7qjtNmDdZBswavhotYbWB0bOwKIlOTSlX14rKn5c11QmJwGt4GHeo7NrL/Ycl7uo9AHvEqs5xZgFBTng=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/signing-key/-/signing-key-5.5.0.tgz"
+  "version" "5.5.0"
+  dependencies:
+    "@ethersproject/bytes" "^5.5.0"
+    "@ethersproject/logger" "^5.5.0"
+    "@ethersproject/properties" "^5.5.0"
+    "bn.js" "^4.11.9"
+    "elliptic" "6.5.4"
+    "hash.js" "1.1.7"
+
+"@ethersproject/signing-key@^5.6.2", "@ethersproject/signing-key@5.6.2":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-jVbu0RuP7EFpw82vHcL+GP35+KaNruVAZM90GxgQnGqB6crhBqW/ozBfFvdeImtmb4qPko0uxXjn8l9jpn0cwQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/signing-key/-/signing-key-5.6.2.tgz"
   "version" "5.6.2"
@@ -482,6 +785,7 @@
     "elliptic" "6.5.4"
     "hash.js" "1.1.7"
 
+<<<<<<< HEAD
 "@ethersproject/signing-key@5.5.0":
   "integrity" "sha512-5VmseH7qjtNmDdZBswavhotYbWB0bOwKIlOTSlX14rKn5c11QmJwGt4GHeo7NrL/Ycl7uo9AHvEqs5xZgFBTng=="
   "resolved" "https://registry.npmjs.org/@ethersproject/signing-key/-/signing-key-5.5.0.tgz"
@@ -494,6 +798,8 @@
     "elliptic" "6.5.4"
     "hash.js" "1.1.7"
 
+=======
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 "@ethersproject/solidity@5.5.0":
   "integrity" "sha512-9NgZs9LhGMj6aCtHXhtmFQ4AN4sth5HuFXVvAQtzmm0jpSCNOTGtrHZJAeYTh7MBjRR8brylWZxBZR9zDStXbw=="
   "resolved" "https://registry.npmjs.org/@ethersproject/solidity/-/solidity-5.5.0.tgz"
@@ -506,7 +812,23 @@
     "@ethersproject/sha2" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
+<<<<<<< HEAD
 "@ethersproject/strings@^5.0.4", "@ethersproject/strings@^5.5.0", "@ethersproject/strings@^5.6.1":
+=======
+"@ethersproject/solidity@5.6.1":
+  "integrity" "sha512-KWqVLkUUoLBfL1iwdzUVlkNqAUIFMpbbeH0rgCfKmJp0vFtY4AsaN91gHKo9ZZLkC4UOm3cI3BmMV4N53BOq4g=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/solidity/-/solidity-5.6.1.tgz"
+  "version" "5.6.1"
+  dependencies:
+    "@ethersproject/bignumber" "^5.6.2"
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/keccak256" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/sha2" "^5.6.1"
+    "@ethersproject/strings" "^5.6.1"
+
+"@ethersproject/strings@^5.0.4", "@ethersproject/strings@^5.6.1", "@ethersproject/strings@5.6.1":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-2X1Lgk6Jyfg26MUnsHiT456U9ijxKUybz8IM1Vih+NJxYtXhmvKBcHOmvGqpFSVJ0nQ4ZCoIViR8XlRw1v/+Cw=="
   "resolved" "https://registry.npmjs.org/@ethersproject/strings/-/strings-5.6.1.tgz"
   "version" "5.6.1"
@@ -515,7 +837,11 @@
     "@ethersproject/constants" "^5.6.1"
     "@ethersproject/logger" "^5.6.0"
 
+<<<<<<< HEAD
 "@ethersproject/strings@5.5.0":
+=======
+"@ethersproject/strings@^5.5.0", "@ethersproject/strings@5.5.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-9fy3TtF5LrX/wTrBaT8FGE6TDJyVjOvXynXJz5MT5azq+E6D92zuKNx7i29sWW2FjVOaWjAsiZ1ZWznuduTIIQ=="
   "resolved" "https://registry.npmjs.org/@ethersproject/strings/-/strings-5.5.0.tgz"
   "version" "5.5.0"
@@ -524,7 +850,11 @@
     "@ethersproject/constants" "^5.5.0"
     "@ethersproject/logger" "^5.5.0"
 
+<<<<<<< HEAD
 "@ethersproject/transactions@^5.0.0-beta.135", "@ethersproject/transactions@^5.5.0", "@ethersproject/transactions@^5.6.2":
+=======
+"@ethersproject/transactions@^5.0.0-beta.135", "@ethersproject/transactions@^5.6.2", "@ethersproject/transactions@5.6.2":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-BuV63IRPHmJvthNkkt9G70Ullx6AcM+SDc+a8Aw/8Yew6YwT51TcBKEp1P4oOQ/bP25I18JJr7rcFRgFtU9B2Q=="
   "resolved" "https://registry.npmjs.org/@ethersproject/transactions/-/transactions-5.6.2.tgz"
   "version" "5.6.2"
@@ -539,7 +869,11 @@
     "@ethersproject/rlp" "^5.6.1"
     "@ethersproject/signing-key" "^5.6.2"
 
+<<<<<<< HEAD
 "@ethersproject/transactions@5.5.0":
+=======
+"@ethersproject/transactions@^5.5.0", "@ethersproject/transactions@5.5.0":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-9RZYSKX26KfzEd/1eqvv8pLauCKzDTub0Ko4LfIgaERvRuwyaNV78mJs7cpIgZaDl6RJui4o49lHwwCM0526zA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/transactions/-/transactions-5.5.0.tgz"
   "version" "5.5.0"
@@ -563,6 +897,18 @@
     "@ethersproject/constants" "^5.5.0"
     "@ethersproject/logger" "^5.5.0"
 
+<<<<<<< HEAD
+=======
+"@ethersproject/units@5.6.1":
+  "integrity" "sha512-rEfSEvMQ7obcx3KWD5EWWx77gqv54K6BKiZzKxkQJqtpriVsICrktIQmKl8ReNToPeIYPnFHpXvKpi068YFZXw=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/units/-/units-5.6.1.tgz"
+  "version" "5.6.1"
+  dependencies:
+    "@ethersproject/bignumber" "^5.6.2"
+    "@ethersproject/constants" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 "@ethersproject/wallet@5.5.0":
   "integrity" "sha512-Mlu13hIctSYaZmUOo7r2PhNSd8eaMPVXe1wxrz4w4FCE4tDYBywDH+bAR1Xz2ADyXGwqYMwstzTrtUVIsKDO0Q=="
   "resolved" "https://registry.npmjs.org/@ethersproject/wallet/-/wallet-5.5.0.tgz"
@@ -584,7 +930,43 @@
     "@ethersproject/transactions" "^5.5.0"
     "@ethersproject/wordlists" "^5.5.0"
 
+<<<<<<< HEAD
 "@ethersproject/web@^5.5.0", "@ethersproject/web@^5.6.1":
+=======
+"@ethersproject/wallet@5.6.2":
+  "integrity" "sha512-lrgh0FDQPuOnHcF80Q3gHYsSUODp6aJLAdDmDV0xKCN/T7D99ta1jGVhulg3PY8wiXEngD0DfM0I2XKXlrqJfg=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/wallet/-/wallet-5.6.2.tgz"
+  "version" "5.6.2"
+  dependencies:
+    "@ethersproject/abstract-provider" "^5.6.1"
+    "@ethersproject/abstract-signer" "^5.6.2"
+    "@ethersproject/address" "^5.6.1"
+    "@ethersproject/bignumber" "^5.6.2"
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/hash" "^5.6.1"
+    "@ethersproject/hdnode" "^5.6.2"
+    "@ethersproject/json-wallets" "^5.6.1"
+    "@ethersproject/keccak256" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/properties" "^5.6.0"
+    "@ethersproject/random" "^5.6.1"
+    "@ethersproject/signing-key" "^5.6.2"
+    "@ethersproject/transactions" "^5.6.2"
+    "@ethersproject/wordlists" "^5.6.1"
+
+"@ethersproject/web@^5.5.0", "@ethersproject/web@5.5.1":
+  "integrity" "sha512-olvLvc1CB12sREc1ROPSHTdFCdvMh0J5GSJYiQg2D0hdD4QmJDy8QYDb1CvoqD/bF1c++aeKv2sR5uduuG9dQg=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/web/-/web-5.5.1.tgz"
+  "version" "5.5.1"
+  dependencies:
+    "@ethersproject/base64" "^5.5.0"
+    "@ethersproject/bytes" "^5.5.0"
+    "@ethersproject/logger" "^5.5.0"
+    "@ethersproject/properties" "^5.5.0"
+    "@ethersproject/strings" "^5.5.0"
+
+"@ethersproject/web@^5.6.1", "@ethersproject/web@5.6.1":
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   "integrity" "sha512-/vSyzaQlNXkO1WV+RneYKqCJwualcUdx/Z3gseVovZP0wIlOFcCE1hkRhKBH8ImKbGQbMl9EAAyJFrJu7V0aqA=="
   "resolved" "https://registry.npmjs.org/@ethersproject/web/-/web-5.6.1.tgz"
   "version" "5.6.1"
@@ -595,6 +977,7 @@
     "@ethersproject/properties" "^5.6.0"
     "@ethersproject/strings" "^5.6.1"
 
+<<<<<<< HEAD
 "@ethersproject/web@5.5.1":
   "integrity" "sha512-olvLvc1CB12sREc1ROPSHTdFCdvMh0J5GSJYiQg2D0hdD4QmJDy8QYDb1CvoqD/bF1c++aeKv2sR5uduuG9dQg=="
   "resolved" "https://registry.npmjs.org/@ethersproject/web/-/web-5.5.1.tgz"
@@ -606,6 +989,8 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
+=======
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 "@ethersproject/wordlists@^5.5.0", "@ethersproject/wordlists@5.5.0":
   "integrity" "sha512-bL0UTReWDiaQJJYOC9sh/XcRu/9i2jMrzf8VLRmPKx58ckSlOJiohODkECCO50dtLZHcGU6MLXQ4OOrgBwP77Q=="
   "resolved" "https://registry.npmjs.org/@ethersproject/wordlists/-/wordlists-5.5.0.tgz"
@@ -617,6 +1002,20 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
+<<<<<<< HEAD
+=======
+"@ethersproject/wordlists@^5.6.1", "@ethersproject/wordlists@5.6.1":
+  "integrity" "sha512-wiPRgBpNbNwCQFoCr8bcWO8o5I810cqO6mkdtKfLKFlLxeCWcnzDi4Alu8iyNzlhYuS9npCwivMbRWF19dyblw=="
+  "resolved" "https://registry.npmjs.org/@ethersproject/wordlists/-/wordlists-5.6.1.tgz"
+  "version" "5.6.1"
+  dependencies:
+    "@ethersproject/bytes" "^5.6.1"
+    "@ethersproject/hash" "^5.6.1"
+    "@ethersproject/logger" "^5.6.0"
+    "@ethersproject/properties" "^5.6.0"
+    "@ethersproject/strings" "^5.6.1"
+
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 "@formatjs/ecma402-abstract@1.11.4":
   "integrity" "sha512-EBikYFp2JCdIfGEb5G9dyCkTGDmC57KSHhRQOC3aYxoPWVZvfWCDjZwkGYHN7Lis/fmuWl906bnNTJifDQ3sXw=="
   "resolved" "https://registry.npmjs.org/@formatjs/ecma402-abstract/-/ecma402-abstract-1.11.4.tgz"
@@ -705,9 +1104,26 @@
   "version" "1.3.1"
 
 "@sapphire/shapeshift@^3.1.0":
-  "integrity" "sha512-6MNupTaIXtyVCHuejbTIE/Wmw35FKbpfRhiPCkxaQHm76iHICaWNO0oej0lipLb7vhK8mQHQn3zE6umOVvwGLw=="
-  "resolved" "https://registry.npmjs.org/@sapphire/shapeshift/-/shapeshift-3.3.0.tgz"
-  "version" "3.3.0"
+  "integrity" "sha512-asNgE5Ooil2/oGIAj6vZMoUc2ZFED0TGYD7jwvZsjHPQZBEh9ITj94ca4bCgiCR1s2ER/UjzykH+5wE3ebVZnQ=="
+  "resolved" "https://registry.npmjs.org/@sapphire/shapeshift/-/shapeshift-3.2.0.tgz"
+  "version" "3.2.0"
+
+"@sideway/address@^4.1.3":
+  "integrity" "sha512-7vwq+rOHVWjyXxVlR76Agnvhy8I9rpzjosTESvmhNeXOXdZZB15Fl+TI9x1SiHZH5Jv2wTGduSxFDIaq0m3DUw=="
+  "resolved" "https://registry.npmjs.org/@sideway/address/-/address-4.1.4.tgz"
+  "version" "4.1.4"
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+
+"@sideway/formula@^3.0.0":
+  "integrity" "sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg=="
+  "resolved" "https://registry.npmjs.org/@sideway/formula/-/formula-3.0.0.tgz"
+  "version" "3.0.0"
+
+"@sideway/pinpoint@^2.0.0":
+  "integrity" "sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ=="
+  "resolved" "https://registry.npmjs.org/@sideway/pinpoint/-/pinpoint-2.0.0.tgz"
+  "version" "2.0.0"
 
 "@sideway/address@^4.1.3":
   "integrity" "sha512-7vwq+rOHVWjyXxVlR76Agnvhy8I9rpzjosTESvmhNeXOXdZZB15Fl+TI9x1SiHZH5Jv2wTGduSxFDIaq0m3DUw=="
@@ -773,17 +1189,17 @@
   "version" "2.8.12"
 
 "@types/node-fetch@^2.6.1":
-  "integrity" "sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A=="
-  "resolved" "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.2.tgz"
-  "version" "2.6.2"
+  "integrity" "sha512-oMqjURCaxoSIsHSr1E47QHzbmzNR5rK8McHuNb11BOM9cHcIK3Avy0s/b2JlXHoQGTYS3NsvWzV1M0iK7l0wbA=="
+  "resolved" "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.6.1.tgz"
+  "version" "2.6.1"
   dependencies:
     "@types/node" "*"
     "form-data" "^3.0.0"
 
 "@types/node@*", "@types/node@>=10.0.0":
-  "integrity" "sha512-xA6drNNeqb5YyV5fO3OAEsnXLfO7uF0whiOfPTz5AeDo8KeZFmODKnvwPymMNO8qE/an8pVY/O50tig2SQCrGw=="
-  "resolved" "https://registry.npmjs.org/@types/node/-/node-17.0.41.tgz"
-  "version" "17.0.41"
+  "integrity" "sha512-UXdBxNGqTMtm7hCwh9HtncFVLrXoqA3oJW30j6XWp5BH/wu3mVeaxo7cq5benFdBw34HB3XDT2TRPI7rXZ+mDg=="
+  "resolved" "https://registry.npmjs.org/@types/node/-/node-17.0.40.tgz"
+  "version" "17.0.40"
 
 "@types/node@^12.12.6":
   "integrity" "sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ=="
@@ -811,16 +1227,24 @@
   dependencies:
     "@types/node" "*"
 
+<<<<<<< HEAD
 "@web3-onboard/common@^2.1.3":
   "integrity" "sha512-IuGnShj3UG0jdqWm6g3k9XzXZGmS4RHFw0JW226D4eGz95xNEiOQzh6VX9rWBsEwlwsdoou4TLlpk6H0852lpA=="
   "resolved" "https://registry.npmjs.org/@web3-onboard/common/-/common-2.1.3.tgz"
   "version" "2.1.3"
+=======
+"@web3-onboard/common@^2.1.2":
+  "integrity" "sha512-sPshJq/ith/Z1CmfK8PXxadpbYtRmomCZJyhRFiR4lWxXf9deDLfvQgc7t4h/w7BLgdODpkwz6ixD0bA0gBkyA=="
+  "resolved" "https://registry.npmjs.org/@web3-onboard/common/-/common-2.1.2.tgz"
+  "version" "2.1.2"
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
   dependencies:
     "@ethereumjs/common" "2.6.2"
     "ethers" "5.5.4"
     "joi" "^17.4.2"
     "rxjs" "^7.5.2"
 
+<<<<<<< HEAD
 "@web3-onboard/common@^2.1.4-alpha.1":
   "integrity" "sha512-9OPdB7NsDY0AEEv0Wr3irFHLrlmhzsbvoDlbqNLP8Q4Qg2BltGHGkchSYtx46tdSZnyTwer5hmtpSHBqeaajsw=="
   "resolved" "https://registry.npmjs.org/@web3-onboard/common/-/common-2.1.4-alpha.1.tgz"
@@ -837,6 +1261,14 @@
   "version" "2.3.2-alpha.4"
   dependencies:
     "@web3-onboard/common" "^2.1.4-alpha.1"
+=======
+"@web3-onboard/core@^2.3.0":
+  "integrity" "sha512-xQt9iZXalVKklOj1g2nb/+A2CTgxVmqiSW12eXciD4XODcbHybsGbLZObluO/E1ciMQpjZ/Kp1hzAj96Bk1m4Q=="
+  "resolved" "https://registry.npmjs.org/@web3-onboard/core/-/core-2.3.0.tgz"
+  "version" "2.3.0"
+  dependencies:
+    "@web3-onboard/common" "^2.1.2"
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
     "bignumber.js" "^9.0.0"
     "bnc-sdk" "^4.4.1"
     "bowser" "^2.11.0"
@@ -850,6 +1282,7 @@
     "svelte" "^3.46.4"
     "svelte-i18n" "^3.3.13"
 
+<<<<<<< HEAD
 "@web3-onboard/injected-wallets@^2.0.11":
   "integrity" "sha512-BrI/HwGkUJFzo32XYh/uXrtVGK9aAiOrOfivdfi9r55XxJ0G7MccJXx3V7yrtkbIUWuTQg5WjImkvHl2a4BVLw=="
   "resolved" "https://registry.npmjs.org/@web3-onboard/injected-wallets/-/injected-wallets-2.0.11.tgz"
@@ -868,6 +1301,17 @@
     "@web3-onboard/core" "^2.3.2-alpha.3"
     "use-sync-external-store" "1.0.0"
 
+=======
+"@web3-onboard/injected-wallets@^2.0.10":
+  "integrity" "sha512-cWh4jcH9hXERxCaMhG7L543+UTDX+8qb6lpR7ef+D4l9PL63zipHMo2eV/x/7lUgtgpi5GgTddnpN3IAgwLYwA=="
+  "resolved" "https://registry.npmjs.org/@web3-onboard/injected-wallets/-/injected-wallets-2.0.10.tgz"
+  "version" "2.0.10"
+  dependencies:
+    "@web3-onboard/common" "^2.1.2"
+    "joi" "^17.4.2"
+    "lodash.uniqby" "^4.7.0"
+
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 "abi-decoder@^2.4.0":
   "integrity" "sha512-TOLU2q1HgYOjs1GKGtVzaqrYkar6I2fT9a80rzx6/9EJ/5crb4nCGuro0grZayixem93T7omrajYmLiMkYDLDA=="
   "resolved" "https://registry.npmjs.org/abi-decoder/-/abi-decoder-2.4.0.tgz"
@@ -981,9 +1425,9 @@
   "version" "1.0.5"
 
 "aws-sdk@^2.1150.0":
-  "integrity" "sha512-Lqwk0bDhm3vzpYb3AAM9VgGHeDpbB8+o7UJnP9R+CO23kJfi/XRpKihAcbyKDD/AUQ+O1LJaUVpvaJYLS9Am7w=="
-  "resolved" "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.1152.0.tgz"
-  "version" "2.1152.0"
+  "integrity" "sha512-SNbVXNlFGNFVcztPk7iWnjtGL+Afm1nyidpvX2rEqYdap2Ow57njZJXvghQUici4Xhqe+BUuG+x1orlFjapo4g=="
+  "resolved" "https://registry.npmjs.org/aws-sdk/-/aws-sdk-2.1150.0.tgz"
+  "version" "2.1150.0"
   dependencies:
     "buffer" "4.9.2"
     "events" "1.1.1"
@@ -1608,14 +2052,7 @@
   dependencies:
     "ms" "2.0.0"
 
-"debug@~4.3.1":
-  "integrity" "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
-  "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
-  "version" "4.3.4"
-  dependencies:
-    "ms" "2.1.2"
-
-"debug@~4.3.2":
+"debug@~4.3.1", "debug@~4.3.2":
   "integrity" "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
   "version" "4.3.4"
@@ -1949,6 +2386,45 @@
     "ethereum-cryptography" "^0.1.3"
     "rlp" "^2.2.4"
 
+<<<<<<< HEAD
+=======
+"ethers@^5.6.9":
+  "integrity" "sha512-lMGC2zv9HC5EC+8r429WaWu3uWJUCgUCt8xxKCFqkrFuBDZXDYIdzDUECxzjf2BMF8IVBByY1EBoGSL3RTm8RA=="
+  "resolved" "https://registry.npmjs.org/ethers/-/ethers-5.6.9.tgz"
+  "version" "5.6.9"
+  dependencies:
+    "@ethersproject/abi" "5.6.4"
+    "@ethersproject/abstract-provider" "5.6.1"
+    "@ethersproject/abstract-signer" "5.6.2"
+    "@ethersproject/address" "5.6.1"
+    "@ethersproject/base64" "5.6.1"
+    "@ethersproject/basex" "5.6.1"
+    "@ethersproject/bignumber" "5.6.2"
+    "@ethersproject/bytes" "5.6.1"
+    "@ethersproject/constants" "5.6.1"
+    "@ethersproject/contracts" "5.6.2"
+    "@ethersproject/hash" "5.6.1"
+    "@ethersproject/hdnode" "5.6.2"
+    "@ethersproject/json-wallets" "5.6.1"
+    "@ethersproject/keccak256" "5.6.1"
+    "@ethersproject/logger" "5.6.0"
+    "@ethersproject/networks" "5.6.4"
+    "@ethersproject/pbkdf2" "5.6.1"
+    "@ethersproject/properties" "5.6.0"
+    "@ethersproject/providers" "5.6.8"
+    "@ethersproject/random" "5.6.1"
+    "@ethersproject/rlp" "5.6.1"
+    "@ethersproject/sha2" "5.6.1"
+    "@ethersproject/signing-key" "5.6.2"
+    "@ethersproject/solidity" "5.6.1"
+    "@ethersproject/strings" "5.6.1"
+    "@ethersproject/transactions" "5.6.2"
+    "@ethersproject/units" "5.6.1"
+    "@ethersproject/wallet" "5.6.2"
+    "@ethersproject/web" "5.6.1"
+    "@ethersproject/wordlists" "5.6.1"
+
+>>>>>>> parent of ebc2654 (Revert "Merge branch 'master' of https://github.com/JointNFT/support-dashboard into test-branch")
 "ethers@5.5.3":
   "integrity" "sha512-fTT4WT8/hTe/BLwRUtl7I5zlpF3XC3P/Xwqxc5AIP2HGlH15qpmjs0Ou78az93b1rLITzXLFxoNX63B8ZbUd7g=="
   "resolved" "https://registry.npmjs.org/ethers/-/ethers-5.5.3.tgz"
@@ -2230,6 +2706,11 @@
   dependencies:
     "minipass" "^2.6.0"
 
+"fsevents@~2.3.2":
+  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
+  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
+  "version" "2.3.2"
+
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
@@ -2251,13 +2732,13 @@
   "version" "1.2.3"
 
 "get-intrinsic@^1.0.2", "get-intrinsic@^1.1.0", "get-intrinsic@^1.1.1":
-  "integrity" "sha512-Jfm3OyCxHh9DJyc28qGk+JmfkpO41A4XkneDSujN9MDXrm4oDKdHvndhZ2dN94+ERNfkYJWDclW6k2L/ZGHjXA=="
-  "resolved" "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.1.2.tgz"
-  "version" "1.1.2"
+  "integrity" "sha512-kWZrnVM42QCiEA2Ig1bG8zjoIMOgxWwYCEeNdwY6Tv/cOSeGpcoX4pXHfKUxNKVoArnrEr2e9srnAxxGIraS9Q=="
+  "resolved" "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.1.1.tgz"
+  "version" "1.1.1"
   dependencies:
     "function-bind" "^1.1.1"
     "has" "^1.0.3"
-    "has-symbols" "^1.0.3"
+    "has-symbols" "^1.0.1"
 
 "get-stream@^3.0.0":
   "integrity" "sha512-GlhdIUuVakc8SJ6kK0zAFbiGzRFzNnY4jUuEbV9UROo4Y+0Ny4fjvcZFVTeDA4odpFyOQzaw6hXukJSq/f28sQ=="
@@ -3585,9 +4066,9 @@
   "version" "2.1.2"
 
 "sass@^1.52.2":
-  "integrity" "sha512-LNNPJ9lafx+j1ArtA7GyEJm9eawXN8KlA1+5dF6IZyoONg1Tyo/g+muOsENWJH/2Q1FHbbV4UwliU0cXMa/VIA=="
-  "resolved" "https://registry.npmjs.org/sass/-/sass-1.52.3.tgz"
-  "version" "1.52.3"
+  "integrity" "sha512-mfHB2VSeFS7sZlPv9YohB9GB7yWIgQNTGniQwfQ04EoQN0wsQEv7SwpCwy/x48Af+Z3vDeFXz+iuXM3HK/phZQ=="
+  "resolved" "https://registry.npmjs.org/sass/-/sass-1.52.2.tgz"
+  "version" "1.52.2"
   dependencies:
     "chokidar" ">=3.0.0 <4.0.0"
     "immutable" "^4.0.0"
@@ -3661,7 +4142,7 @@
     "xhr" "^2.3.3"
 
 "setimmediate@^1.0.5":
-  "integrity" "sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA=="
+  "integrity" "sha1-KQy7Iy4waULX1+qbg3Mqt4VvgoU="
   "resolved" "https://registry.npmjs.org/setimmediate/-/setimmediate-1.0.5.tgz"
   "version" "1.0.5"
 
@@ -3763,7 +4244,7 @@
   "version" "1.1.0"
 
 "strict-uri-encode@^1.0.0":
-  "integrity" "sha512-R3f198pcvnB+5IpnBlRkphuE9n46WyVl8I39W/ZUTZLz4nqSP/oLYUrcnJrw462Ds8he4YKMov2efsTIw1BDGQ=="
+  "integrity" "sha1-J5siXfHVgrH1TmWt3UNS4Y+qBxM="
   "resolved" "https://registry.npmjs.org/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz"
   "version" "1.1.0"
 
@@ -3816,7 +4297,7 @@
     "ansi-regex" "^5.0.1"
 
 "strip-hex-prefix@1.0.0":
-  "integrity" "sha512-q8d4ue7JGEiVcypji1bALTos+0pWtyGlivAWyPuTkHzuTCJqrK9sWxYQZUq6Nq3cuyv3bm734IhHvHtGGURU6A=="
+  "integrity" "sha1-DF8VX+8RUTczd96du1iNoFUA428="
   "resolved" "https://registry.npmjs.org/strip-hex-prefix/-/strip-hex-prefix-1.0.0.tgz"
   "version" "1.0.0"
   dependencies:
@@ -3890,12 +4371,12 @@
     "yallist" "^3.1.1"
 
 "through@^2.3.6":
-  "integrity" "sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg=="
+  "integrity" "sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU="
   "resolved" "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
   "version" "2.3.8"
 
 "timed-out@^4.0.0", "timed-out@^4.0.1":
-  "integrity" "sha512-G7r3AhovYtr5YKOWQkta8RKAPb+J9IsO4uVmzjl8AZwfhs8UcUwTiD6gcJYSgOtzyjvQKrKYn41syHbUWMkafA=="
+  "integrity" "sha1-8y6srFoXW+ol1/q1Zas+2HQe9W8="
   "resolved" "https://registry.npmjs.org/timed-out/-/timed-out-4.0.1.tgz"
   "version" "4.0.1"
 
