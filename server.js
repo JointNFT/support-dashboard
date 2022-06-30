@@ -144,15 +144,6 @@ app.post('/createOrganization', upload.single('imageURL'), async function (req, 
     res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
 });
 
-app.get('/getOrganizationDetails', async function (req, res){
-    var details = await db.getStaffDetails('address');
-    var organizationId = details[0].organizationId;
-    console.log(organizationId)
-
-    var organizationDetails = await db.getOrganizationDetails(organizationId);
-    console.log(organizationDetails);
-    res.send('done');
-})
 
 app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");

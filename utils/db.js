@@ -108,7 +108,7 @@ const updateUserTag = async (userAddress, accessToken, newTag) => {
         Item: {
             userAddress: userAddress,
             accessToken: accessToken,
-            tag: newTag,
+            tag: newTag, 
         },
     };
 
@@ -121,7 +121,7 @@ const addNewOrganization = async (organizationName, address, image, organization
     let dbParams = {
         TableName: "Organization",
         Item: {
-            organizationId: organizationId,
+            organizationId: organizationId ,
             address: address,
             image: image,
             name: organizationName,
@@ -133,36 +133,12 @@ const addNewOrganization = async (organizationName, address, image, organization
     return await response;
 };
 
-const getStaffDetails = async (userAddress) => {
-    const params = {
-        TableName: "OrganizationStaff",
-        KeyConditionExpression: "address = :address",
-        ExpressionAttributeValues: {
-            ":address": userAddress
-        }
-    };
-    const res = await db.query(params).promise();
-    const details = (await res)?.Items;
-    return details;
-};
-const getOrganizationDetails = async (organizationId) => {
-    const params = {
-        TableName: "Organization",
-        KeyConditionExpression: "organizationId = :organizationId",
-        ExpressionAttributeValues: {
-            ":organizationId": organizationId
-        }
-    };
-    const res = await db.query(params).promise();
-    const OrgDetails = (await res)?.Items;
-    return OrgDetails;
-};
 const addNewOrganizationStaff = async (organizationId, address) => {
 
     let dbParams = {
         TableName: "OrganizationStaff",
         Item: {
-            organizationId: organizationId,
+            organizationId: organizationId ,
             address: address,
         },
     };
@@ -170,7 +146,4 @@ const addNewOrganizationStaff = async (organizationId, address) => {
     let response = await db.put(dbParams).promise();
     return await response;
 };
-module.exports = {
-    getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, updateUserTag,
-    addNewOrganization, addNewOrganizationStaff, getStaffDetails, getOrganizationDetails
-};
+module.exports = { getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, db, updateUserTag, addNewOrganization, addNewOrganizationStaff };

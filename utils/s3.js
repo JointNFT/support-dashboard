@@ -24,13 +24,4 @@ const uploadImage = async (imageURL, address) => {
 
   return (uploadedImage.Location);
 }
-
-const getImage = async (key) => {
- const file = await s3.getObject({ Bucket: S3_BUCKET, Key: key }).promise()
- console.log(file);
- return {
-  data: file.Body,
-  mimetype: file.ContentType
- }
-}
 module.exports = { uploadImage };
