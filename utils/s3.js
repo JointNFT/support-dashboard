@@ -24,4 +24,5 @@ const uploadImage = async (imageURL, address) => {
 
   return (uploadedImage.Location);
 }
+
 module.exports = { uploadImage };
