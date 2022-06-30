@@ -18,6 +18,9 @@
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^1.9.3",
     "@chatscope/chat-ui-kit-styles": "^1.2.3",
+    "@web3-onboard/core": "^2.3.2-alpha.4",
+    "@web3-onboard/injected-wallets": "^2.0.11",
+    "@web3-onboard/react": "^2.2.2-alpha.1",
     "abi-decoder": "^2.4.0",
     "aws-sdk": "^2.1150.0",
     "axios": "^0.27.2",
