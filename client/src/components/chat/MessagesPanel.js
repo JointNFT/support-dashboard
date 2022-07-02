@@ -96,6 +96,7 @@ export class MessagesPanel extends React.Component {
                 }
               />
               <ConversationHeader.Content
+                style={{ userSelect: 'all' }}
                 userName={this.props.channel.userAddress}
               />
               <ConversationHeader.Actions>

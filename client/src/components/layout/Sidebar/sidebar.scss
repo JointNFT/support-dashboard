@@ -27,6 +27,7 @@
       text-decoration: none;
       color: #fff;
       position: relative;
+      z-index: 999;
 
       &.active {
         background-color: rgb(24, 144, 255);
@@ -122,6 +123,7 @@
       color: #A6AA9A;
       padding-left: 60px;
       text-decoration: none;
+      z-index: 999;
 
       &.active {
         background-color: rgb(24, 144, 255);

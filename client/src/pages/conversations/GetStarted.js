@@ -8,7 +8,7 @@ const GetStarted = ({signOut}) => {
 
       <div className="content">
         <Nav
-          class="navbar navbar-expand-lg navbar-light bg-light"
+          class="navbar navbar-expand-lg"
           style={{ height: "8%" }}
         >
           <a class="navbar-brand" href="#">
