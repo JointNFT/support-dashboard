@@ -64,6 +64,7 @@ const Organizations = () => {
         return (
             <div className="organizations">
                 <h3>Organizations</h3>
+                <p>Not part of any organization at the moment</p>
                 <div className="row-center">
                     <button className="custom-btn">
                         <ModalForm />

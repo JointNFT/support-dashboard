@@ -138,26 +138,21 @@ app.post('/createOrganization', s3.uploadLogo.single('imageURL'), async function
     var name = req.body.organizationName
     address = req.body.address.count;
     var organizationId = +new Date()
-
-    //var logoKey = await s3.uploadImage(imageURL, organizationId);
+    
     await db.addNewOrganization(name, JSON.stringify(address), req.file.location, organizationId)
-    console.log(typeof address);
     if (typeof address ==='string') {
         var addressString = address.toLowerCase(); 
-        console.log(addressString);
         await db.addNewOrganizationStaff(organizationId, addressString)
     }
-    else {
-        for (let i = 0; i < address; i++) {
+    else if(typeof address ==='object'){
+        for (let i = 0; i < address.length; i++) {
             let addressString = address[i].toLowerCase();
-            console.log(addressString);
             await db.addNewOrganizationStaff(organizationId, addressString)
         }
     }
     res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
 });
 app.get('/getOrganizationDetails', async (req, res) => {
-    // console.log(req.query.address)
     var address = req.query.address;
     var details = await db.getStaffDetails(address);
     var organizationDetails =[];
