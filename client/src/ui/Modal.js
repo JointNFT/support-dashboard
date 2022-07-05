@@ -106,7 +106,7 @@ function ModalForm() {
                 ))}
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" value="Upload">
               Submit
             </Button>
           </Form>

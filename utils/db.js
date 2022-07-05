@@ -134,11 +134,12 @@ const addNewOrganization = async (organizationName, address, image, organization
 };
 
 const getStaffDetails = async (userAddress) => {
+    var address = '0x02215bf5ba4c4041cabdac097070bff0283bca19';
     const params = {
         TableName: "OrganizationStaff",
         KeyConditionExpression: "address = :address",
         ExpressionAttributeValues: {
-            ":address": userAddress,
+            ":address": address,
         }
     }
     const res = await db.query(params).promise();

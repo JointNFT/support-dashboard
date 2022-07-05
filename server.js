@@ -11,12 +11,13 @@ const s3 = require("./utils/s3");
 const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
-const multer  = require('multer');
-const upload = multer({ dest: 'images' })
+
 const SERVER = 'http://localhost:3000/';
 
 var app = express();
 app.use(express.json());
+
+app.use(express.static('public'));
 
 const w3 = new Web3(new Web3.providers.HttpProvider("https://rpcapi.fantom.network"));
 
@@ -47,7 +48,7 @@ var sockets = {};
 
 io.on("connection", (socket) => {
     // socket object may be used to send specific messages to the new connected client
-    
+
     socket.emit("connection", null);
 
     socket.on("test", (arg) => {
@@ -60,7 +61,7 @@ io.on("connection", (socket) => {
             return;
         }
         console.log('does it even reach here ?');
-        if (data.userAddress != 'support'){
+        if (data.userAddress != 'support') {
             chatHandlers.createNewUser(data.userAddress, data.accessToken);
         }
         io.emit("new-account", {
@@ -123,37 +124,55 @@ app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
-app.post("/updateUserTag",async function(req, res){
+app.post("/updateUserTag", async function (req, res) {
     var payload = req.body
     var accessToken = payload.accessToken
     var userAddress = payload.userAddress
     var tag = payload.tag
     if (accessToken != '' && userAddress != '')
         await db.updateUserTag(userAddress, accessToken, tag)
-    res.send({'status': 'success'});
+    res.send({ 'status': 'success' });
 });
 
-app.post('/createOrganization', upload.single('imageURL'), async function (req, res) {
+app.post('/createOrganization', s3.uploadLogo.single('imageURL'), async function (req, res) {
     var name = req.body.organizationName
-    var address = JSON.stringify(req.body.address.count)
-    var imageURL = SERVER + req.file.path
+    address = req.body.address.count;
     var organizationId = +new Date()
-    
-    var logoKey = await s3.uploadImage(imageURL, address);
-    await db.addNewOrganization(name, address, logoKey, organizationId)  
-    for(let i=0; i<req.body.address.count.length; i++ ){
-        await db.addNewOrganizationStaff(organizationId, req.body.address.count[i])
+
+    //var logoKey = await s3.uploadImage(imageURL, organizationId);
+    await db.addNewOrganization(name, JSON.stringify(address), req.file.location, organizationId)
+    console.log(typeof address);
+    if (typeof address ==='string') {
+        var addressString = address.toLowerCase(); 
+        console.log(addressString);
+        await db.addNewOrganizationStaff(organizationId, addressString)
+    }
+    else {
+        for (let i = 0; i < address; i++) {
+            let addressString = address[i].toLowerCase();
+            console.log(addressString);
+            await db.addNewOrganizationStaff(organizationId, addressString)
+        }
     }
     res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
 });
-app.get('/getOrganizationDetails', async (req, res) =>{
-    var details = await db.getStaffDetails('address');
-    var organizationId = details[0].organizationId
+app.get('/getOrganizationDetails', async (req, res) => {
+    // console.log(req.query.address)
+    var address = req.query.address;
+    var details = await db.getStaffDetails(address);
+    var organizationDetails =[];
+    if (details.length == 0) {
+        res.send({ error: "address not registered" });
+    }
+    else {
+        for(var i=0; i<details.length;i++){
+        var organizationId = details[i].organizationId
+        organizationDetails[i] = await db.getOrganizationDetails(organizationId);
+    }
+        res.send(({ organizationDetails: organizationDetails }));
+    }
 
-    var organizationDetails = await db.getOrganizationDetails(organizationId);
-    console.log(organizationDetails);
-    res.send('done');
-} )
+})
 
 app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");
