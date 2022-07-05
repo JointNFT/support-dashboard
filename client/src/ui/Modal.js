@@ -1,29 +1,30 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useContext } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { GrAddCircle } from "react-icons/gr";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
+import Web3Context from "../contexts/web3/Web3Context";
 
 
 function ModalForm() {
   const [show, setShow] = useState(false);
-  const [emailCount, setEmailCount] = useState(1);
-  
+  const [addressCount, setAddressCount] = useState(0);
+  const { address, setAddress } = useContext(Web3Context);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const count = useMemo(() => {
-    return [...Array(emailCount).keys()];
-  }, [emailCount]);
+    return [...Array(addressCount).keys()];
+  }, [addressCount]);
 
   const incrementCount = (e) => {
     e.preventDefault();
-    setEmailCount(emailCount + 1);
+    setAddressCount(addressCount + 1);
   };
 
   const decrementCount = (e) => {
     e.preventDefault();
-    setEmailCount(emailCount - 1);
+    setAddressCount(addressCount - 1);
   };
 
  
@@ -82,6 +83,12 @@ function ModalForm() {
                 <GrAddCircle size={20} />{" "}
               </button>
               <Form.Label>Address list </Form.Label>
+              <Form.Control
+                      value={address.accounts[0].address}
+                      placeholder="Enter address"
+                      name="createdBy"
+                    />
+                    <Form.Text className="text-muted">Insert address</Form.Text>
               {count.length &&
                 count.map((el) => (
                   <React.Fragment key={el}>

@@ -117,7 +117,7 @@ const updateUserTag = async (userAddress, accessToken, newTag) => {
     return await response;
 };
 
-const addNewOrganization = async (organizationName, address, image, organizationId) => {
+const addNewOrganization = async (organizationName, address, image, organizationId, createdBy) => {
     let dbParams = {
         TableName: "Organization",
         Item: {
@@ -125,7 +125,8 @@ const addNewOrganization = async (organizationName, address, image, organization
             address: address,
             image: image,
             name: organizationName,
-            accessToken: 'some-token'
+            accessToken: 'some-token',
+            createdBy: createdBy
         },
     };
 
@@ -134,7 +135,7 @@ const addNewOrganization = async (organizationName, address, image, organization
 };
 
 const getStaffDetails = async (userAddress) => {
-    var address = '0x02215bf5ba4c4041cabdac097070bff0283bca19';
+    var address = userAddress;
     const params = {
         TableName: "OrganizationStaff",
         KeyConditionExpression: "address = :address",

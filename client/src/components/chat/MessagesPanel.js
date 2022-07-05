@@ -49,7 +49,10 @@ export class MessagesPanel extends React.Component {
   };
 
   render() {
-    
+    let inputStyle = {
+      background: 'white'
+    };
+
    const markPrioritized=()=>{
       var property = document.getElementById('button1');
       property.style.backgroundColor = 'pink'
@@ -65,6 +68,22 @@ export class MessagesPanel extends React.Component {
       property.style.backgroundColor = 'pink'
       this.props.onTagClick("deleted");
     };
+    console.log(this.props.channel);
+   // console.log(this.props.channel.tag);
+    /*if(this.props.channel.tag === 'prioritized'){
+      inputStyle = {
+        background:'pink'
+      }
+    }*/
+    if (this.props.channel && this.props.channel.tag) {
+     var tag = this.props.channel.tag;
+     if(tag === 'prioritized'){
+      inputStyle = {
+        background:'pink'
+      }
+
+    }
+  }
     let list = [];
     if (this.props.channel && this.props.channel.messages) {
       list = this.props.channel.messages.map((m) => {
@@ -100,7 +119,7 @@ export class MessagesPanel extends React.Component {
               />
               <ConversationHeader.Actions>
                 <div className="icon">
-                  <button className="button1" id="button1" onClick={markPrioritized}><AiOutlineStar size={20}/></button>
+                  <button className="button1" id="button1" style={inputStyle} onClick={markPrioritized}><AiOutlineStar size={20}/></button>
                 </div>
                 <div className="icon">
                   <button className="button2" id="button2" onClick={markCompleted}><RiCheckFill size={20}  /></button>

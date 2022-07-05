@@ -30,12 +30,6 @@ const Organizations = () => {
                 ))
             .catch((error) => console.log("error", error));
     }
-/*
-    useEffect(() => {
-        fetch("https://63t2to8zja.execute-api.ap-south-1.amazonaws.com/default/getUsersOrganizations").then((res) => {
-            res.json().then((resData) => resData && setOrganizations(resData.organizationList));
-        });
-    }, []);*/
 
     useEffect(() => {
         console.log("at changed", accessToken);

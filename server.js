@@ -136,19 +136,26 @@ app.post("/updateUserTag", async function (req, res) {
 
 app.post('/createOrganization', s3.uploadLogo.single('imageURL'), async function (req, res) {
     var name = req.body.organizationName
-    address = req.body.address.count;
+    var createdBy = req.body.createdBy;
     var organizationId = +new Date()
-    
-    await db.addNewOrganization(name, JSON.stringify(address), req.file.location, organizationId)
-    if (typeof address ==='string') {
-        var addressString = address.toLowerCase(); 
-        await db.addNewOrganizationStaff(organizationId, addressString)
-    }
-    else if(typeof address ==='object'){
-        for (let i = 0; i < address.length; i++) {
-            let addressString = address[i].toLowerCase();
+
+    await db.addNewOrganizationStaff(organizationId, createdBy);
+
+    if (req.body.address != null) {
+        var address = req.body.address.count;
+        await db.addNewOrganization(name, JSON.stringify(createdBy + address), req.file.location, organizationId, createdBy)
+        if (typeof address === 'string') {
+            var addressString = address.toLowerCase();
             await db.addNewOrganizationStaff(organizationId, addressString)
         }
+        else if (typeof address === 'object') {
+            for (let i = 0; i < address.length; i++) {
+                let addressString = address[i].toLowerCase();
+                await db.addNewOrganizationStaff(organizationId, addressString)
+            }
+        }
+    } else {
+        await db.addNewOrganization(name, JSON.stringify(createdBy), req.file.location, organizationId, createdBy)
     }
     res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
 });
