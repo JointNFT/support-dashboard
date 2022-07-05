@@ -21,7 +21,6 @@ var uploadLogo = multer({
       acl: 'public-read',
       bucket: S3_BUCKET,
       key: function (req, file, cb) {
-          console.log(file);
           cb(null, file.fieldname + '-' + Date.now()); 
       }
   })
