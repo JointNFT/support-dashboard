@@ -125,7 +125,7 @@ const addNewOrganization = async (organizationName, address, image, organization
             address: address,
             image: image,
             name: organizationName,
-            accessToken: 'some-token',
+            accessToken: makeAccessToken(24),
             createdBy: createdBy
         },
     };
@@ -160,6 +160,18 @@ const getOrganizationDetails = async (organizationId) => {
     const OrganizationDetails = (await res)?.Items;
     return OrganizationDetails;
 }
+
+const makeAccessToken = (length) => {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   return result;
+}
+
 
 const addNewOrganizationStaff = async (organizationId, address) => {
 
