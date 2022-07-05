@@ -143,7 +143,7 @@ app.post('/createOrganization', s3.uploadLogo.single('imageURL'), async function
 
     if (req.body.address != null) {
         var address = req.body.address.count;
-        await db.addNewOrganization(name, JSON.stringify(createdBy + address), req.file.location, organizationId, createdBy)
+        await db.addNewOrganization(name, JSON.stringify(createdBy + ',' + address), req.file.location, organizationId, createdBy)
         if (typeof address === 'string') {
             var addressString = address.toLowerCase();
             await db.addNewOrganizationStaff(organizationId, addressString)
