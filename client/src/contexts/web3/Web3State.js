@@ -112,7 +112,7 @@ const Web3State = (props) => {
 		}
 		const web3Provider = new Web3(provider);
 		setDisplayMessage('Fetching Account address')
-		const address = accounts[0];
+		const address = provider.selectedAddress;
 		console.log(address)
 		const networkId = await web3Provider.eth.net.getId();
 

@@ -5,10 +5,12 @@ import "./chat.scss";
 import { MessagesPanel } from "./MessagesPanel";
 import { io } from "socket.io-client";
 import UserContext from "../../contexts/user/UserContext";
-const SERVER = "https://dashboard.highfi.me";
+import Web3Context from "../../contexts/web3/Web3Context";
+const SERVER = "http://localhost:3000";
 
 const Chat = (props) => {
     const { accessToken } = useContext(UserContext);
+    const { address, setAddress } = useContext(Web3Context);
     const [channels, setChannels] = useState([]);
     const [arrivalMessage, setArrivalMessage] = useState({});
     const [newAccount, setNewAccount] = useState({});
@@ -17,26 +19,32 @@ const Chat = (props) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        console.log(address, 'address changed');
         loadChannels();
         configureSocket();
-    }, []);
+        
+    }, [address]);
 
     function configureSocket() {
         socket.current = io(SERVER, {
-            userAdderss: "support",
+            type: "support",
+            userAddress: address,
             accessToken: accessToken
         });
+
         socket.current.emit("create-account", {
-            userAddress: "support",
+            type: "support",
+            userAddress: address,
             accessToken: accessToken
         });
+        
         if (socket == null) {
             return;
         }
 
         socket.current.on("connection", () => {
             setLoading(false);
-            console.log("connection happened");
+            
             if (channel) {
                 handleChannelSelect(channel.id);
             }
@@ -47,8 +55,6 @@ const Chat = (props) => {
         });
 
         socket.current.on("message", (message) => {
-            console.log("message", message);
-            console.log(channels);
             setArrivalMessage(message);
         });
 
@@ -85,7 +91,7 @@ const Chat = (props) => {
             }
         });
         setChannels(channelCopy);
-        const newChannel = channelCopy.find((c) => c.userAddress === arrivalMessage.userAddress);
+        const newChannel = channelCopy.find((c) => c.userAddress === arrivalMessage.address);
         setChannel(newChannel);
     }, [arrivalMessage]);
 
@@ -117,15 +123,12 @@ const Chat = (props) => {
         console.log("accessToken - ", accessToken);
         fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(async (response) => {
             let data = await response.json();
-            console.log("channel list", data);
             setChannels(data.users);
-            console.log("channels list =" + channels);
         });
     }
 
     function handleChannelSelect(address) {
         let channelsCopy = channels;
-        console.log("first handle channel select", channels);
 
         let channel = channelsCopy.find((c) => {
             return c.userAddress === address;
