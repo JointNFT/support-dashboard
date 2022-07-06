@@ -1,48 +1,76 @@
-import {useReducer} from 'react';
+import { useReducer } from "react";
 import Web3Context from "./Web3Context";
-import Web3Reducer, {initialState} from "./Web3Reducer";
+import Web3Reducer, { initialState } from "./Web3Reducer";
 import { FaRocketchat } from "react-icons/fa";
-import Web3 from 'web3'
+import Web3 from "web3";
 
-import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
+import Onboard from "@web3-onboard/core";
+import injectedModule from "@web3-onboard/injected-wallets";
 
-const MAINNET_RPC_URL = 'https://mainnet.infura.io/v3/85db4049c00b4783a425412807ff92e9'
+const MAINNET_RPC_URL =
+  "https://mainnet.infura.io/v3/85db4049c00b4783a425412807ff92e9";
 
-const injected = injectedModule()
+const injected = injectedModule();
 
 const onboard = Onboard({
-	wallets: [injected],
-	chains: [
-		{
-			id: '0x1',
-			token: 'ETH',
-			label: 'Ethereum Mainnet',
-			rpcUrl: MAINNET_RPC_URL
-		}
-	],
-	appMetadata: {
-		name: 'Token Swap',
-		icon: FaRocketchat.toString(),
-		description: 'Swap tokens for other tokens',
-		recommendedInjectedWallets: [
-		  { name: 'MetaMask', url: 'https://metamask.io' }
-		]
-	  },
-	  accountCenter: {
-		desktop: {
-		  position: 'topRight',
-		  enabled: true,
-		  minimal: true
-		},
-		mobile: {
-		  position: 'topRight',
-		  enabled: true,
-		  minimal: true
-		}
-	  },
+  wallets: [injected],
+  chains: [
+    {
+      id: "0x1",
+      token: "ETH",
+      label: "Ethereum Mainnet",
+      rpcUrl: MAINNET_RPC_URL,
+    },
+  ],
+  appMetadata: {
+    name: "Token Swap",
+    icon: FaRocketchat.toString(),
+    description: "Swap tokens for other tokens",
+    recommendedInjectedWallets: [
+      { name: "MetaMask", url: "https://metamask.io" },
+    ],
+  },
+	notify: {
+    desktop: {
+      enabled: true,
+      transactionHandler: transaction => {
+        console.log({ transaction })
+        if (transaction.eventCode === 'txPool') {
+          return {
+            type: 'success',
+            message: 'Your transaction from #1 DApp is in the mempool',
+          }
+        }
+      },
+      position: 'bottomLeft'
+    },
+    mobile: {
+      enabled: true,
+      transactionHandler: transaction => {
+        console.log({ transaction })
+        if (transaction.eventCode === 'txPool') {
+          return {
+            type: 'success',
+            message: 'Your transaction from #1 DApp is in the mempool',
+          }
+        }
+      },
+      position: 'topRight'
+    }
+  },
+	accountCenter: {
+    desktop: {
+      position: 'topRight',
+      enabled: true,
+      minimal: true
+    },
+    mobile: {
+      position: 'topRight',
+      enabled: true,
+      minimal: true
+    }
+  },
 });
-
 
 const Web3State = (props) => {
 	const [state, dispatch] = useReducer(Web3Reducer, initialState);
@@ -139,5 +167,6 @@ const Web3State = (props) => {
 		</Web3Context.Provider>
 		)
 }
+
 
 export default Web3State;

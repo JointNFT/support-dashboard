@@ -1,6 +1,8 @@
 .chat-app {
-    width: 80%;
+    width: 75%;
     display: flex;
+    overflow-y: scroll;
+
 
     .no-content-message {
         color: #cccccc;
@@ -11,12 +13,16 @@
     }
 
     .channel-list {
-        width: calc(20% - 12px);
-        border: 1px solid rgb(224, 224, 224);
-        margin: 10px;
-        margin-right: 0;
-        border-right: none;
+        width: 30%;
         height: calc(100% - 22px);
+
+        .search {
+            background-color: #fff;
+
+            input {
+                background-color: #fff;
+            }
+        }
     }
     .bordered{
         border: 3px solid red;
