@@ -13,6 +13,7 @@ import Integrations from "./pages/Integrations";
 import Organizations from "./pages/Organizations";
 import Web3Context from "./contexts/web3/Web3Context";
 import SignIn from "./components/SignIn";
+import DiscordContact from "./pages/DIscordContact";
 
 const SERVER = "http://127.0.0.1:3000";
 
@@ -65,6 +66,7 @@ function App({ signOut, user }) {
                 <Route path="/integrations" element={<Integrations />} signOut={signOut} />
                 <Route path="/customers" element={<Customers />} signOut={signOut} />
                 <Route path="/accessKeys" element={<AccessKeys />} signOut={signOut} />
+                <Route path="/discord" element={<DiscordContact />} signOut={signOut} />
             </Routes>
         </Router>
           </>
