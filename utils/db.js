@@ -108,7 +108,7 @@ const updateUserTag = async (userAddress, accessToken, newTag) => {
         Item: {
             userAddress: userAddress,
             accessToken: accessToken,
-            tag: newTag, 
+            tag: newTag,
         },
     };
 
@@ -117,4 +117,76 @@ const updateUserTag = async (userAddress, accessToken, newTag) => {
     return await response;
 };
 
-module.exports = { getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, db, updateUserTag };
+const addNewOrganization = async (organizationName, address, image, organizationId, createdBy) => {
+    let dbParams = {
+        TableName: "Organization",
+        Item: {
+            organizationId: organizationId,
+            address: address,
+            image: image,
+            name: organizationName,
+            accessToken: makeAccessToken(24),
+            createdBy: createdBy
+        },
+    };
+
+    let response = await db.put(dbParams).promise();
+    return await response;
+};
+
+const getStaffDetails = async (userAddress) => {
+    var address = userAddress;
+    const params = {
+        TableName: "OrganizationStaff",
+        KeyConditionExpression: "address = :address",
+        ExpressionAttributeValues: {
+            ":address": address,
+        }
+    }
+    const res = await db.query(params).promise();
+    const details = (await res)?.Items;
+    return details;
+}
+
+const getOrganizationDetails = async (organizationId) => {
+    const params = {
+        TableName: "Organization",
+        KeyConditionExpression: "organizationId = :organizationId",
+        ExpressionAttributeValues: {
+            ":organizationId": organizationId,
+        }
+    }
+    const res = await db.query(params).promise();
+    const OrganizationDetails = (await res)?.Items;
+    return OrganizationDetails;
+}
+
+const makeAccessToken = (length) => {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+ charactersLength));
+   }
+   return result;
+}
+
+
+const addNewOrganizationStaff = async (organizationId, address) => {
+
+    let dbParams = {
+        TableName: "OrganizationStaff",
+        Item: {
+            organizationId: organizationId,
+            address: address,
+        },
+    };
+
+    let response = await db.put(dbParams).promise();
+    return await response;
+};
+module.exports = {
+    getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, updateUserTag, 
+    addNewOrganization, addNewOrganizationStaff, getStaffDetails, getOrganizationDetails
+};

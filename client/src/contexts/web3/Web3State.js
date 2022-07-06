@@ -73,103 +73,100 @@ const onboard = Onboard({
 });
 
 const Web3State = (props) => {
-  const [state, dispatch] = useReducer(Web3Reducer, initialState);
+	const [state, dispatch] = useReducer(Web3Reducer, initialState);
 
-  const handleAccountsChanged = (accounts) => {
-    // eslint-disable-next-line no-console
-    console.log("accountsChanged", accounts);
-    dispatch({
-      type: "SET_ADDRESS",
-      address: accounts[0],
-    });
-  };
+	const handleAccountsChanged = (accounts) => {
+		// eslint-disable-next-line no-console
+		console.log('accountsChanged', accounts)
+		dispatch({
+		  type: 'SET_ADDRESS',
+		  address: accounts[0],
+		})
+	}
 
-  // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
-  const handleChainChanged = (_hexChainId) => {
-    window.location.reload();
-  };
+	// https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
+	const handleChainChanged = (_hexChainId) => {
+		window.location.reload()
+	}
 
-  const handleDisconnect = (error) => {
-    // eslint-disable-next-line no-console
-    console.log("disconnect", error);
-    disconnect();
-  };
+	const handleDisconnect = (error) => {
+		// eslint-disable-next-line no-console
+		console.log('disconnect', error)
+		disconnect()
+	}
 
-  const connect = async () => {
-    setLoading();
-    setDisplayMessage("Connecting To Wallet Provider");
+	const connect = async () => {
+		setLoading();
+		setDisplayMessage('Connecting To Wallet Provider')
 
-    let provider;
-    let accounts;
-    try {
-      accounts = await onboard.connectWallet();
-      provider = accounts[0].provider;
-    } catch (e) {
-      console.log(e);
-      dispatch({ type: "RESET_WEB3_PROVIDER" });
-      return;
-    }
-    const web3Provider = new Web3(provider);
-    setDisplayMessage("Fetching Account address");
-    const address = accounts[0];
-    const networkId = await web3Provider.eth.net.getId();
+		let provider;
+		let accounts;
+		try {
+			accounts =  await onboard.connectWallet();
+			provider = accounts[0].provider;
+		} catch (e) {
+			console.log(e);
+			dispatch({type:'RESET_WEB3_PROVIDER'})
+			return
+		}
+		const web3Provider = new Web3(provider);
+		setDisplayMessage('Fetching Account address')
+		const address = provider.selectedAddress;
+		const networkId = await web3Provider.eth.net.getId();
 
-    provider.on("accountsChanged", handleAccountsChanged);
-    provider.on("chainChanged", handleChainChanged);
-    provider.on("disconnect", handleDisconnect);
+		provider.on('accountsChanged', handleAccountsChanged)
+		provider.on('chainChanged', handleChainChanged)
+		provider.on('disconnect', handleDisconnect)
 
-    setDisplayMessage("Wallet Connected Successfully");
+		setDisplayMessage('Wallet Connected Successfully')
 
-    dispatch({
-      type: "SET_WEB3_PROVIDER",
-      provider,
-      web3Provider,
-      address,
-      chainId: networkId,
-    });
-  };
+		dispatch({
+		  type: 'SET_WEB3_PROVIDER',
+		  provider,
+		  web3Provider,
+		  address,
+		  chainId: networkId
+		})		
+	};
 
-  const removeListeners = (provider) => {
-    provider.removeListener("accountsChanged", handleAccountsChanged);
-    provider.removeListener("chainChanged", handleChainChanged);
-    provider.removeListener("disconnect", handleDisconnect);
-  };
+	const removeListeners = (provider) => {
+		provider.removeListener('accountsChanged', handleAccountsChanged)
+		provider.removeListener('chainChanged', handleChainChanged)
+		provider.removeListener('disconnect', handleDisconnect)
+	}
 
-  const disconnect = async () => {
-    await state.web3Modal.clearCachedProvider();
-    if (
-      state.provider?.disconnect &&
-      typeof state.provider.disconnect === "function"
-    ) {
-      await state.provider.disconnect();
-    }
-    dispatch({
-      type: "RESET_WEB3_PROVIDER",
-    });
-  };
+	const disconnect = async () => {
+	  await state.web3Modal.clearCachedProvider()
+	  if (state.provider?.disconnect && typeof state.provider.disconnect === 'function') {
+	    await state.provider.disconnect();
+	  }
+	  dispatch({
+	    type: 'RESET_WEB3_PROVIDER',
+	  })
+	}
 
-  const setLoading = () => dispatch({ type: "SET_LOADING" });
+	const setLoading = () => dispatch({ type: 'SET_LOADING' });
 
-  const setDisplayMessage = (message) =>
-    dispatch({ type: "SET_DISPLAY_MESSAGE", payload: message });
+	const setDisplayMessage = (message) => dispatch({ type: 'SET_DISPLAY_MESSAGE', payload: message });
 
-  return (
-    <Web3Context.Provider
-      value={{
-        web3Loading: state.web3Loading,
-        provider: state.provider,
-        web3Provider: state.web3Provider,
-        address: state.address,
-        chainId: state.chainId,
-        web3Modal: state.web3Modal,
-        web3DisplayMessage: state.web3DisplayMessage,
-        connect,
-        disconnect,
-      }}
-    >
-      {props.children}
-    </Web3Context.Provider>
-  );
-};
+	return (
+		<Web3Context.Provider
+			value={{
+				web3Loading: state.web3Loading,
+				provider: state.provider,
+				web3Provider: state.web3Provider,
+				address: state.address,
+				chainId: state.chainId,
+				web3Modal: state.web3Modal,
+				web3DisplayMessage: state.web3DisplayMessage,
+				connect,
+				disconnect
+			}}
+		>
+			{props.children}
+		</Web3Context.Provider>
+		)
+}
+
 
 export default Web3State;

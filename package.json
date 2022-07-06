@@ -18,8 +18,11 @@
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^1.9.3",
     "@chatscope/chat-ui-kit-styles": "^1.2.3",
+    "@web3-onboard/core": "^2.3.2-alpha.4",
+    "@web3-onboard/injected-wallets": "^2.0.11",
+    "@web3-onboard/react": "^2.2.2-alpha.1",
     "abi-decoder": "^2.4.0",
-    "aws-sdk": "^2.1150.0",
+    "aws-sdk": "^2.1167.0",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "cros": "^1.0.1",
@@ -27,11 +30,12 @@
     "dotenv": "^16.0.1",
     "ethers": "^5.6.9",
     "express": "^4.18.1",
+    "fetch": "^1.1.0",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^2.0.0",
+    "node-fetch": "^2.6.1",
     "sass": "^1.52.2",
     "socket.io": "^4.5.1",
     "web3": "^1.7.3",
-"@web3-onboard/core": "^2.3.2-alpha.4",
-"@web3-onboard/injected-wallets": "^2.0.11",
-"@web3-onboard/react": "^2.2.2-alpha.1"
   }
 }

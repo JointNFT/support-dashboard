@@ -7,11 +7,17 @@ const { Client, Intents } = require("discord.js");
 const Web3 = require("web3");
 const utils = require("./utils/transactionDecoders");
 const db = require("./utils/db");
+const s3 = require("./utils/s3");
 const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
+
+const SERVER = "http://localhost:3000/";
+
 var app = express();
 app.use(express.json());
+
+app.use(express.static("public"));
 
 const w3 = new Web3(new Web3.providers.HttpProvider("https://rpcapi.fantom.network"));
 
@@ -38,32 +44,52 @@ var io = require("socket.io")(server, {
     },
 }).listen(server);
 
-var sockets = {};
+var sockets = { support: {}, customers: {} };
 
 io.on("connection", (socket) => {
     // socket object may be used to send specific messages to the new connected client
-    
-    socket.emit("connection", null);
+
+    socket.emit("connection", (data) => {
+        // experimental , we want to move to setting up the account during the connection ideally.
+        if ("type" in data && data.type == "support") {
+            if (!(data.accessToken in sockets.support)) {
+                sockets.support[data.accessToken] = {};
+            }
+            sockets.support[data.accessToken][data.userAddress] = socket.id;
+        } else {
+            if (!(data.accessToken in sockets.customers)) {
+                sockets.customers[data.accessToken] = {};
+            }
+            sockets.customers[data.accessToken][data.userAddress] = socket.id;
+        }
+    });
 
     socket.on("test", (arg) => {
         socket.emit("response", "online");
     });
 
     socket.on("create-account", (data) => {
-        // console.log("create account", data);
         if (data == null || data.userAddress == null || data.accessToken == null) {
             return;
         }
-        console.log('does it even reach here ?');
-        if (data.userAddress != 'support'){
+        if (data.type != "support") {
             chatHandlers.createNewUser(data.userAddress, data.accessToken);
         }
-        io.emit("new-account", {
-            userAddress: data.userAddress,
-            accessToken: data.accessToken,
-        });
-        sockets[data.userAddress] = socket.id;
-        io.to('support').emit("new-account", data);
+        if ("type" in data && data.type == "support") {
+            if (!(data.accessToken in sockets.support)) {
+                sockets.support[data.accessToken] = {};
+            }
+            sockets.support[data.accessToken][data.userAddress] = socket.id;
+        } else {
+            if (!(data.accessToken in sockets.customers)) {
+                sockets.customers[data.accessToken] = {};
+            }
+            sockets.customers[data.accessToken][data.userAddress] = socket.id;
+        }
+        for (supportStaff in sockets.support[data.accessToken]) {
+            io.to(sockets.support[data.accessToken][supportStaff]).emit("new-account", data);
+        }
+        io.to(socket.id).emit("new-account", data);
     });
 
     socket.on("send-message", (data) => {
@@ -71,11 +97,14 @@ io.on("connection", (socket) => {
             io.emit("message", "errored out");
         }
         chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
-        chatHandlers.pushToDiscord(data, client);
-        io.to(socket.id).emit("message", data);
-        io.to(sockets[data.to]).emit("message", data);
-        // io.to(data.userAddress).emit("message", data);
-        // io.emit("message", data);
+        // chatHandlers.pushToDiscord(data, client);
+        let customer = (data.to == "support") ? data.from: data.to;
+        
+        if (sockets.customers[data.accessToken]) io.to(sockets.customers[data.accessToken][customer]).emit("message", data);
+        
+        for (supportStaff in sockets.support[data.accessToken]) {
+            io.to(sockets.support[data.accessToken][supportStaff]).emit("message", data);
+        }
     });
 
     socket.on("disconnect", () => {
@@ -118,15 +147,53 @@ app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
-app.post("/updateUserTag",async function(req, res){
-    var payload = req.body
-    var accessToken = payload.accessToken
-    var userAddress = payload.userAddress
-    var tag = payload.tag
-    if (accessToken != '' && userAddress != '')
-        await db.updateUserTag(userAddress, accessToken, tag)
-    res.send({'status': 'success'});
-})
+app.post("/updateUserTag", async function (req, res) {
+    var payload = req.body;
+    var accessToken = payload.accessToken;
+    var userAddress = payload.userAddress;
+    var tag = payload.tag;
+    if (accessToken != "" && userAddress != "") await db.updateUserTag(userAddress, accessToken, tag);
+    res.send({ status: "success" });
+});
+
+app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function (req, res) {
+    var name = req.body.organizationName;
+    var createdBy = req.body.createdBy;
+    var organizationId = +new Date();
+
+    await db.addNewOrganizationStaff(organizationId, createdBy);
+
+    if (req.body.address != null) {
+        var address = req.body.address.count;
+        await db.addNewOrganization(name, JSON.stringify(createdBy + "," + address), req.file.location, organizationId, createdBy);
+        if (typeof address === "string") {
+            var addressString = address.toLowerCase();
+            await db.addNewOrganizationStaff(organizationId, addressString);
+        } else if (typeof address === "object") {
+            for (let i = 0; i < address.length; i++) {
+                let addressString = address[i].toLowerCase();
+                await db.addNewOrganizationStaff(organizationId, addressString);
+            }
+        }
+    } else {
+        await db.addNewOrganization(name, JSON.stringify(createdBy), req.file.location, organizationId, createdBy);
+    }
+    res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
+});
+app.get("/getOrganizationDetails", async (req, res) => {
+    var address = req.query.address;
+    var details = await db.getStaffDetails(address);
+    var organizationDetails = [];
+    if (details.length == 0) {
+        res.send({ error: "address not registered" });
+    } else {
+        for (var i = 0; i < details.length; i++) {
+            var organizationId = details[i].organizationId;
+            organizationDetails[i] = await db.getOrganizationDetails(organizationId);
+        }
+        res.send({ organizationDetails: organizationDetails });
+    }
+});
 
 app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");
