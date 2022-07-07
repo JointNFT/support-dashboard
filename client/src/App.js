@@ -13,7 +13,7 @@ import Integrations from "./pages/Integrations";
 import Organizations from "./pages/Organizations";
 import Web3Context from "./contexts/web3/Web3Context";
 import SignIn from "./components/SignIn";
-import DiscordContact from "./pages/DIscordContact";
+import DiscordContact from "./pages/DiscordContact";
 
 const SERVER = "http://127.0.0.1:3000";
 
