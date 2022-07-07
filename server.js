@@ -90,6 +90,7 @@ io.on("connection", (socket) => {
             io.to(sockets.support[data.accessToken][supportStaff]).emit("new-account", data);
         }
         io.to(socket.id).emit("new-account", data);
+        
     });
 
     socket.on("send-message", (data) => {
@@ -105,6 +106,7 @@ io.on("connection", (socket) => {
         for (supportStaff in sockets.support[data.accessToken]) {
             io.to(sockets.support[data.accessToken][supportStaff]).emit("message", data);
         }
+        
     });
 
     socket.on("disconnect", () => {

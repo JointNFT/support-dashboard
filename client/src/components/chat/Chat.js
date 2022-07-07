@@ -6,7 +6,7 @@ import { MessagesPanel } from "./MessagesPanel";
 import { io } from "socket.io-client";
 import UserContext from "../../contexts/user/UserContext";
 import Web3Context from "../../contexts/web3/Web3Context";
-const SERVER = "https://dashboard.highfi.me";
+const SERVER = "http://localhost:3000";
 
 const Chat = (props) => {
     const { accessToken } = useContext(UserContext);
@@ -91,8 +91,8 @@ const Chat = (props) => {
             }
         });
         setChannels(channelCopy);
-        if (!(address in channel)) return;
-        const newChannel = channelCopy.find((c) => c.userAddress === channel.address);
+        if (channel == null || !(address in channel)) return;
+        const newChannel = channelCopy.find((c) => c.userAddress == channel.address);
         setChannel(newChannel);
     }, [arrivalMessage]);
 
