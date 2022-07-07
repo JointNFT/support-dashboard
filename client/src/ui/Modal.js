@@ -84,7 +84,7 @@ function ModalForm() {
               </button>
               <Form.Label>Address list </Form.Label>
               <Form.Control
-                      value={address.accounts[0].address}
+                      value={address}
                       placeholder="Enter address"
                       name="createdBy"
                     />
