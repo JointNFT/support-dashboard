@@ -91,7 +91,8 @@ const Chat = (props) => {
             }
         });
         setChannels(channelCopy);
-        const newChannel = channelCopy.find((c) => c.userAddress === arrivalMessage.address);
+        if (!(address in channel)) return;
+        const newChannel = channelCopy.find((c) => c.userAddress === channel.address);
         setChannel(newChannel);
     }, [arrivalMessage]);
 
