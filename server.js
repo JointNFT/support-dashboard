@@ -12,7 +12,7 @@ const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
 
-const SERVER = "http://localhost:3000/";
+const SERVER = "https://dashboard.highfi.me";
 
 var app = express();
 app.use(express.json());
