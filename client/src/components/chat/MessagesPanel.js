@@ -49,41 +49,55 @@ export class MessagesPanel extends React.Component {
   };
 
   render() {
-    let inputStyle = {
+    let highlightPrioritized = {
+      background: 'white'
+    };
+    let highlightCompleted = {
+      background: 'white'
+    };
+    let highlightDeleted = {
       background: 'white'
     };
 
    const markPrioritized=()=>{
-      var property = document.getElementById('button1');
-      property.style.backgroundColor = 'pink'
+      document.getElementById('prioritized').style.backgroundColor = 'pink'
+      document.getElementById('completed').style.backgroundColor = 'white'
+      document.getElementById('deleted').style.backgroundColor = 'white'
       this.props.onTagClick("prioritized");
     };
     const markCompleted=()=>{
-      var property = document.getElementById('button1');
-      property.style.backgroundColor = 'pink'
+      document.getElementById('completed').style.backgroundColor = 'pink'
+      document.getElementById('prioritized').style.backgroundColor = 'white'
+      document.getElementById('deleted').style.backgroundColor = 'white'
       this.props.onTagClick("completed");
     };
     const deleteConversation=()=>{
-      var property = document.getElementById('button1');
-      property.style.backgroundColor = 'pink'
+      document.getElementById('deleted').style.backgroundColor = 'pink'
+      document.getElementById('prioritized').style.backgroundColor = 'white'
+      document.getElementById('completed').style.backgroundColor = 'white'
       this.props.onTagClick("deleted");
     };
     console.log(this.props.channel);
-   // console.log(this.props.channel.tag);
-    /*if(this.props.channel.tag === 'prioritized'){
-      inputStyle = {
-        background:'pink'
-      }
-    }*/
+   
     if (this.props.channel && this.props.channel.tag) {
-     var tag = this.props.channel.tag;
-     if(tag === 'prioritized'){
-      inputStyle = {
-        background:'pink'
+      var tag = this.props.channel.tag;
+      if (tag === 'prioritized') {
+        highlightPrioritized = {
+          background: 'pink'
+        }
       }
-
+      if (tag === 'completed') {
+        highlightCompleted = {
+          background: 'pink'
+        }
+      }
+      if (tag === 'deleted') {
+        highlightDeleted = {
+          background: 'pink'
+        }
+      }
     }
-  }
+        
     let list = [];
     if (this.props.channel && this.props.channel.messages) {
       list = this.props.channel.messages.map((m) => {
@@ -120,13 +134,13 @@ export class MessagesPanel extends React.Component {
               />
               <ConversationHeader.Actions>
                 <div className="icon">
-                  <button className="button1" id="button1" style={inputStyle} onClick={markPrioritized}><AiOutlineStar size={20}/></button>
+                  <button className="prioritized" id="prioritized" style={highlightPrioritized} onClick={markPrioritized}><AiOutlineStar size={20}/></button>
                 </div>
                 <div className="icon">
-                  <button className="button2" id="button2" onClick={markCompleted}><RiCheckFill size={20}  /></button>
+                  <button className="completed" id="completed" style={highlightCompleted} onClick={markCompleted}><RiCheckFill size={20}  /></button>
                 </div>
                 <div className="icon">
-                  <button className="button3" id="button3" onClick={deleteConversation}><BiTrashAlt size={20} /></button>
+                  <button className="deleted" id="deleted" style={highlightDeleted} onClick={deleteConversation}><BiTrashAlt size={20} /></button>
                 </div>
               </ConversationHeader.Actions>
             </ConversationHeader>
