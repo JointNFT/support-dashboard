@@ -25,7 +25,6 @@ const Organizations = () => {
         fetch("/getOrganizationDetails?address=" + userAddress, requestOptions)
             .then((response) => response.text())
             .then((result) => (
-                console.log(JSON.parse(result).organizationDetails),
                 setOrganizations(JSON.parse(result).organizationDetails)             
                 ))
             .catch((error) => console.log("error", error));

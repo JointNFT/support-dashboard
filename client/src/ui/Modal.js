@@ -27,6 +27,12 @@ function ModalForm() {
     setAddressCount(addressCount - 1);
   };
 
+  const isMetamaskAddress = (e) => {
+    if(!e.target.value.startsWith("0x")){
+      e.target.value = '';
+      alert('Address entered is not Metamask address');
+    }    
+  }
  
   return (
     <>
@@ -50,7 +56,7 @@ function ModalForm() {
           <Form form action="/createOrganization" enctype="multipart/form-data" method="post">
             <Form.Group className="mb-3" controlId="formBasicImage">
               <Form.Label>Logo</Form.Label>
-              <Form.Control type="file" placeholder="Logo" name="imageURL"/>
+              <Form.Control type="file" placeholder="Logo" name="imageURL" required/>
               <Form.Text className="text-muted">
                 Insert logo of your organization
               </Form.Text>
@@ -58,7 +64,7 @@ function ModalForm() {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Organization name</Form.Label>
-              <Form.Control type="text" placeholder="Enter organization name" name="organizationName"/>
+              <Form.Control type="text" placeholder="Enter organization name" name="organizationName" required/>
               <Form.Text className="text-muted">
                 Insert organization name
               </Form.Text>
@@ -104,6 +110,7 @@ function ModalForm() {
                       <IoMdRemoveCircleOutline size={20} />{" "}
                     </button>
                     <Form.Control
+                      onChange={isMetamaskAddress}
                       placeholder="Enter address"
                       required
                       name="address[count]"
@@ -113,7 +120,7 @@ function ModalForm() {
                 ))}
             </Form.Group>
 
-            <Button variant="primary" type="submit" value="Upload">
+            <Button variant="primary"  type ="submit" value="Upload" >
               Submit
             </Button>
           </Form>
