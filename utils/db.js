@@ -102,17 +102,23 @@ const getMessages = async (userAddress, accesToken) => {
     return messages;
 };
 
-const updateUserTag = async (userAddress, accessToken, newTag) => {
+const updateUserTag = async (address, token, newTag) => {
     let dbParams = {
         TableName: "ChatUsers",
-        Item: {
-            userAddress: userAddress,
-            accessToken: accessToken,
-            tag: newTag,
+        ExpressionAttributeNames: {
+            "#tag": "tag",
+        },
+        Key: {
+            userAddress: address,
+            accessToken: token,
+        },
+        UpdateExpression: 'set #tag = :newTag',
+        ExpressionAttributeValues: {
+            ':newTag': newTag
         },
     };
 
-    let response = await db.put(dbParams).promise();
+    let response = await db.update(dbParams).promise();
     console.log("response", await response);
     return await response;
 };
