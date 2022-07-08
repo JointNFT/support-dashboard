@@ -33,7 +33,7 @@ const Organizations = () => {
 
     useEffect(() => {
         console.log("at changed", accessToken);
-        getOrganizationDetails(address.accounts[0].address)
+        getOrganizationDetails(address)
     }, [accessToken]);
 
     if (organizations != undefined) {

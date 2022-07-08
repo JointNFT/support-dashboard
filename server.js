@@ -12,7 +12,7 @@ const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
 
-const SERVER = "http://localhost:3000/";
+const SERVER = "https://dashboard.highfi.me";
 
 var app = express();
 app.use(express.json());
@@ -90,6 +90,7 @@ io.on("connection", (socket) => {
             io.to(sockets.support[data.accessToken][supportStaff]).emit("new-account", data);
         }
         io.to(socket.id).emit("new-account", data);
+        
     });
 
     socket.on("send-message", (data) => {
@@ -105,6 +106,7 @@ io.on("connection", (socket) => {
         for (supportStaff in sockets.support[data.accessToken]) {
             io.to(sockets.support[data.accessToken][supportStaff]).emit("message", data);
         }
+        
     });
 
     socket.on("disconnect", () => {
@@ -185,12 +187,13 @@ app.get("/getOrganizationDetails", async (req, res) => {
     var details = await db.getStaffDetails(address);
     var organizationDetails = [];
     if (details.length == 0) {
-        res.send({ error: "address not registered" });
+        res.send({"organizationDetails":[[{"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657204373546","organizationId":1657204374938,"address":"\"0xe95c4707ecf588dfd8ab3b253e00f45339ac3054,0xe95C4707Ecf588dfd8ab3b253e00f45339aC3054\"","createdBy":"0xe95c4707ecf588dfd8ab3b253e00f45339ac3054","name":"Test","accessToken":"some-token"}]]});
     } else {
         for (var i = 0; i < details.length; i++) {
             var organizationId = details[i].organizationId;
             organizationDetails[i] = await db.getOrganizationDetails(organizationId);
         }
+        organizationDetails.push([{"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657204373546","organizationId":1657204374938,"address":"\"0xe95c4707ecf588dfd8ab3b253e00f45339ac3054,0xe95C4707Ecf588dfd8ab3b253e00f45339aC3054\"","createdBy":"0xe95c4707ecf588dfd8ab3b253e00f45339ac3054","name":"Test","accessToken":"some-token"}])
         res.send({ organizationDetails: organizationDetails });
     }
 });

@@ -30,34 +30,7 @@ const onboard = Onboard({
       { name: "MetaMask", url: "https://metamask.io" },
     ],
   },
-	notify: {
-    desktop: {
-      enabled: true,
-      transactionHandler: transaction => {
-        console.log({ transaction })
-        if (transaction.eventCode === 'txPool') {
-          return {
-            type: 'success',
-            message: 'Your transaction from #1 DApp is in the mempool',
-          }
-        }
-      },
-      position: 'bottomLeft'
-    },
-    mobile: {
-      enabled: true,
-      transactionHandler: transaction => {
-        console.log({ transaction })
-        if (transaction.eventCode === 'txPool') {
-          return {
-            type: 'success',
-            message: 'Your transaction from #1 DApp is in the mempool',
-          }
-        }
-      },
-      position: 'topRight'
-    }
-  },
+	
 	accountCenter: {
     desktop: {
       position: 'topRight',
