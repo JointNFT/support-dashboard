@@ -6,7 +6,7 @@ import UserContext from "../contexts/user/UserContext";
 import Web3Context from "../contexts/web3/Web3Context";
 
 const Organizations = () => {
-    const { accessToken, setAccessToken } = useContext(UserContext);
+    const { accessToken, setAccessToken, setOrganizationID } = useContext(UserContext);
     const { address, setAddress } = useContext(Web3Context);
     const [organizations, setOrganizations] = useState([]);
 
@@ -41,14 +41,19 @@ const Organizations = () => {
                 <h3>Organizations</h3>
                 <div className="row-center">
                     {organizations.map((org) => (
-                        <Link to="/conversations/all" className="org-card" onClick={() => storeAccessToken(org[0].accessToken)}>
+                        <Link to="/conversations/all" 
+                            className="org-card" 
+                            onClick={() =>{ 
+                                storeAccessToken(org[0].accessToken);
+                                setOrganizationID(org[0].organizationId)
+                                }}>
                             <img src={org[0].image} alt="" />
                             <h4>{org[0].name}</h4>
                         </Link>
                     ))}
 
                     <button className="custom-btn">
-                        <ModalForm />
+                        <ModalForm mode="create"/>
                     </button>
                 </div>
             </div>
@@ -60,7 +65,7 @@ const Organizations = () => {
                 <p>Not part of any organization at the moment</p>
                 <div className="row-center">
                     <button className="custom-btn">
-                        <ModalForm />
+                        <ModalForm mode="create"/>
                     </button>
                 </div>
             </div>

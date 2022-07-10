@@ -6,8 +6,8 @@ import { MessagesPanel } from "./MessagesPanel";
 import { io } from "socket.io-client";
 import UserContext from "../../contexts/user/UserContext";
 import Web3Context from "../../contexts/web3/Web3Context";
-const SERVER = "https://dashboard.highfi.me";
-
+//const SERVER = "https://dashboard.highfi.me";
+const SERVER = "http://localhost:3001";
 const Chat = (props) => {
     const { accessToken } = useContext(UserContext);
     const { address, setAddress } = useContext(Web3Context);

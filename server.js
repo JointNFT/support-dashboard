@@ -197,7 +197,15 @@ app.get("/getOrganizationDetails", async (req, res) => {
         res.send({ organizationDetails: organizationDetails });
     }
 });
-
+app.get('/getOrganization', async (req, res) => {
+    const id = req.query.orgID;
+    const organization = await db.getOrganizationDetails(parseInt(id));
+    if(!organization) {
+        res.status(404).json({ message: "Not found"})
+    }
+    res.send({data: organization[0]})
+    
+})
 app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");
 

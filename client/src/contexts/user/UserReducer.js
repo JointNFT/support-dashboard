@@ -7,6 +7,7 @@ export const initialState = {
     loading: true,
     connectedCount: 0,
     accessToken: "",
+    orgID: null
 };
 
 export const localState = JSON.parse(localStorage.getItem("state"));
@@ -30,6 +31,12 @@ export default function UserReducer(state, action) {
                 ...state,
                 accessToken: action.accessToken,
             };
+        case "SET_ORG_ID":
+          console.log(action.orgID)
+            return {
+                ...state,
+                orgID: action.orgID
+            }
         default:
             return state;
     }

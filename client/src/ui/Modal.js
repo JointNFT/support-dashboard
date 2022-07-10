@@ -4,8 +4,9 @@ import { GrAddCircle } from "react-icons/gr";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import Web3Context from "../contexts/web3/Web3Context";
 
+// mode = "create" || "edit"
 
-function ModalForm() {
+function ModalForm({ mode }) {
   const [show, setShow] = useState(false);
   const [addressCount, setAddressCount] = useState(0);
   const { address, setAddress } = useContext(Web3Context);
@@ -36,12 +37,24 @@ function ModalForm() {
  
   return (
     <>
+    {
+      mode === 'create' ? (
       <button
         style={{ border: "none", outline: "none", background: "transparent" }}
         onClick={handleShow}
       >
         <GrAddCircle size={30} />{" "}
       </button>
+      ) : (
+        <button
+        onClick={handleShow}
+        className="btn btn-primary"
+        >
+          Edit
+        </button> 
+      )
+    }
+      
 
       <Modal
         show={show}
