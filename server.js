@@ -192,14 +192,14 @@ app.get("/getOrganizationDetails", async (req, res) => {
     var details = await db.getStaffDetails(address);
     var organizationDetails = [];
     if (details.length == 0) {
-        //res.send({"organizationDetails":[{"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657204373546","organizationId":1657204374938,"address":"\"0xe95c4707ecf588dfd8ab3b253e00f45339ac3054,0xe95C4707Ecf588dfd8ab3b253e00f45339aC3054\"","createdBy":"0xe95c4707ecf588dfd8ab3b253e00f45339ac3054","name":"Test","accessToken":"some-token"}]});
-        res.send({ organizationDetails: organizationDetails });
+        res.send({"organizationDetails":[{"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657539645820","organizationId":1657539646021,"addresses":'["0x02215bf5ba4c4041cabdac097070bff0283bca19"]',"createdBy":"0x02215bf5ba4c4041cabdac097070bff0283bca19","name":"test","accessToken":"some-token"}]});
+
     } else {
         for (var i = 0; i < details.length; i++) {
             var organizationId = details[i].organizationId;
             organizationDetails[i] = await db.getOrganizationDetails(organizationId);
         }
-       // organizationDetails.push({"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657204373546","organizationId":1657204374938,"address":"\"0xe95c4707ecf588dfd8ab3b253e00f45339ac3054,0xe95C4707Ecf588dfd8ab3b253e00f45339aC3054\"","createdBy":"0xe95c4707ecf588dfd8ab3b253e00f45339ac3054","name":"Test","accessToken":"some-token"})
+        organizationDetails.push({"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657539645820","organizationId":1657539646021,"address":'["0x02215bf5ba4c4041cabdac097070bff0283bca19"]',"createdBy":"0x02215bf5ba4c4041cabdac097070bff0283bca19","name":"test","accessToken":"some-token"})
         res.send({ organizationDetails: organizationDetails });
     }
 });
