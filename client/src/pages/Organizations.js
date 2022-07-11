@@ -35,15 +35,15 @@ const Organizations = () => {
         getOrganizationDetails(address)
     }, [accessToken]);
 
-    if (organizations != undefined) {
+    if (organizations.length != 0) {
         return (
             <div className="organizations">
                 <h3>Organizations</h3>
                 <div className="row-center">
                     {organizations.map((org) => (
-                        <Link to="/conversations/all" className="org-card" onClick={() => storeAccessToken(org[0].accessToken)}>
-                            <img src={org[0].image} alt="" />
-                            <h4>{org[0].name}</h4>
+                        <Link to="/conversations/all" className="org-card" onClick={() => storeAccessToken(org.accessToken)}>
+                            <img src={org.image} alt="" />
+                            <h4>{org.name}</h4>
                         </Link>
                     ))}
 
@@ -57,7 +57,7 @@ const Organizations = () => {
         return (
             <div className="organizations">
                 <h3>Organizations</h3>
-                <p>Not part of any organization at the moment</p>
+                <h6>Not part of any organization at the moment</h6>
                 <div className="row-center">
                     <button className="custom-btn">
                         <ModalForm />
