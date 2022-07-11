@@ -2,15 +2,12 @@ import React,{ useEffect, useContext, useState } from "react";
 import UserContext from "../contexts/user/UserContext";
 import Sidebar from '../components/layout/Sidebar/Sidebar'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import ModalForm from "../ui/Modal";
-// dev only
-const addressList = [
-  "0xcbca97f55E57BFF371800Eb68BE9d93242E565a3",
-  "0xcbca97f55E57BFF371800Eb68BE9d93242E565a3",
-  "0xcbca97f55E57BFF371800Eb68BE9d93242E565a3",
-  "0xcbca97f55E57BFF371800Eb68BE9d93242E565a3",
-  "0xcbca97f55E57BFF371800Eb68BE9d93242E565a3"
-];
+import EditModal from "../ui/EditOrgModal";
+
+const convertAddressList = (str) => {
+  const regex = /(0x[A-Z|0-9|a-z]*)(?=")/g;
+  return str?.match(regex)
+}
 const AccessKey = ({ content }) => {
   const [ show, setShow ] = React.useState(false);
   const toggleShowKey = React.useCallback(() => {
@@ -67,7 +64,7 @@ const AccessKeys = ({signOut}) => {
                 <p>View all your access keys</p>
               </div>
               <div>            
-                <ModalForm mode="edit" />               
+               <EditModal org={{...organization, addresses: convertAddressList(organization?.addresses)}}/>           
               </div>
             </div>
           </div>
@@ -96,7 +93,7 @@ const AccessKeys = ({signOut}) => {
                 <div className="name column">Staff List</div>
                 <div className="name column">
                   {                   
-                    organization?.address?.substring(1,organization?.address?.length - 1)?.split(",")?.map((a,i )=> <div key={i}>{a}</div>)
+                    convertAddressList(organization?.addresses)?.map((a,i )=> <div key={i}>{a}</div>)
                   }
                 </div>
               </div>

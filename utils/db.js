@@ -128,11 +128,11 @@ const addNewOrganization = async (organizationName, address, image, organization
         TableName: "Organization",
         Item: {
             organizationId: organizationId,
-            address: address,
+            createdBy: createdBy,
+            addresses: address,
             image: image,
             name: organizationName,
-            accessToken: makeAccessToken(24),
-            createdBy: createdBy
+            accessToken: makeAccessToken(24)            
         },
     };
 
@@ -164,7 +164,7 @@ const getOrganizationDetails = async (organizationId) => {
     }
     const res = await db.query(params).promise();
     const OrganizationDetails = (await res)?.Items;
-    return OrganizationDetails;
+    return OrganizationDetails[0];
 }
 
 const makeAccessToken = (length) => {

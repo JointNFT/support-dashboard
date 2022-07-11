@@ -35,7 +35,7 @@ const Organizations = () => {
         getOrganizationDetails(address)
     }, [accessToken]);
 
-    if (organizations != undefined) {
+    if (organizations.length != 0) {
         return (
             <div className="organizations">
                 <h3>Organizations</h3>
@@ -44,16 +44,15 @@ const Organizations = () => {
                         <Link to="/conversations/all" 
                             className="org-card" 
                             onClick={() =>{ 
-                                storeAccessToken(org[0].accessToken);
-                                setOrganizationID(org[0].organizationId)
+                                storeAccessToken(org.accessToken);
+                                setOrganizationID(org.organizationId)
                                 }}>
-                            <img src={org[0].image} alt="" />
-                            <h4>{org[0].name}</h4>
+                            <img src={org.image} alt="" />
+                            <h4>{org.name}</h4>
                         </Link>
                     ))}
-
                     <button className="custom-btn">
-                        <ModalForm mode="create"/>
+                        <ModalForm />
                     </button>
                 </div>
             </div>
@@ -62,10 +61,10 @@ const Organizations = () => {
         return (
             <div className="organizations">
                 <h3>Organizations</h3>
-                <p>Not part of any organization at the moment</p>
+                <h6>Not part of any organization at the moment</h6>
                 <div className="row-center">
                     <button className="custom-btn">
-                        <ModalForm mode="create"/>
+                        <ModalForm />
                     </button>
                 </div>
             </div>
