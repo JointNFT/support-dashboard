@@ -4,26 +4,26 @@ import { GrAddCircle } from "react-icons/gr";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import Web3Context from "../contexts/web3/Web3Context";
 
-function ModalForm({ org }) {
+function ModalForm({ org, onUpdateSuccess }) {
   const [show, setShow] = useState(false);
   const [addressList, setAddressList] = useState([]);
-  const [ addressCount, setAddressCount ] = useState(0)
+  const [addressCount, setAddressCount] = useState(0);
   const [formData, setFormData] = useState({});
   useEffect(() => {
-    if(!show) {
-        return;
+    if (!show) {
+      return;
     }
     setFormData({
-        name: org?.name || "",
-        organizationId: org?.organizationId || null,
-        addresses: org?.addresses || [],
-        image: null,
-        createdBy: org?.createdBy || "",
-      });
-      const list = org?.addresses?.filter(a => a !== org?.createdBy);
-      setAddressList(list);
-      setAddressCount(list?.length);
-  },[org, show]);
+      name: org?.name || "",
+      organizationId: org?.organizationId || null,
+      addresses: org?.addresses || [],
+      image: null,
+      createdBy: org?.createdBy || "",
+    });
+    const list = org?.addresses?.filter((a) => a !== org?.createdBy);
+    setAddressList(list);
+    setAddressCount(list?.length);
+  }, [org, show]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -31,16 +31,16 @@ function ModalForm({ org }) {
   const count = useMemo(() => {
     return [...Array(addressCount).keys()];
   }, [addressCount]);
-  console.log(count)
+  console.log(count);
   const incrementCount = (e) => {
     e.preventDefault();
     setAddressCount(addressCount + 1);
   };
 
-  const decrementCount = (e,index) => {
+  const decrementCount = (e, index) => {
     e.preventDefault();
-    const removedAddress = addressList[index]
-    const tempList = addressList?.filter(a => a !== removedAddress);
+    const removedAddress = addressList[index];
+    const tempList = addressList?.filter((a) => a !== removedAddress);
     setAddressList(tempList);
     setAddressCount(addressCount - 1);
   };
@@ -51,16 +51,40 @@ function ModalForm({ org }) {
       alert("Address entered is not Metamask address");
     }
   };
- 
-  const handleSubmit = () => {
+  const updateOrgInfo = (orgID, formData) => {
+    fetch("/updateOrganization?orgID=" + orgID, {
+      method: "PATCH",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        
+        onUpdateSuccess(result?.organization);
+        setShow(false)
+        console.log("Success:", result);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const data = {
-        ...formData,
-        addresses: [formData?.createdBy,...addressList]
+      ...formData,
+      addresses: [formData?.createdBy, ...addressList],
+    };
+    const form = new FormData();
+    form.append('name', data.name);
+    form.append('organizationId', data.organizationId);
+    form.append('createdBy', data.createdBy )
+    if(data.image) {
+      form.append('image',data.image)
     }
-    console.log(data)
-  }
-  console.log(org)
-  console.log(formData)
+    form.append('addresses',data.addresses)
+   
+    updateOrgInfo(org?.organizationId, form);
+  };
+  console.log(formData);
   return (
     <>
       <button onClick={handleShow} className="btn btn-primary">
@@ -84,7 +108,9 @@ function ModalForm({ org }) {
                 placeholder="Logo"
                 name="imageURL"
                 required
-                onChange={(e) => setFormData({...formData, image: e.target.files[0]})}
+                onChange={(e) =>
+                  setFormData({ ...formData, image: e.target.files[0] })
+                }
               />
               <Form.Text className="text-muted">
                 Insert logo of your organization
@@ -99,7 +125,9 @@ function ModalForm({ org }) {
                 placeholder="Enter organization name"
                 name="organizationName"
                 required
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
               />
               <Form.Text className="text-muted">
                 Insert organization name
@@ -142,9 +170,9 @@ function ModalForm({ org }) {
                         border: "none",
                         outline: "none",
                       }}
-                      onClick={(e) => { 
+                      onClick={(e) => {
                         decrementCount(e, el);
-                    }}
+                      }}
                     >
                       <IoMdRemoveCircleOutline size={20} />{" "}
                     </button>
@@ -153,8 +181,8 @@ function ModalForm({ org }) {
                         isMetamaskAddress(e);
                         const tempList = [...addressList];
                         tempList[el] = e.target.value;
-                        setAddressList(tempList)
-                    }}
+                        setAddressList(tempList);
+                      }}
                       placeholder="Enter address"
                       required
                       value={addressList?.[el] || ""}

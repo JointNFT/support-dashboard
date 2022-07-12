@@ -51,6 +51,9 @@ const AccessKeys = ({signOut}) => {
   useEffect(() => {
     getOrganization(orgID)
   },[]);
+  const onUpdateSuccess = React.useCallback((org) => {
+    setOrganization(org)
+  },[])
   console.log(organization)
   return (
     <div className="wrapp">
@@ -64,7 +67,7 @@ const AccessKeys = ({signOut}) => {
                 <p>View all your access keys</p>
               </div>
               <div>            
-               <EditModal org={{...organization, addresses: convertAddressList(organization?.addresses)}}/>           
+               <EditModal org={{...organization, addresses: (organization?.addresses)}} onUpdateSuccess={onUpdateSuccess}/>           
               </div>
             </div>
           </div>
@@ -93,7 +96,7 @@ const AccessKeys = ({signOut}) => {
                 <div className="name column">Staff List</div>
                 <div className="name column">
                   {                   
-                    convertAddressList(organization?.addresses)?.map((a,i )=> <div key={i}>{a}</div>)
+                    (organization?.addresses)?.map((a,i )=> <div key={i}>{a}</div>)
                   }
                 </div>
               </div>
