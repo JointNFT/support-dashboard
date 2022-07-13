@@ -213,7 +213,7 @@ const Chat = (props) => {
                     Socket Connecting...
                 </div>
             )} */}
-            <ChannelList channels={channels} onSelectChannel={handleChannelSelect} type={props.type} accessToken={accessToken} />
+            <ChannelList channels={channels} onSelectChannel={handleChannelSelect} type={props.type} accessToken={accessToken} address = {address}/>
             <MessagesPanel onSendMessage={handleSendMessage} onTagClick={handleUserTag} channel={channel} organization={organization} assignConversation={assignConversation}/>
         </div>
     );
