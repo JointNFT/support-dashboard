@@ -14,6 +14,8 @@ import {
   RiCheckFill,
 } from "react-icons/ri";
 import { format } from "timeago.js";
+import {Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import "./MessagePanel.scss";
 const messageListReferance = React.createRef();
 
@@ -78,7 +80,11 @@ export class MessagesPanel extends React.Component {
       this.props.onTagClick("deleted");
     };
     console.log(this.props.channel);
-   
+
+    const assignConversation = (address) =>{
+      this.props.assignConversation(address);
+    }
+
     if (this.props.channel && this.props.channel.tag) {
       var tag = this.props.channel.tag;
       if (tag === 'prioritized') {
@@ -133,6 +139,18 @@ export class MessagesPanel extends React.Component {
                 userName={this.props.channel.userAddress}
               />
               <ConversationHeader.Actions>
+                <div>
+                  <Menu>
+                    <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                      Assign To
+                    </MenuButton>
+                    <MenuList>
+                    {JSON.parse(this.props.organization.addresses).map((address) => (
+                        <MenuItem onClick={() => assignConversation(address)}>{address}</MenuItem>
+                    ))}
+                    </MenuList>
+                  </Menu>
+                </div>
                 <div className="icon">
                   <button className="prioritized" id="prioritized" style={highlightPrioritized} onClick={markPrioritized}><AiOutlineStar size={20}/></button>
                 </div>
