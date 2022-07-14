@@ -34,12 +34,12 @@ const onboard = Onboard({
 	accountCenter: {
     desktop: {
       position: 'topRight',
-      enabled: true,
+      enabled: false,
       minimal: true
     },
     mobile: {
       position: 'topRight',
-      enabled: true,
+      enabled: false,
       minimal: true
     }
   },
@@ -50,6 +50,7 @@ const Web3State = (props) => {
 
 	const handleAccountsChanged = (accounts) => {
 		// eslint-disable-next-line no-console
+		
 		console.log('accountsChanged', accounts)
 		dispatch({
 		  type: 'SET_ADDRESS',
@@ -62,10 +63,17 @@ const Web3State = (props) => {
 		window.location.reload()
 	}
 
-	const handleDisconnect = (error) => {
+	const handleDisconnect = async (error) => {
 		// eslint-disable-next-line no-console
-		console.log('disconnect', error)
-		disconnect()
+		console.log('handling disconnect')
+		try{
+			await onboard.disconnectWallet();
+		} catch {
+			console.log('tried disconnecting wallet after wallet was disconnected')
+		}
+		dispatch({
+			type: 'RESET_WEB3_PROVIDER',
+		  })
 	}
 
 	const connect = async () => {
@@ -108,15 +116,7 @@ const Web3State = (props) => {
 		provider.removeListener('disconnect', handleDisconnect)
 	}
 
-	const disconnect = async () => {
-	  await state.web3Modal.clearCachedProvider()
-	  if (state.provider?.disconnect && typeof state.provider.disconnect === 'function') {
-	    await state.provider.disconnect();
-	  }
-	  dispatch({
-	    type: 'RESET_WEB3_PROVIDER',
-	  })
-	}
+	
 
 	const setLoading = () => dispatch({ type: 'SET_LOADING' });
 
@@ -133,7 +133,7 @@ const Web3State = (props) => {
 				web3Modal: state.web3Modal,
 				web3DisplayMessage: state.web3DisplayMessage,
 				connect,
-				disconnect
+				handleDisconnect
 			}}
 		>
 			{props.children}
