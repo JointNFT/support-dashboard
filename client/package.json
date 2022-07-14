@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@aws-amplify/ui-react": "^2.20.0",
+    "@chakra-ui/icons": "^2.0.3",
     "@chakra-ui/react": "^2.2.1",
     "@chatscope/chat-ui-kit-react": "^1.9.3",
     "@chatscope/chat-ui-kit-styles": "^1.2.3",

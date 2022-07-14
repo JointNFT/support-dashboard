@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useContext, useState, useRef } from "react";
+import React, { Component, useEffect, useContext, useState, useRef, useCallback } from "react";
 import { Nav } from "react-bootstrap";
 import { ChannelList } from "./ChannelList";
 import "./chat.scss";
@@ -87,7 +87,7 @@ const Chat = (props) => {
         setChannels(channelCopy);
         const newChannel = channelCopy.find((c) => c.userAddress === arrivalMessage.userAddress);
         setChannel(newChannel);
-    }, [arrivalMessage]);
+    }, [arrivalMessage, channels]);
 
     function handleUserTag(tag) {
         var myHeaders = new Headers();
@@ -122,34 +122,36 @@ const Chat = (props) => {
             console.log("channels list =" + channels);
         });
     }
-
-    function handleChannelSelect(address) {
+ 
+    const handleChannelSelect = useCallback((address) => {
         let channelsCopy = channels;
-        console.log("first handle channel select", channels);
-
+        
         let channel = channelsCopy.find((c) => {
             return c.userAddress === address;
         });
-
-        if (channel == undefined) {
+        
+        console.log("first handle channel select", channels);
+        setChannel(channel)
+        console.log('CHANNEL', channel)
+        
+        if (channel === undefined) {
             return;
         }
+        
 
         fetch(SERVER + "/getMessages?address=" + address + "&accessToken=" + accessToken).then(async (response) => {
             let data = await response.json();
             channel.messages = data?.messages || "";
             channelsCopy.forEach((c) => {
-                if (c.userAddress == channel.userAddress) {
+                if (c.userAddress === channel.userAddress) {
                     c.unread = 0;
                 }
             });
             setChannel(channel);
             setChannels(channelsCopy);
         });
-
-        // this.socket.emit('create-account', {'address':'0xe96', accessToken: "some-token"});
-    }
-
+    }, [channels])
+  
     function handleSendMessage(address, text) {
         socket.current.emit("send-message", {
             id: Date.now(),
@@ -161,6 +163,7 @@ const Chat = (props) => {
             timestamp: +new Date(),
         });
     }
+
 
     return (
         <div className="chat-app">
