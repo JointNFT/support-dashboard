@@ -145,6 +145,7 @@ const getStaffDetails = async (userAddress) => {
     const params = {
         TableName: "OrganizationStaff",
         KeyConditionExpression: "address = :address",
+        IndexName: "address-organizationId-index",
         ExpressionAttributeValues: {
             ":address": address,
         }
