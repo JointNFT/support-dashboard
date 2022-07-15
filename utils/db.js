@@ -224,6 +224,7 @@ const addNewOrganizationStaff = async (organizationId, address) => {
     let response = await db.put(dbParams).promise();
     return await response;
 };
+//
 const getStaffs = async(organizationId) => {
     try {
         const params = {

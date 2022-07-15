@@ -187,6 +187,7 @@ app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function
 
     res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
 });
+//
 app.patch("/updateOrganization", s3.uploadLogo.single("image"), async(req,res) => {
     const orgID = req.query?.orgID
     const { name, addresses, createdBy } = req.body || {};

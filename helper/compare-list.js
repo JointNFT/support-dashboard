@@ -1,14 +1,14 @@
-const diffStaff = (fStaff,sStaff) => {
-	const fObj = fStaff.reduce((acc,value) => {
+const diffList = (fList,sList) => {
+	const fObj = fList.reduce((acc,value) => {
     acc[value.address] = true
    return acc;
   },{});
-  const diffStaff = sStaff.reduce((acc,value) => {
+  const diffList = sList.reduce((acc,value) => {
   		if(!fObj[value.address]) {
         acc.push(value)
       }
       return acc
   },[])
-  return diffStaff;
+  return diffList;
 };
-module.exports = diffStaff;
+module.exports = diffList;
