@@ -6,10 +6,13 @@ import ChatList from "../../components/ChatList";
 import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
+import Web3Context from "../../contexts/web3/Web3Context";
 const SERVER = "https://dashboard.highfi.me";
 
 function All(props) {
   const { accessToken } = useContext(UserContext);
+  const { organization } = useContext(UserContext);
+  const { address, setAddress } = useContext(Web3Context);
   const [channels, setChannels] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState({});
   const [newAccount, setNewAccount] = useState({});
@@ -117,6 +120,30 @@ function All(props) {
       .catch((error) => console.log("error", error));
   }
 
+  function assignConversation(address) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var userAdderss = channel.userAddress;
+    var accessToken = channel.accessToken;
+    var raw = JSON.stringify({
+      userAddress: userAdderss,
+      accessToken: accessToken,
+      assignTo: address,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("/assignConversation", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }
+
   async function loadChannels() {
     console.log("accessToken - ", accessToken);
     fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(
@@ -189,11 +216,14 @@ function All(props) {
           type={"all"}
           accessToken={accessToken}
           heading="All Conversations"
+          address = {address}
         />
         <MessageList
           onSendMessage={handleSendMessage}
           onTagClick={handleUserTag}
           channel={channel}
+          organization={organization}
+          assignConversation={assignConversation}
         />
         <Tranasaction />
       </Flex>

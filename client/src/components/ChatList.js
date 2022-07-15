@@ -24,6 +24,8 @@ const ChatList = (props) => {
         if (props.type != null && props.type == (c.tag != null ? c.tag : ""))
           return true;
         else if (props.type == null || props.type == "all") return true;
+        else if (props.type == "me" && props.address == c.assignedTo)
+            return true;
         else return false;
       })
       .map((c) => {

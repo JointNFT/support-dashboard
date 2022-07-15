@@ -8,7 +8,12 @@ import {
   Stack,
   Tag,
   Text,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem
 } from "@chakra-ui/react";
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { RiErrorWarningFill } from "react-icons/ri";
@@ -39,6 +44,10 @@ const MessageList = (props) => {
       send();
     }
   };
+
+  const assignConversation = (address) =>{
+    props.assignConversation(address);
+  }
 
   const style = {
     width: "inherit",
@@ -95,7 +104,19 @@ const MessageList = (props) => {
             gap={"10px"}
             marginRight="2"
           >
-            <Text fontSize={"sm"}>Assigned To</Text>
+            
+            <div>
+                  <Menu>
+                    <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                      Assign To
+                    </MenuButton>
+                    <MenuList>
+                    {JSON.parse(props.organization.addresses).map((address) => (
+                        <MenuItem onClick={() => assignConversation(address)}>{address}</MenuItem>
+                    ))}
+                    </MenuList>
+                  </Menu>
+                </div>
             <IconButton colorScheme="teal" aria-label="Call Segun" size="xs" />
             <Heading as="h6" size="sm">
               @Adam
