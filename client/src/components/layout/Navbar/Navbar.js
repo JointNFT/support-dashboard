@@ -25,9 +25,17 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import { useContext} from "react";
+import UserContext from "../../../contexts/user/UserContext";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
+  const { organization, setOrganization } = useContext(UserContext);
+
+  const resetOrganization = () => {
+    setOrganization(null);
+    window.location.href = "/";
+  }
 
   return (
     <Box width={"100%"} h='8vh'>
@@ -88,6 +96,9 @@ export default function WithSubnavigation() {
 							</MenuItem>
               <MenuItem _hover={{ background: "#ebf8ff" }}>
 								<Link style={{ textDecoration: 'none', color: '#666' }} to="/settings">Settings</Link>
+							</MenuItem>
+              <MenuItem _hover={{ background: "#ebf8ff" }} style={{ textDecoration: 'none', color: '#666' }} onClick={() => resetOrganization()}>
+								Switch Organization
 							</MenuItem>
               <MenuItem _hover={{ background: "#ebf8ff" }}>
 								<Link style={{ textDecoration: 'none', color: '#666' }} to="/logout">Logout</Link>
