@@ -31,7 +31,6 @@ function ModalForm({ org, onUpdateSuccess }) {
   const count = useMemo(() => {
     return [...Array(addressCount).keys()];
   }, [addressCount]);
-  console.log(count);
   const incrementCount = (e) => {
     e.preventDefault();
     setAddressCount(addressCount + 1);
@@ -58,10 +57,8 @@ function ModalForm({ org, onUpdateSuccess }) {
     })
       .then((response) => response.json())
       .then((result) => {
-        
         onUpdateSuccess(result?.organization);
-        setShow(false)
-        console.log("Success:", result);
+        setShow(false);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -69,22 +66,17 @@ function ModalForm({ org, onUpdateSuccess }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      ...formData,
-      addresses: [formData?.createdBy, ...addressList],
-    };
     const form = new FormData();
-    form.append('name', data.name);
-    form.append('organizationId', data.organizationId);
-    form.append('createdBy', data.createdBy )
-    if(data.image) {
-      form.append('image',data.image)
+    form.append("name", formData.name);
+    form.append("organizationId", formData.organizationId);
+    form.append("createdBy", formData.createdBy);
+    if (formData.image) {
+      form.append("image", formData.image);
     }
-    form.append('addresses',data.addresses)
-   
+    form.append("addresses",  [formData.createdBy, ...addressList]);
     updateOrgInfo(org?.organizationId, form);
   };
-  console.log(formData);
+
   return (
     <>
       <button onClick={handleShow} className="btn btn-primary">
