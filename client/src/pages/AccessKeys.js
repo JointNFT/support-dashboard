@@ -29,7 +29,7 @@ const AccessKey = ({ content }) => {
 }
 const AccessKeys = ({signOut}) => {
   const { orgID } = useContext(UserContext);
-  const [organization, setOrganization ] = React.useState({});
+  const [organization, setOrganization ] = React.useState();
 
   function getOrganization(orgID) {
     var myHeaders = new Headers();
@@ -41,10 +41,10 @@ const AccessKeys = ({signOut}) => {
     };
 
     fetch("/getOrganization?orgID=" + orgID, requestOptions)
-        .then((response) => response.text())
+        .then((response) => response.json())
         .then(async(result) => {
-            const org = await JSON.parse(result);
-            setOrganization(org.data)             
+          console.log(result)
+            setOrganization(result.data)             
         })
         .catch((error) => console.log("error", error));
 }
@@ -54,6 +54,10 @@ const AccessKeys = ({signOut}) => {
   const onUpdateSuccess = React.useCallback((org) => {
     setOrganization(org)
   },[])
+  let addresses = organization?.addresses;
+  if(typeof organization?.addresses === "string") {
+    addresses = convertAddressList(organization.addresses)
+  }
   console.log(organization)
   return (
     <div className="wrapp">
@@ -67,7 +71,7 @@ const AccessKeys = ({signOut}) => {
                 <p>View all your access keys</p>
               </div>
               <div>            
-               <EditModal org={{...organization, addresses: (organization?.addresses)}} onUpdateSuccess={onUpdateSuccess}/>           
+               <EditModal org={{...organization, addresses }} onUpdateSuccess={onUpdateSuccess}/>           
               </div>
             </div>
           </div>
@@ -96,7 +100,7 @@ const AccessKeys = ({signOut}) => {
                 <div className="name column">Staff List</div>
                 <div className="name column">
                   {                   
-                    (organization?.addresses)?.map((a,i )=> <div key={i}>{a}</div>)
+                    addresses?.map((a,i )=> <div key={i}>{a}</div>)
                   }
                 </div>
               </div>
