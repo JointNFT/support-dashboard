@@ -151,7 +151,7 @@ const updateOrganization = async(organizationName, addresses, image, organizatio
             ExpressionAttributeNames: {'#nameOrg' : 'name'},
             ExpressionAttributeValues: {
                 ":orgName": organizationName,
-                ":orgAddresses": addresses.split(',')
+                ":orgAddresses": addresses 
             },
             ReturnValues: "ALL_NEW",
         };
@@ -160,15 +160,12 @@ const updateOrganization = async(organizationName, addresses, image, organizatio
              ...dbParams,
              ExpressionAttributeValues: {
                 ":orgName": organizationName,
-                ":orgAddresses": addresses.split(','),
+                ":orgAddresses": addresses,
                 ":orgImage": image
              }
             }
          }
-         console.log(dbParams);
         let response = await db.update(dbParams).promise();
-       
-        console.log("response", await response);
         return await response;
     } catch (error) {
         console.log(error)
@@ -227,7 +224,68 @@ const addNewOrganizationStaff = async (organizationId, address) => {
     let response = await db.put(dbParams).promise();
     return await response;
 };
+const getStaffs = async(organizationId) => {
+    try {
+        const params = {
+            TableName: "OrganizationStaff",
+            KeyConditionExpression: "organizationId = :organizationId",
+            ExpressionAttributeValues: {
+                ":organizationId": organizationId,
+            }
+        }
+        const res = await db.query(params).promise();
+        const staffs = (await res)?.Items;
+        console.log(staffs)
+        return staffs
+    
+    } catch (error) {
+        console.log(error)
+    }
+};
+const deleteOrganizationStaffs = async (list) => {
+ try {
+    const params = {
+        RequestItems: {
+            OrganizationStaff : []
+        }
+      };
+      list.forEach(a => {
+        params.RequestItems.OrganizationStaff.push({
+            DeleteRequest: {
+              Key: {
+                organizationId: a.organizationId,
+                address: a.address
+              }
+            }
+          });
+      })
+      await db.batchWrite(params).promise();
+ } catch (error) {
+    console.log(error)
+ }
+}
+
+const updateOrganizationStaffs = async  (list) => {
+    try {
+       const params = {
+           RequestItems: {
+               "OrganizationStaff" : []
+           }
+         };
+         list.forEach(a => {
+           params.RequestItems["OrganizationStaff"].push({
+               PutRequest: {
+                 Item: {...a}
+               }
+             });
+         })
+         await db.batchWrite(params).promise();
+    } catch (error) {
+       console.log(error)
+    }
+}
 module.exports = {
     getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, updateUserTag, 
-    addNewOrganization, addNewOrganizationStaff, getStaffDetails, getOrganizationDetails, updateOrganization
+    addNewOrganization, addNewOrganizationStaff, getStaffDetails, getOrganizationDetails, updateOrganization,
+    updateOrganizationStaffs, deleteOrganizationStaffs, getStaffs
 };
