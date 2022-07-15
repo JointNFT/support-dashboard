@@ -11,7 +11,7 @@ const s3 = require("./utils/s3");
 const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
-
+const compareStaff = require('./helper/compare-list');
 const SERVER = "https://dashboard.highfi.me";
 
 var app = express();
@@ -190,9 +190,19 @@ app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function
 app.patch("/updateOrganization", s3.uploadLogo.single("image"), async(req,res) => {
     const orgID = req.query?.orgID
     const { name, addresses, createdBy } = req.body || {};
-    console.log(req.body)
-    const response = await db.updateOrganization( name, addresses, req?.file?.location , orgID, createdBy);
+ 
+    const addressList = addresses.split(',');
+    const submitStaff = addressList.map(a => ({ organizationId: parseInt(orgID), address: a}));
+    const currentStaffs = await db.getStaffs(parseInt(orgID));
+  
+    const deleteList = compareStaff(submitStaff,currentStaffs);
+    const addList = compareStaff(currentStaffs,submitStaff);
+
+    await db.deleteOrganizationStaffs(deleteList)
+    await db.updateOrganizationStaffs(addList);
+    const response = await db.updateOrganization( name, addressList, req?.file?.location , orgID, createdBy);
     res.json({organization: response?.Attributes})
+     
 })
 app.get("/getOrganizationDetails", async (req, res) => {
     var address = req.query.address;
@@ -216,8 +226,7 @@ app.get('/getOrganization', async (req, res) => {
     if(!organization) {
         res.status(404).json({ message: "Not found"})
     }
-    res.send({data: organization})
-    
+    res.json({data: organization})
 })
 app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");
