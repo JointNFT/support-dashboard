@@ -158,6 +158,15 @@ app.post("/updateUserTag", async function (req, res) {
     res.send({ status: "success" });
 });
 
+app.post("/assignConversation", async function (req, res) {
+    var payload = req.body;
+    var accessToken = payload.accessToken;
+    var userAddress = payload.userAddress;
+    var assignTo = payload.assignTo;
+    if (accessToken != "" && userAddress != "") await db.assignConversation(userAddress, accessToken, assignTo);
+    res.send({ status: "success" });
+});
+
 app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function (req, res) {
     var name = req.body.organizationName;
     var createdBy = req.body.createdBy;
@@ -199,7 +208,7 @@ app.get("/getOrganizationDetails", async (req, res) => {
             var organizationId = details[i].organizationId;
             organizationDetails[i] = await db.getOrganizationDetails(organizationId);
         }
-        organizationDetails.push({"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657539645820","organizationId":1657539646021,"address":'["0x02215bf5ba4c4041cabdac097070bff0283bca19"]',"createdBy":"0x02215bf5ba4c4041cabdac097070bff0283bca19","name":"test","accessToken":"some-token"})
+        organizationDetails.push({"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657539645820","organizationId":1657539646021,"addresses":'["0x02215bf5ba4c4041cabdac097070bff0283bca19"]',"createdBy":"0x02215bf5ba4c4041cabdac097070bff0283bca19","name":"test","accessToken":"some-token"})
         res.send({ organizationDetails: organizationDetails });
     }
 });

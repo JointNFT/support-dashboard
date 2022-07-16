@@ -26,6 +26,8 @@ export class ChannelList extends React.Component {
             return true;
           else if (this.props.type == null || this.props.type == "all")
             return true;
+          else if (this.props.type == "me" && this.props.address == c.assignedTo)
+            return true;
           else return false;
         })
         .map((c) => {

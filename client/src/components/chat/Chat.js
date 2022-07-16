@@ -6,10 +6,12 @@ import { MessagesPanel } from "./MessagesPanel";
 import { io } from "socket.io-client";
 import UserContext from "../../contexts/user/UserContext";
 import Web3Context from "../../contexts/web3/Web3Context";
+import userContext from "../../contexts/user/UserContext";
 const SERVER = "https://dashboard.highfi.me";
 
 const Chat = (props) => {
     const { accessToken } = useContext(UserContext);
+    const { organization } = useContext(userContext);
     const { address, setAddress } = useContext(Web3Context);
     const [channels, setChannels] = useState([]);
     const [arrivalMessage, setArrivalMessage] = useState({});
@@ -22,7 +24,7 @@ const Chat = (props) => {
         console.log(address, 'address changed');
         loadChannels();
         configureSocket();
-        
+
     }, [address]);
 
     function configureSocket() {
@@ -37,14 +39,14 @@ const Chat = (props) => {
             userAddress: address,
             accessToken: accessToken
         });
-        
+
         if (socket == null) {
             return;
         }
 
         socket.current.on("connection", () => {
             setLoading(false);
-            
+
             if (channel) {
                 handleChannelSelect(channel.id);
             }
@@ -120,6 +122,30 @@ const Chat = (props) => {
             .catch((error) => console.log("error", error));
     }
 
+    function assignConversation(address) {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var userAdderss = channel.userAddress;
+        var accessToken = channel.accessToken;
+        var raw = JSON.stringify({
+            userAddress: userAdderss,
+            accessToken: accessToken,
+            assignTo: address,
+        });
+
+        var requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow",
+        };
+
+        fetch("/assignConversation", requestOptions)
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.log("error", error));
+    }
+
     async function loadChannels() {
         console.log("accessToken - ", accessToken);
         fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(async (response) => {
@@ -187,8 +213,8 @@ const Chat = (props) => {
                     Socket Connecting...
                 </div>
             )} */}
-            <ChannelList channels={channels} onSelectChannel={handleChannelSelect} type={props.type} accessToken={accessToken} />
-            <MessagesPanel onSendMessage={handleSendMessage} onTagClick={handleUserTag} channel={channel} />
+            <ChannelList channels={channels} onSelectChannel={handleChannelSelect} type={props.type} accessToken={accessToken} address = {address}/>
+            <MessagesPanel onSendMessage={handleSendMessage} onTagClick={handleUserTag} channel={channel} organization={organization} assignConversation={assignConversation}/>
         </div>
     );
 };

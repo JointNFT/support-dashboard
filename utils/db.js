@@ -123,6 +123,27 @@ const updateUserTag = async (address, token, newTag) => {
     return await response;
 };
 
+const assignConversation = async (userAddress, token, assignedTo) => {
+    let dbParams = {
+        TableName: "ChatUsers",
+        ExpressionAttributeNames: {
+            "#assignedTo": "assignedTo",
+        },
+        Key: {
+            userAddress: userAddress,
+            accessToken: token,
+        },
+        UpdateExpression: 'set #assignedTo = :assignedTo',
+        ExpressionAttributeValues: {
+            ':assignedTo': assignedTo
+        },
+    };
+
+    let response = await db.update(dbParams).promise();
+    console.log("response", await response);
+    return await response;
+};
+
 const addNewOrganization = async (organizationName, address, image, organizationId, createdBy) => {
     let dbParams = {
         TableName: "Organization",
@@ -195,5 +216,6 @@ const addNewOrganizationStaff = async (organizationId, address) => {
 };
 module.exports = {
     getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, updateUserTag, 
-    addNewOrganization, addNewOrganizationStaff, getStaffDetails, getOrganizationDetails
+    addNewOrganization, addNewOrganizationStaff, getStaffDetails, getOrganizationDetails,
+    assignConversation 
 };
