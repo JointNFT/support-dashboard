@@ -16,7 +16,6 @@ export class ChannelList extends React.Component {
   render() {
     let list = [];
     if (this.props.channels && this.props.channels.map) {
-      console.log("channels", this.props.channels);
       list = this.props.channels
         .filter((c) => {
           if (

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import UserContext from "./contexts/user/UserContext";
 import AccessKeys from "./pages/AccessKeys";
-import All from "./pages/conversations/All";
 import Closed from "./pages/conversations/Closed";
 import GetStarted from "./pages/conversations/GetStarted";
 import Me from "./pages/conversations/Me";
@@ -14,6 +13,9 @@ import Organizations from "./pages/Organizations";
 import Web3Context from "./contexts/web3/Web3Context";
 import SignIn from "./components/SignIn";
 import DiscordContact from "./pages/DiscordContact";
+import Navbar from "./components/layout/Navbar/Navbar";
+import WithSubnavigation from "./components/layout/Navbar/Navbar";
+import All from "./pages/chat/All";
 
 
 function App({ signOut, user }) {
@@ -48,18 +50,19 @@ function App({ signOut, user }) {
         { (address) ?  
           <>
             <Router>
+              <WithSubnavigation />
             {/*<Sidebar signOut={signOut}/>*/}
             <Routes>
                 <Route path="/" element={<Organizations />} />
-                <Route path="/getstarted" element={<GetStarted signOut={disconnectHandler} />} />
-                <Route path="/conversations/all" element={<All signOut={disconnectHandler} />} />
-                <Route path="/conversations/me" element={<Me signOut={disconnectHandler} />} />
-                <Route path="/conversations/prioritized" element={<Prioritized signOut={disconnectHandler} />} />
-                <Route path="/conversations/closed" element={<Closed />} signOut={disconnectHandler} />
-                <Route path="/integrations" element={<Integrations />} signOut={disconnectHandler} />
-                <Route path="/customers" element={<Customers />} signOut={disconnectHandler} />
-                <Route path="/accessKeys" element={<AccessKeys />} signOut={disconnectHandler} />
-                <Route path="/discord" element={<DiscordContact />} signOut={disconnectHandler} />
+                <Route path="/getstarted" element={<GetStarted signOut={signOut} />} />
+                <Route path="/conversations/all" element={<All />} />
+                <Route path="/conversations/me" element={<Me signOut={signOut} />} />
+                <Route path="/conversations/prioritized" element={<Prioritized signOut={signOut} />} />
+                <Route path="/conversations/closed" element={<Closed />} signOut={signOut} />
+                <Route path="/integrations" element={<Integrations />} signOut={signOut} />
+                <Route path="/customers" element={<Customers />} signOut={signOut} />
+                <Route path="/accessKeys" element={<AccessKeys />} signOut={signOut} />
+                <Route path="/discord" element={<DiscordContact />} signOut={signOut} />
             </Routes>
         </Router>
           </>
