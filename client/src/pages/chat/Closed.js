@@ -8,7 +8,7 @@ import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
 const SERVER = "https://dashboard.highfi.me";
 
-function All(props) {
+function Closed(props) {
   const { accessToken } = useContext(UserContext);
   const [channels, setChannels] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState({});
@@ -187,9 +187,9 @@ function All(props) {
         <ChatList
           channels={channels}
           onSelectChannel={handleChannelSelect}
-          type={"all"}
+          type={"closed"}
           accessToken={accessToken}
-          heading="All Conversations"
+          heading="Closed"
         />
         <MessageList
           onSendMessage={handleSendMessage}
@@ -202,4 +202,4 @@ function All(props) {
   );
 }
 
-export default All;
+export default Closed;

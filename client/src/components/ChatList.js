@@ -17,6 +17,8 @@ const ChatList = (props) => {
     console.log("chh", channelId);
   };
 
+  console.log('props', props.type)
+
   let list = [];
   if (props.channels && props.channels.map) {
     list = props.channels

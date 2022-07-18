@@ -1,6 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useCallback } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import ChatList from "../../components/ChatList";
 import MessageList from "../../components/MessageList";
@@ -8,7 +7,7 @@ import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
 const SERVER = "https://dashboard.highfi.me";
 
-function All(props) {
+function Me(props) {
   const { accessToken } = useContext(UserContext);
   const [channels, setChannels] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState({});
@@ -187,7 +186,7 @@ function All(props) {
         <ChatList
           channels={channels}
           onSelectChannel={handleChannelSelect}
-          type={"all"}
+          type={"me"}
           accessToken={accessToken}
           heading="All Conversations"
         />
@@ -202,4 +201,4 @@ function All(props) {
   );
 }
 
-export default All;
+export default Me;
