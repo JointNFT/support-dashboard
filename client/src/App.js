@@ -6,7 +6,6 @@ import AccessKeys from "./pages/AccessKeys";
 import GetStarted from "./pages/conversations/GetStarted";
 import Customers from "./pages/Customers";
 import Integrations from "./pages/Integrations";
-import Organizations from "./pages/Organizations";
 import Web3Context from "./contexts/web3/Web3Context";
 import SignIn from "./components/SignIn";
 import DiscordContact from "./pages/DiscordContact";
@@ -16,6 +15,7 @@ import All from "./pages/chat/All";
 import Closed from "./pages/chat/Closed";
 import Prioritized from "./pages/chat/Prioritized";
 import Me from "./pages/chat/Me";
+import Organizations from "./pages/Organizations/Organizations";
 
 const SERVER = "http://127.0.0.1:3000";
 
