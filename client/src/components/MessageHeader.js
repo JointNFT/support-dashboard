@@ -9,7 +9,12 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const MessageHeader = ({src, userName}) => {
+const MessageHeader = ({src, userName, onCloseConversation}) => {
+
+  const closeConversation = () => {
+    onCloseConversation(); 
+    window.location.href = "/conversations/all"
+  }
   return (
     <Flex align="center" mb={"5"} width="100%" as={"a"} href="#" mt="3">
       <Box width="60px">
@@ -47,11 +52,12 @@ const MessageHeader = ({src, userName}) => {
             Assign to Me
           </MenuButton>
           <MenuList>
-            <MenuItem>Download</MenuItem>
-            <MenuItem>Create a Copy</MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
+            <MenuItem isDisabled>Download</MenuItem>
+            <MenuItem isDisabled>Create a Copy</MenuItem>
+            <MenuItem isDisabled>Mark as Draft</MenuItem>
+            <MenuItem isDisabled>Delete</MenuItem>
+            <MenuItem isDisabled>Attend a Workshop</MenuItem>
+            <MenuItem onClick={() => closeConversation() }>Close</MenuItem>
           </MenuList>
         </Menu>
       </Box>
