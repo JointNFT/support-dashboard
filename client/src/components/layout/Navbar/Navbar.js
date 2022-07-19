@@ -30,6 +30,8 @@ import UserContext from "../../../contexts/user/UserContext";
 
 import { Link as ReactLink } from "react-router-dom";
 
+import { Link as ReactLink } from "react-router-dom";
+
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { organization, setOrganization } = useContext(UserContext);
@@ -116,15 +118,6 @@ export default function WithSubnavigation() {
               <MenuItem _hover={{ background: "#ebf8ff" }} style={{ textDecoration: 'none', color: '#666' }} onClick={() => resetOrganization()}>
 								Switch Organization
 							</MenuItem>
-              <MenuItem _hover={{ background: "#ebf8ff" }}>
-                <Link
-                  as={ReactLink}
-                  style={{ textDecoration: "none", color: "#666" }}
-                  to="/settings"
-                >
-                  Settings
-                </Link>
-              </MenuItem>
               <MenuItem _hover={{ background: "#ebf8ff" }}>
                 <Link
                   as={ReactLink}
