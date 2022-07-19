@@ -30,6 +30,7 @@ const MessageList = (props) => {
   const send = () => {
     if (input && input != "") {
       props.onSendMessage(props.channel.userAddress, input);
+      console.log(props.channel)
       setInput("");
     }
   };
@@ -145,24 +146,18 @@ const MessageList = (props) => {
           onCloseConversation={props.onCloseConversation}
         />
         <MessageBox channel={props.channel} list={list} />
-        
 
-        {props.channel && (
-          <MessageBar
-            handleInput={handleInput}
-            input={input}
-            handleKeypress={handleKeypress}
-            send={send}
-          />
-        )}
+        <MessageBar
+          handleInput={handleInput}
+          input={input}
+          handleKeypress={handleKeypress}
+          send={send}
+        />
       </Box>
     );
   } else {
     return (
-      <div
-        className="messages-panel empty-panel ms-auto"
-        style={{ display: "flex", justifyContent: "center" }}
-      >
+      <Box height={"70vh"} width="40%" mt="5" textAlign={'center'} display='flex' flexDir={'column'} gap='20px'> 
         <div className="icon">
           <RiErrorWarningFill size={80} color={"#1890FF"} />
         </div>
@@ -170,6 +165,8 @@ const MessageList = (props) => {
         <p>It looks like no channels have been set up yet!</p>
         <button
           style={{
+            width:'50%',
+            margin:'0 auto',
             background: "#1890ff",
             fontSize: "14px",
             color: "#fff",
@@ -180,7 +177,7 @@ const MessageList = (props) => {
         >
           Get Started
         </button>
-      </div>
+      </Box>
     );
   }
 };

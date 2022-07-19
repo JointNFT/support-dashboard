@@ -1,18 +1,14 @@
 import { Box, Flex } from "@chakra-ui/react";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useCallback } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import ChatList from "../../components/ChatList";
 import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
-import Web3Context from "../../contexts/web3/Web3Context";
 const SERVER = "https://dashboard.highfi.me";
 
-function All(props) {
+function Me(props) {
   const { accessToken } = useContext(UserContext);
-  const { organization } = useContext(UserContext);
-  const { address, setAddress } = useContext(Web3Context);
   const [channels, setChannels] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState({});
   const [newAccount, setNewAccount] = useState({});
@@ -122,53 +118,6 @@ function All(props) {
       .catch((error) => console.log("error", error));
   }
 
-  function closeConversation() {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var userAdderss = channel.userAddress;
-    var accessToken = channel.accessToken;
-    var raw = JSON.stringify({
-      userAddress: userAdderss,
-      accessToken: accessToken
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch("/closeConversation", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  }
-
-  function assignConversation(address) {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var userAdderss = channel.userAddress;
-    var accessToken = channel.accessToken;
-    var raw = JSON.stringify({
-      userAddress: userAdderss,
-      accessToken: accessToken,
-      assignTo: address,
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch("/assignConversation", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  }
-
   async function loadChannels() {
     console.log("accessToken - ", accessToken);
     fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(
@@ -237,18 +186,14 @@ function All(props) {
         <ChatList
           channels={channels}
           onSelectChannel={handleChannelSelect}
-          type={"all"}
+          type={"me"}
           accessToken={accessToken}
           heading="All Conversations"
-          address = {address}
         />
         <MessageList
           onSendMessage={handleSendMessage}
           onTagClick={handleUserTag}
           channel={channel}
-          organization={organization}
-          assignConversation={assignConversation}
-          onCloseConversation={closeConversation}
         />
         <Tranasaction />
       </Flex>
@@ -256,4 +201,4 @@ function All(props) {
   );
 }
 
-export default All;
+export default Me;
