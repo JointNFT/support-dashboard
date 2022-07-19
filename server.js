@@ -11,7 +11,7 @@ const s3 = require("./utils/s3");
 const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
-
+const compareStaff = require('./helper/compare-list');
 const SERVER = "https://dashboard.highfi.me";
 
 var app = express();
@@ -171,7 +171,7 @@ app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function
     var name = req.body.organizationName;
     var createdBy = req.body.createdBy;
     var organizationId = +new Date();
-
+    console.log(req.body.address)
     await db.addNewOrganizationStaff(organizationId, createdBy);
 
     var addressList = [];
@@ -196,6 +196,24 @@ app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function
 
     res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
 });
+//
+app.patch("/updateOrganization", s3.uploadLogo.single("image"), async(req,res) => {
+    const orgID = req.query?.orgID
+    const { name, addresses, createdBy } = req.body || {};
+ 
+    const addressList = addresses.split(',');
+    const submitStaff = addressList.map(a => ({ organizationId: parseInt(orgID), address: a}));
+    const currentStaffs = await db.getStaffs(parseInt(orgID));
+  
+    const deleteList = compareStaff(submitStaff,currentStaffs);
+    const addList = compareStaff(currentStaffs,submitStaff);
+
+    await db.deleteOrganizationStaffs(deleteList)
+    await db.updateOrganizationStaffs(addList);
+    const response = await db.updateOrganization( name, addressList, req?.file?.location , orgID, createdBy);
+    res.json({organization: response?.Attributes})
+     
+})
 app.get("/getOrganizationDetails", async (req, res) => {
     var address = req.query.address;
     var details = await db.getStaffDetails(address);
@@ -212,7 +230,14 @@ app.get("/getOrganizationDetails", async (req, res) => {
         res.send({ organizationDetails: organizationDetails });
     }
 });
-
+app.get('/getOrganization', async (req, res) => {
+    const id = req.query.orgID;
+    const organization = await db.getOrganizationDetails(parseInt(id));
+    if(!organization) {
+        res.status(404).json({ message: "Not found"})
+    }
+    res.json({data: organization})
+})
 app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");
 

@@ -39,6 +39,13 @@ const UserState = (props) => {
         });
     };
 
+    const setOrganizationID = async (orgID) => {
+        console.log("orgID is being set", orgID);
+        dispatch({
+            type: "SET_ORG_ID",
+           orgID
+        });
+    }
     return (
         <UserContext.Provider
             value={{
@@ -46,7 +53,9 @@ const UserState = (props) => {
                 setAccessToken: setAccessToken,
                 accessToken: state.accessToken,
                 setOrganization: setOrganization,
-                organization: state.organization
+                organization: state.organization,
+                setOrganizationID,
+                orgID: state.orgID
             }}
         >
             {props.children}

@@ -7,17 +7,14 @@ import Web3Context from "../contexts/web3/Web3Context";
 import userContext from "../contexts/user/UserContext";
 
 const Organizations = () => {
-    const { accessToken, setAccessToken } = useContext(UserContext);
-    const {organization , setOrganization} = useContext(userContext);
+    const { accessToken, setAccessToken, setOrganizationID } = useContext(UserContext);
     const { address, setAddress } = useContext(Web3Context);
     const [organizations, setOrganizations] = useState([]);
 
     const storeAccessToken = (accessToken) => {
         setAccessToken(accessToken);
     };
-    const storeOrganization = (organization) => {
-        setOrganization(organization);
-    };
+    
 
     function getOrganizationDetails(userAddress) {
         var myHeaders = new Headers();
@@ -47,12 +44,16 @@ const Organizations = () => {
                 <h3>Organizations</h3>
                 <div className="row-center">
                     {organizations.map((org) => (
-                        <Link to="/conversations/all" className="org-card" onClick={() => storeOrganization(org)}>
+                        <Link to="/conversations/all" 
+                            className="org-card" 
+                            onClick={() =>{ 
+                                storeAccessToken(org.accessToken);
+                                setOrganizationID(org.organizationId)
+                                }}>
                             <img src={org.image} alt="" />
                             <h4>{org.name}</h4>
                         </Link>
                     ))}
-
                     <button className="custom-btn">
                         <ModalForm />
                     </button>

@@ -17,6 +17,8 @@ import Navbar from "./components/layout/Navbar/Navbar";
 import WithSubnavigation from "./components/layout/Navbar/Navbar";
 import All from "./pages/chat/All";
 
+//const SERVER = "http://127.0.0.1:3000";
+const SERVER = "http://localhost:3001";
 
 function App({ signOut, user }) {
     const [data, setData] = useState(null);
