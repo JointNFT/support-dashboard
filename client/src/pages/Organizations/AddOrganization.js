@@ -30,7 +30,7 @@ const AddOrganization = () => {
         padding={22}
         gap="10px"
       >
-        <AddIcon color='green' />
+        <AddIcon color='green' height="50px" />
         <Text fontSize="18px">MegaCrypto</Text>
       </Flex>
       <HStack justifyContent="center">

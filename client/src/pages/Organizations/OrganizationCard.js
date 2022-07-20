@@ -12,11 +12,12 @@ import {
 import React from "react";
 import AddOrganization from "./AddOrganization";
 import OrganizationStack from "./OrganizationStack";
+import { Link } from "react-router-dom";
 
-const OrganizationCard = () => {
+const OrganizationCard = ({ storeAccessToken, organization }) => {
   return (
     <Box
-      width={{ xl: '25%', lg: "30%", sm: "100%", md: "100%" }}
+      width={{ xl: "25%", lg: "30%", sm: "100%", md: "100%" }}
       bg="white"
       rounded={"lg"}
       height={{
@@ -31,13 +32,19 @@ const OrganizationCard = () => {
         as="h6"
         fontSize={"22px"}
         padding={22}
-        gap='10px'
+        gap="10px"
       >
-        <Image src="/Vector.png" />
-        <Text fontSize='18px'>MegaCrypto</Text>
+        <Image src={organization.image} width='50px' />
+        <Text fontSize="18px">MegaCrypto</Text>
       </Flex>
       <HStack>
-        <Button colorScheme="blue" width={"70%"}>
+        <Button
+          as={Link}
+          to={"/conversations/all"}
+          onClick={() => storeAccessToken(organization.accessToken)}
+          colorScheme="blue"
+          width={"70%"}
+        >
           Open Conversations
         </Button>
         <Button colorScheme="gray" color="darkblue.100" width="30%">
