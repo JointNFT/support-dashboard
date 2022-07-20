@@ -28,6 +28,8 @@ import {
 import { useContext} from "react";
 import UserContext from "../../../contexts/user/UserContext";
 
+import { Link as ReactLink } from "react-router-dom";
+
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { organization, setOrganization } = useContext(UserContext);
@@ -38,7 +40,7 @@ export default function WithSubnavigation() {
   }
 
   return (
-    <Box width={"100%"} h='8vh'>
+    <Box width={"100%"} h="8vh">
       <Flex
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
@@ -48,9 +50,9 @@ export default function WithSubnavigation() {
         borderStyle={"solid"}
         borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
-        alignSelf='center'
-        width='80%'
-        mx='auto'
+        alignSelf="center"
+        width="80%"
+        mx="auto"
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
@@ -66,9 +68,17 @@ export default function WithSubnavigation() {
             aria-label={"Toggle Navigation"}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }} align='center' >
-            <img src="./heart.png" alt="" style={{ margin: '0 5px', height: '80%' }} />
-            <img src="./lg.png" alt="" style={{ height: '80%' }} />
+        <Flex
+          flex={{ base: 1 }}
+          justify={{ base: "center", md: "start" }}
+          align="center"
+        >
+          <img
+            src="./heart.png"
+            alt=""
+            style={{ margin: "0 5px", height: "80%" }}
+          />
+          <img src="./lg.png" alt="" style={{ height: "80%" }} />
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -92,8 +102,14 @@ export default function WithSubnavigation() {
             </MenuButton>
             <MenuList>
               <MenuItem _hover={{ background: "#ebf8ff" }}>
-								<Link style={{ textDecoration: 'none', color: '#666' }} to="/profile">Profile</Link>
-							</MenuItem>
+                <Link
+                  as={ReactLink}
+                  style={{ textDecoration: "none", color: "#666" }}
+                  to="/profile"
+                >
+                  Profile
+                </Link>
+              </MenuItem>
               <MenuItem _hover={{ background: "#ebf8ff" }}>
 								<Link style={{ textDecoration: 'none', color: '#666' }} to="/settings">Settings</Link>
 							</MenuItem>
@@ -101,8 +117,23 @@ export default function WithSubnavigation() {
 								Switch Organization
 							</MenuItem>
               <MenuItem _hover={{ background: "#ebf8ff" }}>
-								<Link style={{ textDecoration: 'none', color: '#666' }} to="/logout">Logout</Link>
-							</MenuItem>
+                <Link
+                  as={ReactLink}
+                  style={{ textDecoration: "none", color: "#666" }}
+                  to="/settings"
+                >
+                  Settings
+                </Link>
+              </MenuItem>
+              <MenuItem _hover={{ background: "#ebf8ff" }}>
+                <Link
+                  as={ReactLink}
+                  style={{ textDecoration: "none", color: "#666" }}
+                  to="/logout"
+                >
+                  Logout
+                </Link>
+              </MenuItem>
             </MenuList>
           </Menu>
           {/*<Button
@@ -136,7 +167,8 @@ const DesktopNav = () => {
             <PopoverTrigger>
               <Link
                 p={2}
-                href={navItem.href ?? "#"}
+                as={ReactLink}
+                to={navItem.href ?? "#"}
                 fontSize={"sm"}
                 fontWeight={500}
                 color={linkColor}
@@ -144,9 +176,9 @@ const DesktopNav = () => {
                   textDecoration: "none",
                   color: linkHoverColor,
                 }}
-								>
+              >
                 {navItem.label}
-								{<ChevronDownIcon />}
+                {<ChevronDownIcon />}
               </Link>
             </PopoverTrigger>
 
@@ -176,7 +208,8 @@ const DesktopNav = () => {
 const DesktopSubNav = ({ label, href, subLabel }) => {
   return (
     <Link
-      href={href}
+      as={ReactLink}
+      to={href}
       role={"group"}
       display={"block"}
       p={2}
@@ -226,7 +259,7 @@ const MobileNav = () => {
 
 const MobileNavItem = ({ label, children, href }) => {
   const { isOpen, onToggle } = useDisclosure();
-
+  console.log('href', href)
   return (
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
@@ -267,7 +300,7 @@ const MobileNavItem = ({ label, children, href }) => {
         >
           {children &&
             children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
+              <Link key={child.label} py={2} as={ReactLink} to={child.href}>
                 {child.label}
               </Link>
             ))}
@@ -295,7 +328,7 @@ const NAV_ITEMS = [
       },
       {
         label: "Closed",
-        href: "/closed",
+        href: "/conversations/closed",
       },
     ],
   },
@@ -314,6 +347,6 @@ const NAV_ITEMS = [
   },
   {
     label: "Settings",
-    href: "#",
+    href: "/accessKeys",
   },
 ];

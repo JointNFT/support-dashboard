@@ -3,19 +3,19 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import UserContext from "./contexts/user/UserContext";
 import AccessKeys from "./pages/AccessKeys";
-import Closed from "./pages/conversations/Closed";
 import GetStarted from "./pages/conversations/GetStarted";
-import Me from "./pages/conversations/Me";
-import Prioritized from "./pages/conversations/Prioritized";
 import Customers from "./pages/Customers";
 import Integrations from "./pages/Integrations";
-import Organizations from "./pages/Organizations";
 import Web3Context from "./contexts/web3/Web3Context";
 import SignIn from "./components/SignIn";
 import DiscordContact from "./pages/DiscordContact";
 import Navbar from "./components/layout/Navbar/Navbar";
 import WithSubnavigation from "./components/layout/Navbar/Navbar";
 import All from "./pages/chat/All";
+import Closed from "./pages/chat/Closed";
+import Prioritized from "./pages/chat/Prioritized";
+import Me from "./pages/chat/Me";
+import Organizations from "./pages/Organizations/Organizations";
 
 //const SERVER = "http://127.0.0.1:3000";
 const SERVER = "http://localhost:3001";
@@ -58,7 +58,7 @@ function App({ signOut, user }) {
                 <Route path="/" element={<Organizations />} />
                 <Route path="/getstarted" element={<GetStarted signOut={signOut} />} />
                 <Route path="/conversations/all" element={<All />} />
-                <Route path="/conversations/me" element={<Me signOut={signOut} />} />
+                <Route path="/conversations/me" element={<Me />} />
                 <Route path="/conversations/prioritized" element={<Prioritized signOut={signOut} />} />
                 <Route path="/conversations/closed" element={<Closed />} signOut={signOut} />
                 <Route path="/integrations" element={<Integrations />} signOut={signOut} />

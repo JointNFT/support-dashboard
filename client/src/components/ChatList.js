@@ -10,12 +10,19 @@ import {
 import React from "react";
 import ChatBox from "./ChatBox";
 import { format } from "timeago.js";
+import { useState } from "react";
 
 const ChatList = (props) => {
-  const handleClick = (channelId) => {
+  const handleClick = (channelId, id) => {
     props.onSelectChannel(channelId);
+    console.log('id', id)
+    setIsActive(channelId)
     console.log("chh", channelId);
   };
+
+  const [isActive, setIsActive] = useState(null)
+
+  console.log('props', props.type)
 
   let list = [];
   if (props.channels && props.channels.map) {
@@ -114,13 +121,15 @@ const ChatList = (props) => {
               <TabPanel>
                 {list.map((conversationInfo) => (
                   <ChatBox
-                    active
+                    isActive={isActive}
+                    setIsActive={setIsActive}
                     src={conversationInfo.avatar}
                     name={conversationInfo.title.slice(0, 10) + "..."}
                     info={conversationInfo.subtitle}
                     unreadCnt={conversationInfo.unread}
                     lastActivityTime={format(conversationInfo.date)}
                     handleClick={() => handleClick(conversationInfo.title)}
+                    id={conversationInfo.title}
                   />
                 ))}
               </TabPanel>

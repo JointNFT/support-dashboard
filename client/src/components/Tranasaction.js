@@ -1,3 +1,4 @@
+import { ArrowUpIcon, InfoIcon } from "@chakra-ui/icons";
 import {
   Badge,
   Box,
@@ -6,41 +7,44 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  IconButton,
   Input,
   Select,
   Stack,
   Switch,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { InfoIcon, ArrowUpIcon } from "@chakra-ui/icons";
+import React, { useRef, useState } from "react";
 
 const SERVER = "https://dashboard.highfi.me";
 
 const Tranasaction = () => {
   let [transactions, setTransactions] = useState([]);
-
-  let [userAddress, setUserAddress] = useState("0x5c146cd18fa53914580573c9b9604588529406ca");
-  let [contractAddresses, setContractAddresses] = useState("0xad337077480134028b7c68af290e891ce28076eb");
+  const toast = useToast();
+  const inputRef = useRef(null);
+  let [userAddress, setUserAddress] = useState(
+    "0x5c146cd18fa53914580573c9b9604588529406ca"
+  );
+  let [contractAddresses, setContractAddresses] = useState(
+    "0xad337077480134028b7c68af290e891ce28076eb"
+  );
   let [chain, setChain] = useState("ftm");
 
   const handleUserAddresInput = (e) => {
-      setUserAddress(e.target.value);
+    setUserAddress(e.target.value);
   };
 
   const handleContractAddressInput = (e) => {
-      setContractAddresses(e.target.value);
+    setContractAddresses(e.target.value);
   };
 
   const handleSelectInput = (e) => {
-      setChain(e.target.value);
-  }
+    setChain(e.target.value);
+  };
 
   const send = (e) => {
     fetchTransactions(userAddress, contractAddresses, chain);
   };
-
 
   const fetchTransactions = async (userAddress, contractAddresses, chain) => {
     fetch(
@@ -55,6 +59,30 @@ const Tranasaction = () => {
       let data = await response.json();
       setTransactions(data.filteredTransactions);
       console.log(transactions);
+    });
+  };
+
+  const copyHandler = (e) => {
+    toast({
+      title: "Copied.",
+      description: "Text copied to clipboard.",
+      status: "info",
+      duration: 9000,
+      isClosable: true,
+    });
+    var copyText = inputRef.current;
+
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+    /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyText.value);
+  };
+
+  const pasteHandler = (e) => {
+    navigator.clipboard.readText().then((clipText) => {
+      return (inputRef.current.value = clipText);
     });
   };
 
@@ -88,19 +116,32 @@ const Tranasaction = () => {
               alignItems="center"
               justifyContent={"center"}
               bg="gray.100"
+              onClick={pasteHandler}
+              cursor="pointer"
+              _hover={{
+                background: "gray.200",
+              }}
             >
               Paste
             </Flex>
-            <Input value={userAddress} width='60%' type='text' onChange={handleUserAddresInput} />
-            {/*<Text fontSize={"lg"} width="60%" bg="#fff" p="3">
-              0x64sfa561fsa3f21as3sfa213sa1f
-            </Text>*/}
+            <Input
+              value={userAddress}
+              width="60%"
+              type="text"
+              onChange={handleUserAddresInput}
+              ref={inputRef}
+            />
             <Flex
               fontSize={"sm"}
               width={"20%"}
               alignItems="center"
               justifyContent={"center"}
               bg="gray.100"
+              onClick={copyHandler}
+              cursor="pointer"
+              _hover={{
+                background: "gray.200",
+              }}
             >
               Copy
             </Flex>
@@ -127,7 +168,13 @@ const Tranasaction = () => {
           mt="5"
           justifyContent={"space-between"}
         >
-          <Button colorScheme="teal" size="sm" p={"4"} fontSize="sm" onClick={send}>
+          <Button
+            colorScheme="teal"
+            size="sm"
+            p={"4"}
+            fontSize="sm"
+            onClick={send}
+          >
             Fetch Transactions
           </Button>
           <Flex alignItems="center">
