@@ -158,6 +158,14 @@ app.post("/updateUserTag", async function (req, res) {
     res.send({ status: "success" });
 });
 
+app.post("/closeConversation", async function (req, res) {
+    var payload = req.body;
+    var accessToken = payload.accessToken;
+    var userAddress = payload.userAddress;
+    if (accessToken != "" && userAddress != "") await db.closeConversation(userAddress, accessToken);
+    res.send({ status: "success" });
+});
+
 app.post("/assignConversation", async function (req, res) {
     var payload = req.body;
     var accessToken = payload.accessToken;

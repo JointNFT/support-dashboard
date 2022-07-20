@@ -122,6 +122,29 @@ function All(props) {
       .catch((error) => console.log("error", error));
   }
 
+  function closeConversation() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var userAdderss = channel.userAddress;
+    var accessToken = channel.accessToken;
+    var raw = JSON.stringify({
+      userAddress: userAdderss,
+      accessToken: accessToken
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("/closeConversation", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }
+
   function assignConversation(address) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -225,6 +248,7 @@ function All(props) {
           channel={channel}
           organization={organization}
           assignConversation={assignConversation}
+          onCloseConversation={closeConversation}
         />
         <Tranasaction />
       </Flex>

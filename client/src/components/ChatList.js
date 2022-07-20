@@ -65,7 +65,7 @@ const ChatList = (props) => {
           Conversations / {props.heading}
         </Heading>
         <Heading as="h4" size={"md"} my="3" color="#2C5282">
-          {props.heading}
+          {props.heading} ({list.length})
         </Heading>
         <Tabs variant="unstyled" colorScheme="blue">
           <TabList mx={"auto"} justifyContent="center" gap="10px">
@@ -85,19 +85,21 @@ const ChatList = (props) => {
             >
               Oldest
             </Tab>
-            <Tab
+            <Tab 
               style={{ color: "#2C5282" }}
               bg={"#bee3f8"}
               width="60px"
               fontSize={"12px"}
+              isDisabled
             >
               Longest
             </Tab>
-            <Tab
+            <Tab 
               style={{ color: "#2C5282" }}
               bg={"#bee3f8"}
               width="60px"
               fontSize={"12px"}
+              isDisabled
             >
               Shortest
             </Tab>

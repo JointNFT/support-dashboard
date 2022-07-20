@@ -50,6 +50,18 @@ const MessageList = (props) => {
     props.assignConversation(address);
   }
 
+  const getStatus = () => {
+    console.log(props.channel);
+    if (props.channel != null) {
+      console.log(props.channel.status)
+      if (props.channel.status == 'closed') {
+        return ('closed');
+      } else {
+        return ('open')
+      }
+    }
+  };
+
   const style = {
     width: "inherit",
     ".rce-container-mlist > width": "inherit",
@@ -70,6 +82,8 @@ const MessageList = (props) => {
     property.style.backgroundColor = "pink";
     props.onTagClick("deleted");
   };
+
+
   let list = [];
   if (props.channel && props.channel.messages) {
     list = props.channel.messages.map((m) => {
@@ -84,7 +98,7 @@ const MessageList = (props) => {
       messageBodyParams.to = m.to;
       return messageBodyParams;
     });
-  }
+  } 
 
   if (props.channel) {
     return (
@@ -94,7 +108,7 @@ const MessageList = (props) => {
             <Tag bg="pink.100" mr="2">
               Priority
             </Tag>
-            <Tag bg="yellow.100">Open</Tag>
+            <Tag bg="yellow.100">{getStatus()}</Tag>
           </Box>
           <Flex
             width="100%"
@@ -129,6 +143,7 @@ const MessageList = (props) => {
             ".png"
           }
           userName={props.channel.userAddress}
+          onCloseConversation={props.onCloseConversation}
         />
         <MessageBox channel={props.channel} list={list} />
 
