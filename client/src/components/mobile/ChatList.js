@@ -7,21 +7,14 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import ChatBox from "./ChatBox";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import { format } from "timeago.js";
-import { useState } from "react";
-import { getChannelList } from "../contexts/ChannelContext";
+import { getChannelList } from "../../contexts/ChannelContext";
+import ChatBox from "../ChatBox";
+import Nav from "./Nav";
 
 const ChatList = (props) => {
-  const [isActive, setIsActive] = useState(null);
-  const [list, setList] = useState([]);
-
-  useEffect(() => {
-    const list = getChannelList(props);
-    setList(list);
-  }, []);
-
   const handleClick = (channelId, id) => {
     props.onSelectChannel(channelId);
     console.log("id", id);
@@ -29,58 +22,36 @@ const ChatList = (props) => {
     console.log("chh", channelId);
   };
 
+  const [list, setList] = useState([]);
+
+  const [isActive, setIsActive] = useState(null);
+
+  console.log("props", props.type);
+
+  useEffect(() => {
+    const list = getChannelList(props);
+    setList(list)
+  }, [])
+
+  
+
   return (
     <Box
-      width={{
-        md: "25%",
-        sm: "100%",
-      }}
-      height={"70vh"}
-      mt="5"
+      flex={"100%"}
+      bg="blue.100"
+      height={"100vh"}
+      width={{ sm: "100%", md: "100%" }}
     >
-      <Heading as="h5" size="xs" color="#2C5282">
-        Conversations / {props.heading}
-      </Heading>
-      <Heading as="h4" size={"md"} my="3" color="#2C5282">
-        {props.heading}
-      </Heading>
-      <Tabs variant="unstyled" colorScheme="blue">
-        <TabList mx={"auto"} justifyContent="center" gap="10px">
-          <Tab
-            style={{ color: "#2C5282" }}
-            bg={"#bee3f8"}
-            width="60px"
-            fontSize={"12px"}
-          >
-            Newest
-          </Tab>
-          <Tab
-            style={{ color: "#2C5282" }}
-            bg={"#bee3f8"}
-            width="60px"
-            fontSize={"12px"}
-          >
-            Oldest
-          </Tab>
-          <Tab
-            style={{ color: "#2C5282" }}
-            bg={"#bee3f8"}
-            width="60px"
-            fontSize={"12px"}
-          >
-            Longest
-          </Tab>
-          <Tab
-            style={{ color: "#2C5282" }}
-            bg={"#bee3f8"}
-            width="60px"
-            fontSize={"12px"}
-          >
-            Shortest
-          </Tab>
+      <Nav type={props.type} heading={props.heading} />
+      <Tabs colorScheme="pink" p="2">
+        <TabList>
+          <Tab style={{ color: "#fff" }}>Tab 1</Tab>
+          <Tab style={{ color: "#fff" }}>Tab 2</Tab>
+          <Tab style={{ color: "#fff" }}>Tab 3</Tab>
+          <Tab style={{ color: "#fff" }}>Tab 4</Tab>
         </TabList>
         <Box
-          h={"70vh"}
+          h={"80vh"}
           marginTop="20px"
           sx={{
             "&::-webkit-scrollbar": {

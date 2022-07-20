@@ -1,16 +1,21 @@
 import { Box, Flex } from "@chakra-ui/react";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useCallback } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { io } from "socket.io-client";
 import ChatList from "../../components/ChatList";
 import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
-import UserContext from "../../contexts/user/UserContext";
+import userContext from "../../contexts/user/UserContext";
 
-const SERVER = ''
+const SERVER = "https://dashboard.highfi.me";
 
-function All(props) {
-  const { accessToken } = useContext(UserContext);
+const Chat = (props) => {
+  const { accessToken } = useContext(userContext);
   const [channels, setChannels] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState({});
   const [newAccount, setNewAccount] = useState({});
@@ -92,7 +97,7 @@ function All(props) {
       (c) => c.userAddress === arrivalMessage.userAddress
     );
 
-    console.log('arrival')
+    console.log("arrival");
     setChannel(newChannel);
   }, [arrivalMessage]);
 
@@ -125,44 +130,46 @@ function All(props) {
     fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(
       async (response) => {
         let data = await response.json();
-        console.log("channel list", data);
         setChannels(data.users);
-        console.log("channels list =" + channels);
       }
     );
   }
 
-  const handleChannelSelect = useCallback((address) => {
-    let channelsCopy = channels;
-    console.log("first handle channel select", channels);
+  const handleChannelSelect = useCallback(
+    (address) => {
+      let channelsCopy = channels;
 
-    let channel = channelsCopy.find((c) => {
-      console.log(address)
-      if(c.userAddress === address) {
-        console.log('jednako', address)
-      }
-      return c.userAddress == address;
-    });
-
-    if (channel == undefined) {
-      return;
-    }
-
-    fetch(
-      SERVER + "/getMessages?address=" + address + "&accessToken=" + accessToken
-    ).then(async (response) => {
-      let data = await response.json();
-      channel.messages = data?.messages || "";
-      channelsCopy.forEach((c) => {
-        if (c.userAddress == channel.userAddress) {
-          c.unread = 0;
+      let channel = channelsCopy.find((c) => {
+        if (c.userAddress === address) {
+          console.log("jednako", address);
         }
+        return c.userAddress == address;
       });
-      setChannel(channel);
-      setChannels(channelsCopy);
-    });
 
-  }, [channels])
+      if (channel == undefined) {
+        return;
+      }
+
+      fetch(
+        SERVER +
+          "/getMessages?address=" +
+          address +
+          "&accessToken=" +
+          accessToken
+      ).then(async (response) => {
+        let data = await response.json();
+        channel.messages = data?.messages || "";
+        channelsCopy.forEach((c) => {
+          if (c.userAddress == channel.userAddress) {
+            c.unread = 0;
+          }
+        });
+        setChannel(channel);
+        setChannels(channelsCopy);
+      });
+    },
+    [channels]
+  );
 
   function handleSendMessage(address, text) {
     socket.current.emit("send-message", {
@@ -188,9 +195,9 @@ function All(props) {
         <ChatList
           channels={channels}
           onSelectChannel={handleChannelSelect}
-          type={"all"}
+          type={props.type}
           accessToken={accessToken}
-          heading="All Conversations"
+          heading={props.heading}
         />
         <MessageList
           onSendMessage={handleSendMessage}
@@ -201,6 +208,6 @@ function All(props) {
       </Flex>
     </Box>
   );
-}
+};
 
-export default All;
+export default Chat;
