@@ -35,7 +35,7 @@ const OrganizationCard = ({ storeAccessToken, organization }) => {
         gap="10px"
       >
         <Image src={organization.image} width='50px' />
-        <Text fontSize="18px">MegaCrypto</Text>
+        <Text fontSize="18px">{organization.title}</Text>
       </Flex>
       <HStack>
         <Button
