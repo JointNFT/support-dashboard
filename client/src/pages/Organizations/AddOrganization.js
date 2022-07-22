@@ -31,7 +31,7 @@ const AddOrganization = () => {
         gap="10px"
       >
         <AddIcon color='green' height="50px" />
-        <Text fontSize="18px">Add</Text>
+        <Text fontSize="18px">MegaCrypto</Text>
       </Flex>
       <HStack justifyContent="center">
         <Button colorScheme="blue">Add New Company</Button>

@@ -7,97 +7,121 @@ import {
   TabPanels,
   Tabs,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 import ChatBox from "./ChatBox";
 import { format } from "timeago.js";
 import { useState } from "react";
-import { getChannelList } from "../contexts/ChannelContext";
 
 const ChatList = (props) => {
-  const [isActive, setIsActive] = useState(null);
-  const [list, setList] = useState([]);
-
-  useEffect(() => {
-    const list = getChannelList(props);
-    setList(list);
-  }, []);
-
   const handleClick = (channelId, id) => {
     props.onSelectChannel(channelId);
-    console.log("id", id);
-    setIsActive(channelId);
+    console.log('id', id)
+    setIsActive(channelId)
     console.log("chh", channelId);
   };
 
-  return (
-    <Box
-      width={{
-        md: "25%",
-        sm: "100%",
-      }}
-      height={"70vh"}
-      mt="5"
-    >
-      <Heading as="h5" size="xs" color="#2C5282">
-        Conversations / {props.heading}
-      </Heading>
-      <Heading as="h4" size={"md"} my="3" color="#2C5282">
-        {props.heading}
-      </Heading>
-      <Tabs variant="unstyled" colorScheme="blue">
-        <TabList mx={"auto"} justifyContent="center" gap="10px">
-          <Tab
-            style={{ color: "#2C5282" }}
-            bg={"#bee3f8"}
-            width="60px"
-            fontSize={"12px"}
+  const [isActive, setIsActive] = useState(null)
+
+  console.log('props', props.type)
+
+  let list = [];
+  if (props.channels && props.channels.map) {
+    list = props.channels
+      .filter((c) => {
+        if (props.type != null && props.type == (c.tag != null ? c.tag : ""))
+          return true;
+        else if (props.type == null || props.type == "all") return true;
+        else if (props.type == "me" && props.address == c.assignedTo)
+            return true;
+        else return false;
+      })
+      .map((c) => {
+        if (c.accessToken == props.accessToken) {
+          return {
+            avatar:
+              "https://storage.googleapis.com/opensea-static/opensea-profile/" +
+              ((parseInt(c.userAddress) % 30) + 1) +
+              ".png",
+            alt: "Some DP",
+            title: c.userAddress,
+            subtitle: c?.messages
+              ? c?.messages[c.messages.length - 1]?.message
+              : (c.lastMessage?.message || null),
+            date: new Date(
+              c?.messages
+                ? c?.messages[c.messages.length - 1]?.timestamp
+                : c?.lastMessage?.timestamp
+            ),
+            unread: c.unread != null ? c.unread : 0,
+          };
+        }
+      });
+  }
+
+  if (list.length) {
+    return (
+      <Box width="25%" height={"70vh"} mt="5">
+        <Heading as="h5" size="xs" color="#2C5282">
+          Conversations / {props.heading}
+        </Heading>
+        <Heading as="h4" size={"md"} my="3" color="#2C5282">
+          {props.heading} ({list.length})
+        </Heading>
+        <Tabs variant="unstyled" colorScheme="blue">
+          <TabList mx={"auto"} justifyContent="center" gap="10px">
+            <Tab
+              style={{ color: "#2C5282" }}
+              bg={"#bee3f8"}
+              width="60px"
+              fontSize={"12px"}
+            >
+              Newest
+            </Tab>
+            <Tab
+              style={{ color: "#2C5282" }}
+              bg={"#bee3f8"}
+              width="60px"
+              fontSize={"12px"}
+            >
+              Oldest
+            </Tab>
+            <Tab 
+              style={{ color: "#2C5282" }}
+              bg={"#bee3f8"}
+              width="60px"
+              fontSize={"12px"}
+              isDisabled
+            >
+              Longest
+            </Tab>
+            <Tab 
+              style={{ color: "#2C5282" }}
+              bg={"#bee3f8"}
+              width="60px"
+              fontSize={"12px"}
+              isDisabled
+            >
+              Shortest
+            </Tab>
+          </TabList>
+          <Box
+            h={"70vh"}
+            marginTop="20px"
+            sx={{
+              "&::-webkit-scrollbar": {
+                width: "10px",
+                borderRadius: "8px",
+                backgroundColor: `rgba(0, 0, 0, 0.05)`,
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: `rgba(255, 255, 255, 1)`,
+              },
+            }}
+            overflowY={"scroll"}
           >
-            Newest
-          </Tab>
-          <Tab
-            style={{ color: "#2C5282" }}
-            bg={"#bee3f8"}
-            width="60px"
-            fontSize={"12px"}
-          >
-            Oldest
-          </Tab>
-          <Tab
-            style={{ color: "#2C5282" }}
-            bg={"#bee3f8"}
-            width="60px"
-            fontSize={"12px"}
-          >
-            Longest
-          </Tab>
-          <Tab
-            style={{ color: "#2C5282" }}
-            bg={"#bee3f8"}
-            width="60px"
-            fontSize={"12px"}
-          >
-            Shortest
-          </Tab>
-        </TabList>
-        <Box
-          h={"70vh"}
-          marginTop="20px"
-          sx={{
-            "&::-webkit-scrollbar": {
-              width: "10px",
-              borderRadius: "8px",
-              backgroundColor: `rgba(0, 0, 0, 0.05)`,
-            },
-            "&::-webkit-scrollbar-thumb": {
-              backgroundColor: `rgba(255, 255, 255, 1)`,
-            },
-          }}
-          overflowY={"scroll"}
-        >
-          <TabPanels>
-            <TabPanel>
-              {list?.length ? (
-                list.map((conversationInfo) => (
+            <TabPanels>
+              <TabPanel>
+                {list.map((conversationInfo) => (
                   <ChatBox
                     isActive={isActive}
                     setIsActive={setIsActive}
@@ -109,26 +133,21 @@ const ChatList = (props) => {
                     handleClick={() => handleClick(conversationInfo.title)}
                     id={conversationInfo.title}
                   />
-                ))
-              ) : (
-                <Heading
-                  as="h5"
-                  fontSize={"22px"}
-                  color="#2C5282"
-                  align={"center"}
-                >
-                  No messages
-                </Heading>
-              )}
-            </TabPanel>
-            <TabPanel>
-              <p>two!</p>
-            </TabPanel>
-          </TabPanels>
-        </Box>
-      </Tabs>
-    </Box>
-  );
+                ))}
+              </TabPanel>
+              <TabPanel>
+                <p>two!</p>
+              </TabPanel>
+            </TabPanels>
+          </Box>
+        </Tabs>
+      </Box>
+    );
+  } else {
+    return (
+      <div className="no-content-message">There is no channels to show</div>
+    );
+  }
 };
 
 export default ChatList;
