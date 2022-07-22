@@ -31,7 +31,7 @@ client.on("ready", () => {
 });
 
 // Middleware
-app.use(express.static(path.resolve(__dirname, "./client/public/bundle.js")));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use(cors());
 
 const port = process.env.PORT || 3000;
@@ -204,19 +204,6 @@ app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function
 
     res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
 });
-
-app.post("/updateOrganizationDetails", async function (req, res) {
-    var payload = req.body;
-    var organizationId = payload.organizationId;
-    var totalConversations = payload.totalConversations;
-    var createdBy = payload.createdBy;
-    var prioritized = payload.prioritized;
-    var closed = payload.closed;
-    var staff = payload.staff;
-    if (totalConversations != "" && createdBy != "") await db.updateOrganizationDetails(organizationId, createdBy, totalConversations, prioritized, closed, staff);
-    res.send({ status: "success" });
-});
-
 app.get("/getOrganizationDetails", async (req, res) => {
     var address = req.query.address;
     var details = await db.getStaffDetails(address);

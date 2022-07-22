@@ -30,7 +30,9 @@ import UserContext from "../../../contexts/user/UserContext";
 
 import { Link as ReactLink } from "react-router-dom";
 
-export default function WithSubnavigation(props) {
+import { Link as ReactLink } from "react-router-dom";
+
+export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const { organization, setOrganization } = useContext(UserContext);
 
@@ -38,11 +40,6 @@ export default function WithSubnavigation(props) {
     setOrganization(null);
     window.location.href = "/";
   }
-
-  const logout = () => {
-    console.log("heyyy")
-    props.disconnectHandler();
-  };
 
   return (
     <Box width={"100%"} h="8vh">
@@ -121,14 +118,14 @@ export default function WithSubnavigation(props) {
               <MenuItem _hover={{ background: "#ebf8ff" }} style={{ textDecoration: 'none', color: '#666' }} onClick={() => resetOrganization()}>
 								Switch Organization
 							</MenuItem>
-              <MenuItem _hover={{ background: "#ebf8ff" }} onClick={() => logout()}>
-              <Link
+              <MenuItem _hover={{ background: "#ebf8ff" }}>
+                <Link
                   as={ReactLink}
                   style={{ textDecoration: "none", color: "#666" }}
-                  to="/"
+                  to="/logout"
                 >
                   Logout
-                </Link>  
+                </Link>
               </MenuItem>
             </MenuList>
           </Menu>
