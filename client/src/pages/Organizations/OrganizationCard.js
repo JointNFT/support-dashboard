@@ -14,7 +14,7 @@ import AddOrganization from "./AddOrganization";
 import OrganizationStack from "./OrganizationStack";
 import { Link } from "react-router-dom";
 
-const OrganizationCard = ({ storeAccessToken, organization }) => {
+const OrganizationCard = ({ storeAccessToken, organization, setOrganizationID, storeOrganization }) => {
   return (
     <Box
       width={{ xl: "25%", lg: "30%", sm: "100%", md: "100%" }}
@@ -41,7 +41,11 @@ const OrganizationCard = ({ storeAccessToken, organization }) => {
         <Button
           as={Link}
           to={"/conversations/all"}
-          onClick={() => storeAccessToken(organization.accessToken)}
+          onClick={() => {
+            storeAccessToken(organization.accessToken)
+            setOrganizationID(organization.organizationId)
+            storeOrganization(organization)
+          }}
           colorScheme="blue"
           width={"70%"}
         >

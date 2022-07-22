@@ -18,9 +18,11 @@ const ChatList = (props) => {
   const [list, setList] = useState([]);
 
   useEffect(() => {
+    console.log(props)
     const list = getChannelList(props);
+    console.log(list);
     setList(list);
-  }, []);
+  }, [props.channels]);
 
   const handleClick = (channelId, id) => {
     props.onSelectChannel(channelId);

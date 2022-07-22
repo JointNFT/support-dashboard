@@ -15,7 +15,7 @@ import userContext from "../../contexts/user/UserContext";
 const SERVER = "https://dashboard.highfi.me";
 
 const Chat = (props) => {
-  const { accessToken } = useContext(userContext);
+  const { accessToken, organization } = useContext(userContext);
   const [channels, setChannels] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState({});
   const [newAccount, setNewAccount] = useState({});
@@ -27,6 +27,30 @@ const Chat = (props) => {
     loadChannels();
     configureSocket();
   }, []);
+
+  function assignConversation(address) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    var userAdderss = channel.userAddress;
+    var accessToken = channel.accessToken;
+    var raw = JSON.stringify({
+      userAddress: userAdderss,
+      accessToken: accessToken,
+      assignTo: address,
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("/assignConversation", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }
 
   function configureSocket() {
     socket.current = io(SERVER, {
@@ -128,9 +152,13 @@ const Chat = (props) => {
   async function loadChannels() {
     console.log("accessToken - ", accessToken);
     fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(
+      
       async (response) => {
+        console.log('res', response);
+        console.log('did we even get here?')
         let data = await response.json();
         setChannels(data.users);
+        console.log('data')
       }
     );
   }
@@ -203,6 +231,8 @@ const Chat = (props) => {
           onSendMessage={handleSendMessage}
           onTagClick={handleUserTag}
           channel={channel}
+          organization={organization}
+          assignConversation={assignConversation}
         />
         <Tranasaction />
       </Flex>

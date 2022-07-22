@@ -28,15 +28,16 @@ import {
 import { useContext} from "react";
 import UserContext from "../../../contexts/user/UserContext";
 
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, useNavigate } from "react-router-dom";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
+  const navigate = useNavigate();
   const { organization, setOrganization } = useContext(UserContext);
 
   const resetOrganization = () => {
     setOrganization(null);
-    window.location.href = "/";
+    navigate('/', {replace: true})
   }
 
   return (
@@ -110,9 +111,6 @@ export default function WithSubnavigation() {
                   Profile
                 </Link>
               </MenuItem>
-              <MenuItem _hover={{ background: "#ebf8ff" }}>
-								<Link style={{ textDecoration: 'none', color: '#666' }} to="/settings">Settings</Link>
-							</MenuItem>
               <MenuItem _hover={{ background: "#ebf8ff" }} style={{ textDecoration: 'none', color: '#666' }} onClick={() => resetOrganization()}>
 								Switch Organization
 							</MenuItem>
@@ -120,7 +118,7 @@ export default function WithSubnavigation() {
                 <Link
                   as={ReactLink}
                   style={{ textDecoration: "none", color: "#666" }}
-                  to="/settings"
+                  to="/accessKeys"
                 >
                   Settings
                 </Link>
