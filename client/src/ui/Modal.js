@@ -58,7 +58,7 @@ function ModalForm() {
               <Form.Label>Logo</Form.Label>
               <Form.Control type="file" placeholder="Logo" name="imageURL" required/>
               <Form.Text className="text-muted">
-                Insert logo of your organization
+                Insert logo of the organization
               </Form.Text>
             </Form.Group>
 

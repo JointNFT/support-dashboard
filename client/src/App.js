@@ -50,7 +50,7 @@ function App({ signOut, user }) {
         { (address) ?  
           <>
             <Router>
-              <WithSubnavigation />
+              <WithSubnavigation disconnectHandler={disconnectHandler}/>
             {/*<Sidebar signOut={signOut}/>*/}
             <Routes>
                 <Route path="/" element={<Organizations />} />

@@ -9,11 +9,11 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const MessageHeader = ({src, userName, onCloseConversation}) => {
+const MessageHeader = ({src, userName, onCloseConversation, lastMessage}) => {
 
   const closeConversation = () => {
     onCloseConversation(); 
-    window.location.href = "/conversations/all"
+    window.location.reload();
   }
   return (
     <Flex align="center" mb={"5"} width="100%" as={"a"} href="#" mt="3">
@@ -31,7 +31,7 @@ const MessageHeader = ({src, userName, onCloseConversation}) => {
           {userName.slice(1,20) + '...'}
         </Heading>
         <Text noOfLines={1} fontSize="sm">
-          "The quick brown fox jumps over the lazy dog".
+          {lastMessage}
         </Text>
       </Box>
 

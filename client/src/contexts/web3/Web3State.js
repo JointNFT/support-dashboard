@@ -63,12 +63,13 @@ const Web3State = (props) => {
 		window.location.reload()
 	}
 
-	const handleDisconnect = async (error) => {
+	const handleDisconnect = async() => {
 		// eslint-disable-next-line no-console
 		console.log('handling disconnect')
 		try{
 			await onboard.disconnectWallet();
-		} catch {
+		} catch(error) {
+			console.log(error);
 			console.log('tried disconnecting wallet after wallet was disconnected')
 		}
 		dispatch({

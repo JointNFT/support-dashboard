@@ -170,6 +170,7 @@ function All(props) {
   }
 
   async function loadChannels() {
+    console.log("testing")
     console.log("accessToken - ", accessToken);
     fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(
       async (response) => {

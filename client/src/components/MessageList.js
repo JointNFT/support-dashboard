@@ -144,6 +144,7 @@ const MessageList = (props) => {
           }
           userName={props.channel.userAddress}
           onCloseConversation={props.onCloseConversation}
+          lastMessage={props.channel.lastMessage.message}
         />
         <MessageBox channel={props.channel} list={list} />
 
