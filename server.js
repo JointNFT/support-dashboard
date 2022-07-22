@@ -31,7 +31,7 @@ client.on("ready", () => {
 });
 
 // Middleware
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+//app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use(cors());
 
 const port = process.env.PORT || 3000;
