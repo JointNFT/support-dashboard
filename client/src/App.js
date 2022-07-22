@@ -1,28 +1,28 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { isDesktop, isMobile } from "react-device-detect";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.scss";
+import WithSubnavigation from "./components/layout/Navbar/Navbar";
+import SignIn from "./components/SignIn";
 import UserContext from "./contexts/user/UserContext";
+import Web3Context from "./contexts/web3/Web3Context";
 import AccessKeys from "./pages/AccessKeys";
 import GetStarted from "./pages/conversations/GetStarted";
 import Customers from "./pages/Customers";
-import Integrations from "./pages/Integrations";
-import Web3Context from "./contexts/web3/Web3Context";
-import SignIn from "./components/SignIn";
 import DiscordContact from "./pages/DiscordContact";
-import Navbar from "./components/layout/Navbar/Navbar";
-import WithSubnavigation from "./components/layout/Navbar/Navbar";
-import All from "./pages/chat/All";
-import Closed from "./pages/chat/Closed";
-import Prioritized from "./pages/chat/Prioritized";
-import Me from "./pages/chat/Me";
+import Integrations from "./pages/Integrations";
 import Organizations from "./pages/Organizations/Organizations";
 
 //const SERVER = "http://127.0.0.1:3000";
 const SERVER = "http://localhost:3001";
 
-function App({ signOut, user }) {
-    const [data, setData] = useState(null);
-    const { loginUser } = useContext(UserContext);
+const ChatComponent = React.lazy(() =>
+  isMobile
+    ? import("./components/mobile/ChatList")
+    : import("./pages/chat/Chat")
+);
+
+function App() {
     const {web3DisplayMessage, web3Loading, address, web3Provider, connect, handleDisconnect, provider, removeListeners } = useContext(Web3Context);
   
     const connectHandler = async (e) => {
@@ -43,43 +43,82 @@ function App({ signOut, user }) {
       }
     }, [provider, handleDisconnect])
 
-    useEffect(() => {
-        console.log("userChanged", user);
-    }, [user]);
 
-    return (
+  return (
+    <>
+      {address ? (
         <>
-        { (address) ?  
-          <>
-            <Router>
-              <WithSubnavigation />
+          <Router>
+            {isDesktop && <WithSubnavigation />}
             {/*<Sidebar signOut={signOut}/>*/}
             <Routes>
-                <Route path="/" element={<Organizations />} />
-                <Route path="/getstarted" element={<GetStarted signOut={signOut} />} />
-                <Route path="/conversations/all" element={<All />} />
-                <Route path="/conversations/me" element={<Me />} />
-                <Route path="/conversations/prioritized" element={<Prioritized signOut={signOut} />} />
-                <Route path="/conversations/closed" element={<Closed />} signOut={signOut} />
-                <Route path="/integrations" element={<Integrations />} signOut={signOut} />
-                <Route path="/customers" element={<Customers />} signOut={signOut} />
-                <Route path="/accessKeys" element={<AccessKeys />} signOut={signOut} />
-                <Route path="/discord" element={<DiscordContact />} signOut={signOut} />
+              <Route path="/" element={<Organizations />} />
+              <Route
+                path="/getstarted"
+                element={<GetStarted signOut={disconnectHandler} />}
+              />
+              <Route
+                path="/conversations/all"
+                element={
+                  <React.Suspense fallback="Loading...">
+                    <ChatComponent type="all" heading="All Conversations" />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/conversations/me"
+                element={
+                  <React.Suspense fallback="Loading...">
+                    <ChatComponent type="me" heading="Assigned to me" />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/conversations/prioritized"
+                element={
+                  <React.Suspense fallback="Loading...">
+                    <ChatComponent type="prioritized" heading="Prioritized" />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/conversations/closed"
+                element={
+                  <React.Suspense fallback="Loading...">
+                    <ChatComponent type="closed" heading="Closed" />
+                  </React.Suspense>
+                }
+              />
+              <Route
+                path="/integrations"
+                element={<Integrations signOut={disconnectHandler} />}
+              />
+              <Route
+                path="/customers"
+                element={<Customers signOut={disconnectHandler} />}
+              />
+              <Route
+                path="/accessKeys"
+                element={<AccessKeys signOut={disconnectHandler} />}
+              />
+              <Route
+                path="/discord"
+                element={<DiscordContact signOut={disconnectHandler} />}
+              />
             </Routes>
-        </Router>
-          </>
-         : 
-          <SignIn
-            web3Loading={web3Loading}
-            web3Provider={web3Provider}
-            connectHandler={connectHandler}
-            disconnectHandler={disconnectHandler}
-            web3DisplayMessage={web3DisplayMessage}
-          />
-        }
-      </>
-        
-    );
+          </Router>
+        </>
+      ) : (
+        <SignIn
+          web3Loading={web3Loading}
+          web3Provider={web3Provider}
+          connectHandler={connectHandler}
+          disconnectHandler={disconnectHandler}
+          web3DisplayMessage={web3DisplayMessage}
+        />
+      )}
+    </>
+  );
 }
 
 export default App;
