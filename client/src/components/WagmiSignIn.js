@@ -22,7 +22,9 @@ export default function WagmiSignIn({
  isLoading,
  pendingConnector,
  error,
- connect
+ connect,
+ isConnected,
+ signIn,
 }) {
   return (
     <div>
@@ -40,24 +42,37 @@ export default function WagmiSignIn({
           grow="10"
           bg="#e5f4f1"
         >
-          <div>
-            {connectors.map((connector) => (
-              <CustomButton
-                disabled={!connector.ready}
-                key={connector.id}
-                onClick={() => connect({ connector })}
-                isLoading={isLoading}
-              >
-                {connector.name}
-                {!connector.ready && " (unsupported)"}
-                {isLoading &&
-                  connector.id === pendingConnector?.id &&
-                  " (connecting)"}
-              </CustomButton>
-            ))}
-
-            {error && <div>{error.message}</div>}
-          </div>
+            {
+                !isConnected ? (
+                    <div>
+                    {connectors.map((connector) => (
+                      <CustomButton
+                        disabled={!connector.ready}
+                        key={connector.id}
+                        onClick={() => connect({ connector })}
+                        isLoading={isLoading}
+                      >
+                        {connector.name}
+                        {!connector.ready && " (unsupported)"}
+                        {isLoading &&
+                          connector.id === pendingConnector?.id &&
+                          " (connecting)"}
+                      </CustomButton>
+                    ))}
+        
+                    {error && <div>{error.message}</div>}
+                  </div>
+                ):(
+                    <CustomButton
+                    onClick={signIn}
+                    isLoading={isLoading}
+                  >
+                        Sign-In with Ethereum
+                  </CustomButton>
+                    
+                )
+            }
+         
        {/*    <CustomButton isLoading={web3Loading} onClick={connectHandler}>
             Connect Wallet
           </CustomButton> */}
