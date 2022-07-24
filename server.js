@@ -13,7 +13,8 @@ const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
 const compareStaff = require('./helper/compare-list');
 const SERVER = "https://dashboard.highfi.me";
-
+const { generateNonce, SiweMessage }= require('siwe');
+const session = require('express-session')
 var app = express();
 app.use(express.json());
 
@@ -33,7 +34,12 @@ client.on("ready", () => {
 // Middleware
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use(cors());
-
+app.use(session({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+  }))
 const port = process.env.PORT || 3000;
 
 var server = require("http").createServer(app);
@@ -284,7 +290,38 @@ app.get("/test", (req, res) => {
     );
     res.send("hehe");
 });
+// API for SIWE authentication
+app.get("/wagmi/nonce", async (req,res) => {
+    req.session.nonce = generateNonce()
+    await req.session.save()
+    console.log(req.session.nonce)
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(req.session.nonce);
+})
+app.post("/wagmi/verify", async (req,res) => {
+    try {
+        const { message, signature } = req.body
+        const siweMessage = new SiweMessage(message)
+        const fields = await siweMessage.validate(signature)
 
+        if (fields.nonce !== req.session.nonce)
+          return res.status(422).json({ message: 'Invalid nonce.' })
+
+        req.session.siwe = fields
+        await req.session.save()
+        res.json({ ok: true })
+    } catch (error) {
+        res.json({ ok: false })
+    }
+   
+});
+app.get("/wagmi/me", async(req,res) => {
+    res.send({ address: req.session.siwe?.address })
+})
+app.get("/wagmi/logout", async(req,res) => {
+    req.session.destroy()
+    res.send({ ok: true })
+})  
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
