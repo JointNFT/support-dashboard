@@ -8,12 +8,14 @@ import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
 import Web3Context from "../../contexts/web3/Web3Context";
+import WagmiContext from "../../contexts/wagmi/WagmiContext";
 const SERVER = "https://dashboard.highfi.me";
 
 function All(props) {
     const { accessToken } = useContext(UserContext);
     const { organization } = useContext(UserContext);
-    const { address, setAddress } = useContext(Web3Context);
+    //const { address, setAddress } = useContext(Web3Context);
+    const { address } = useContext(WagmiContext);
     const [channels, setChannels] = useState([]);
     const [arrivalMessage, setArrivalMessage] = useState({});
     const [newAccount, setNewAccount] = useState({});

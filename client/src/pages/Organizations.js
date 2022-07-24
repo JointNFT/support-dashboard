@@ -5,10 +5,11 @@ import { useEffect, useContext, useState } from "react";
 import UserContext from "../contexts/user/UserContext";
 import Web3Context from "../contexts/web3/Web3Context";
 import userContext from "../contexts/user/UserContext";
-
+import WagmiContext from "../contexts/wagmi/WagmiContext";
 const Organizations = () => {
     const { accessToken, setAccessToken, setOrganizationID } = useContext(UserContext);
-    const { address, setAddress } = useContext(Web3Context);
+    //const { address, setAddress } = useContext(Web3Context);
+    const { address  } = useContext(WagmiContext);
     const [organizations, setOrganizations] = useState([]);
 
     const storeAccessToken = (accessToken) => {

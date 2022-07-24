@@ -6,13 +6,14 @@ import WithSubnavigation from "./components/layout/Navbar/Navbar";
 import SignIn from "./components/SignIn";
 import UserContext from "./contexts/user/UserContext";
 import Web3Context from "./contexts/web3/Web3Context";
+import WagmiContext from "./contexts/wagmi/WagmiContext";
 import AccessKeys from "./pages/AccessKeys";
 import GetStarted from "./pages/conversations/GetStarted";
 import Customers from "./pages/Customers";
 import DiscordContact from "./pages/DiscordContact";
 import Integrations from "./pages/Integrations";
 import Organizations from "./pages/Organizations/Organizations";
-
+import WagmiSignIn from "./components/WagmiSignIn";
 //const SERVER = "http://127.0.0.1:3000";
 const SERVER = "http://localhost:3001";
 
@@ -23,30 +24,41 @@ const ChatComponent = React.lazy(() =>
 );
 
 function App() {
-    const {web3DisplayMessage, web3Loading, address, web3Provider, connect, handleDisconnect, provider, removeListeners } = useContext(Web3Context);
-  
-    const connectHandler = async (e) => {
-      await connect();
-    };
-  
-    const disconnectHandler = async (e) => {  
-        handleDisconnect();
-    };
-  
-    useEffect(() => {
-      if (provider?.on) {
-        // Subscription Cleanup
-        return () => {
-          console.log('...');
-          //remove the listeners here
-        }
-      }
-    }, [provider, handleDisconnect])
+  //const {web3DisplayMessage, web3Loading, address, web3Provider, connect, handleDisconnect, provider, removeListeners } = useContext(Web3Context);
+  const {
+    address,
+    connector,
+    isConnected,
+    ensAvatar,
+    ensName,
+    connect,
+    connectors,
+    isLoading,
+    pendingConnector,
+    disconnect,
+    error,
+  } = useContext(WagmiContext);
+  const connectHandler = async (e) => {
+    await connect();
+  };
 
+  const disconnectHandler = async (e) => {
+    disconnect();
+  };
+
+/*   useEffect(() => {
+    if (provider?.on) {
+      // Subscription Cleanup
+      return () => {
+        console.log("...");
+        //remove the listeners here
+      };
+    }
+  }, [provider, handleDisconnect]); */
 
   return (
     <>
-      {address ? (
+      {isConnected ? (
         <>
           <Router>
             {isDesktop && <WithSubnavigation />}
@@ -109,13 +121,20 @@ function App() {
           </Router>
         </>
       ) : (
-        <SignIn
+       <WagmiSignIn
+        connectors={connectors}
+        isLoading={isLoading}
+        pendingConnector={pendingConnector}
+        connect={connect}
+        error={error}
+       />
+        /*  <SignIn
           web3Loading={web3Loading}
           web3Provider={web3Provider}
           connectHandler={connectHandler}
           disconnectHandler={disconnectHandler}
           web3DisplayMessage={web3DisplayMessage}
-        />
+        /> */
       )}
     </>
   );

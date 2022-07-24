@@ -3,11 +3,12 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { GrAddCircle } from "react-icons/gr";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import Web3Context from "../contexts/web3/Web3Context";
-
+import WagmiContext from "../contexts/wagmi/WagmiContext";
 function ModalForm() {
   const [show, setShow] = useState(false);
   const [addressCount, setAddressCount] = useState(0);
-  const { address, setAddress } = useContext(Web3Context);
+  //const { address, setAddress } = useContext(Web3Context);
+  const { address } = useContext(WagmiContext);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
