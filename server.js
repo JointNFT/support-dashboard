@@ -38,7 +38,7 @@ app.use(session({
     secret: 'secret-key',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: false }
   }))
 const port = process.env.PORT || 3000;
 
@@ -247,12 +247,17 @@ app.get("/getOrganizationDetails", async (req, res) => {
     }
 });
 app.get('/getOrganization', async (req, res) => {
-    const id = req.query.orgID;
-    const organization = await db.getOrganizationDetails(parseInt(id));
-    if(!organization) {
-        res.status(404).json({ message: "Not found"})
+    try {
+        const id = req.query.orgID;
+        const organization = await db.getOrganizationDetails(parseInt(id));
+        if(!organization) {
+            res.status(404).json({ message: "Not found"})
+        }
+        res.json({data: organization})
+    } catch (error) {
+        console.log(error)
     }
-    res.json({data: organization})
+
 })
 app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");
@@ -294,21 +299,19 @@ app.get("/test", (req, res) => {
 app.get("/wagmi/nonce", async (req,res) => {
     req.session.nonce = generateNonce()
     await req.session.save()
-    console.log(req.session.nonce)
     res.setHeader('Content-Type', 'text/plain');
     res.send(req.session.nonce);
 })
 app.post("/wagmi/verify", async (req,res) => {
     try {
+        console.log('/verify')
         const { message, signature } = req.body
         const siweMessage = new SiweMessage(message)
         const fields = await siweMessage.validate(signature)
-
         if (fields.nonce !== req.session.nonce)
           return res.status(422).json({ message: 'Invalid nonce.' })
-
-        req.session.siwe = fields
-        await req.session.save()
+        req.session.siwe = {...fields}
+        await req.session.save();
         res.json({ ok: true })
     } catch (error) {
         res.json({ ok: false })
