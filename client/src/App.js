@@ -24,42 +24,43 @@ const ChatComponent = React.lazy(() =>
 );
 
 function App() {
-  //const {web3DisplayMessage, web3Loading, address, web3Provider, connect, handleDisconnect, provider, removeListeners } = useContext(Web3Context);
   const {
     address,
-    connector,
     isConnected,
-    ensAvatar,
-    ensName,
     connect,
     connectors,
     isLoading,
     pendingConnector,
     disconnect,
     error,
+    signIn,
+    signOut,
+    signInLoading
   } = useContext(WagmiContext);
   const connectHandler = async (e) => {
     await connect();
   };
 
   const disconnectHandler = async (e) => {
-    disconnect();
+   // disconnect();
+   await signOut()
   };
 
-/*   useEffect(() => {
-    if (provider?.on) {
-      // Subscription Cleanup
-      return () => {
-        console.log("...");
-        //remove the listeners here
-      };
-    }
-  }, [provider, handleDisconnect]); */
-
+   if (!isConnected || !address)
+     return (
+       <WagmiSignIn
+         connectors={connectors}
+         isLoading={isLoading}
+         pendingConnector={pendingConnector}
+         connect={connectHandler}
+         error={error}
+         signIn={signIn}
+         isConnected={isConnected}
+      
+       />
+     );
   return (
     <>
-      {isConnected ? (
-        <>
           <Router>
             {isDesktop && <WithSubnavigation />}
             {/*<Sidebar signOut={signOut}/>*/}
@@ -119,23 +120,6 @@ function App() {
               />
             </Routes>
           </Router>
-        </>
-      ) : (
-       <WagmiSignIn
-        connectors={connectors}
-        isLoading={isLoading}
-        pendingConnector={pendingConnector}
-        connect={connect}
-        error={error}
-       />
-        /*  <SignIn
-          web3Loading={web3Loading}
-          web3Provider={web3Provider}
-          connectHandler={connectHandler}
-          disconnectHandler={disconnectHandler}
-          web3DisplayMessage={web3DisplayMessage}
-        /> */
-      )}
     </>
   );
 }
