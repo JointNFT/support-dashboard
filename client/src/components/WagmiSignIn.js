@@ -72,10 +72,6 @@ export default function WagmiSignIn({
                     
                 )
             }
-         
-       {/*    <CustomButton isLoading={web3Loading} onClick={connectHandler}>
-            Connect Wallet
-          </CustomButton> */}
         </Flex>
         <Flex h="45vh" justify="center" alignItems="center" bg="#e5f4f1"></Flex>
       </main>
