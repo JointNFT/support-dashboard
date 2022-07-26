@@ -31,7 +31,7 @@ client.on("ready", () => {
 });
 
 // Middleware
-//app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use(cors());
 
 const port = process.env.PORT || 3000;
@@ -129,13 +129,21 @@ app.get("/getChannels", (req, res) => {
 
 app.get("/getUsers", async (req, res) => {
     console.log(req.query.accessToken);
+    if(req.query.accessToken){
     const users = await chatHandlers.getUsers(req.query.accessToken);
     res.send(JSON.stringify({ users: users }));
+    }else{
+        res.send({ error : " Couldn't fetch users"})
+    }
 });
 
 app.get("/getMessages", async (req, res) => {
+    if(req.query.address != "" && req.query.accessToken != ""){
     chatMessages = await chatHandlers.getMessages(req.query.address, req.query.accessToken);
     res.send(JSON.stringify({ messages: chatMessages }));
+    }else{
+        res.send({error : "Couldn't fetch messages"})
+    }
 });
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, "./client/build")));
@@ -154,16 +162,30 @@ app.post("/updateUserTag", async function (req, res) {
     var accessToken = payload.accessToken;
     var userAddress = payload.userAddress;
     var tag = payload.tag;
-    if (accessToken != "" && userAddress != "") await db.updateUserTag(userAddress, accessToken, tag);
-    res.send({ status: "success" });
+    if (accessToken != "" && userAddress != "") {
+        await db.updateUserTag(userAddress, accessToken, tag);
+        res.send({ status: "success" });
+    } else {
+        res.send({ error: "Couldn't update user tag" });
+    }
 });
 
 app.post("/closeConversation", async function (req, res) {
     var payload = req.body;
     var accessToken = payload.accessToken;
     var userAddress = payload.userAddress;
-    if (accessToken != "" && userAddress != "") await db.closeConversation(userAddress, accessToken);
-    res.send({ status: "success" });
+    var organizationId = payload.organizationId;
+    var createdBy = payload.createdBy;
+    var totalConversations = payload.totalConversations;
+    var prioritized = payload.prioritized;
+    var closed = payload.closed;
+    if (accessToken != "" && userAddress != "" && organizationId != "" && createdBy != "") {
+        await db.closeConversation(userAddress, accessToken);
+        await db.updateOrganizationDetails(organizationId, createdBy, totalConversations, prioritized, closed);
+        res.send({ status: "success" });
+    }else{
+        res.send({ error : "couldn't close the conversation"})
+    }
 });
 
 app.post("/assignConversation", async function (req, res) {
@@ -171,8 +193,12 @@ app.post("/assignConversation", async function (req, res) {
     var accessToken = payload.accessToken;
     var userAddress = payload.userAddress;
     var assignTo = payload.assignTo;
-    if (accessToken != "" && userAddress != "") await db.assignConversation(userAddress, accessToken, assignTo);
-    res.send({ status: "success" });
+    if (accessToken != "" && userAddress != "" && assignTo != "") {
+        await db.assignConversation(userAddress, accessToken, assignTo);    
+        res.send({ status: "success" });
+    }else{
+        res.send({error : "couldn't assign conversation"})
+    }
 });
 
 app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function (req, res) {
@@ -180,44 +206,69 @@ app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function
     var createdBy = req.body.createdBy;
     var organizationId = +new Date();
 
-    await db.addNewOrganizationStaff(organizationId, createdBy);
+    if (name != "" && createdBy != "") {
 
-    var addressList = [];
-    addressList[0] = createdBy;
+        await db.addNewOrganizationStaff(organizationId, createdBy);
 
-    if (req.body.address != null) {
-        var address = req.body.address.count;
+        var addressList = [];
+        addressList[0] = createdBy;
 
-        if (typeof address === "string") {
-            var addressString = address.toLowerCase();
-            addressList[1] = addressString;
-            await db.addNewOrganizationStaff(organizationId, addressString);
-        } else if (typeof address === "object") {
-            for (let i = 0; i < address.length; i++) {
-                let addressString = address[i].toLowerCase();
-                addressList[i + 1] = address[i]
+        if (req.body.address != null) {
+            var address = req.body.address.count;
+
+            if (typeof address === "string") {
+                var addressString = address.toLowerCase();
+                addressList[1] = addressString;
                 await db.addNewOrganizationStaff(organizationId, addressString);
+            } else if (typeof address === "object") {
+                for (let i = 0; i < address.length; i++) {
+                    let addressString = address[i].toLowerCase();
+                    addressList[i + 1] = address[i]
+                    await db.addNewOrganizationStaff(organizationId, addressString);
+                }
             }
         }
-    }
-    await db.addNewOrganization(name, JSON.stringify(addressList), req.file.location, organizationId, createdBy);
+        await db.addNewOrganization(name, JSON.stringify(addressList), req.file.location, organizationId, createdBy);
 
-    res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
+        res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
+    } else {
+        res.send({ error: "Couldn't add organization" })
+    }
 });
+
+app.post("/updateOrganizationDetails", async function (req, res) {
+    var payload = req.body;
+    var organizationId = payload.organizationId;
+    var createdBy = payload.createdBy;
+    var totalConversations = payload.totalConversations;
+    var prioritized = payload.prioritized;
+    var closed = payload.closed;
+    if (organizationId != "" && crreatedBy != "" && totalConversations != "" && prioritized != "" && closed != "") {
+        await db.updateOrganizationDetails(organizationId, createdBy, totalConversations, prioritized, closed);
+        res.send({ status: "success" });
+    }else{
+        res.send({ error: "couldn't update organization Details" })
+    }
+});
+
 app.get("/getOrganizationDetails", async (req, res) => {
     var address = req.query.address;
-    var details = await db.getStaffDetails(address);
-    var organizationDetails = [];
-    if (details.length == 0) {
-        res.send({"organizationDetails":[{"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788","organizationId":1657871686003,"addresses":'["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]',"createdBy":"0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72","name":"test","accessToken":"some-token"}]});
+    if (address != "") {
+        var details = await db.getStaffDetails(address);
+        var organizationDetails = [];
+        if (details.length == 0) {
+            res.send({ "organizationDetails": [{ "image": "https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788", "organizationId": 1657871686003, "addresses": '["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]', "createdBy": "0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72", "name": "test", "accessToken": "some-token" }] });
 
-    } else {
-        for (var i = 0; i < details.length; i++) {
-            var organizationId = details[i].organizationId;
-            organizationDetails[i] = await db.getOrganizationDetails(organizationId);
+        } else {
+            for (var i = 0; i < details.length; i++) {
+                var organizationId = details[i].organizationId;
+                organizationDetails[i] = await db.getOrganizationDetails(organizationId);
+            }
+            organizationDetails.push({ "image": "https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788", "organizationId": 1657871686003, "addresses": '["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]', "createdBy": "0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72", "name": "test", "accessToken": "some-token" })
+            res.send({ organizationDetails: organizationDetails });
         }
-        organizationDetails.push({"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788","organizationId":1657871686003,"addresses":'["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]',"createdBy":"0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72","name":"test","accessToken":"some-token"})
-        res.send({ organizationDetails: organizationDetails });
+    } else {
+        res.send({ error: "couldn't get organization details" })
     }
 });
 

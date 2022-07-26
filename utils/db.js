@@ -182,6 +182,31 @@ const addNewOrganization = async (organizationName, address, image, organization
     return await response;
 };
 
+const updateOrganizationDetails = async (organizationId, createdBy, totalConversations, prioritized, closed) => {
+    let dbParams = {
+        TableName: "Organization",
+        ExpressionAttributeNames: {
+            "#totalConversations": "totalConversations",
+            "#prioritized": "prioritized",
+            "#closed" : "closed"
+        },
+        Key: {
+            organizationId: organizationId,
+            createdBy: createdBy,
+        },
+        UpdateExpression: 'set #totalConversations = :totalConversations, #prioritized= :prioritized, #closed = :closed',
+        ExpressionAttributeValues: {
+            ':totalConversations': totalConversations,
+            ':prioritized' : prioritized,
+            ':closed' : closed
+        },
+    };
+
+    let response = await db.update(dbParams).promise();
+    console.log("response", await response);
+    return await response;
+};
+
 const getStaffDetails = async (userAddress) => {
     var address = userAddress;
     const params = {
@@ -238,5 +263,5 @@ const addNewOrganizationStaff = async (organizationId, address) => {
 module.exports = {
     getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, updateUserTag, 
     addNewOrganization, addNewOrganizationStaff, getStaffDetails, getOrganizationDetails,
-    assignConversation, closeConversation 
+    assignConversation, closeConversation, updateOrganizationDetails 
 };

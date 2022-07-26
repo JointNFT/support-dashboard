@@ -5,6 +5,14 @@ import { useEffect, useContext, useState } from "react";
 import UserContext from "../contexts/user/UserContext";
 import Web3Context from "../contexts/web3/Web3Context";
 import userContext from "../contexts/user/UserContext";
+import {
+    Stat,
+    StatLabel,
+    StatNumber,
+    StatHelpText,
+    StatArrow,
+    StatGroup,
+  } from '@chakra-ui/react'
 
 const Organizations = () => {
     const { accessToken, setAccessToken } = useContext(UserContext);
@@ -50,6 +58,52 @@ const Organizations = () => {
                         <Link to="/conversations/all" className="org-card" onClick={() => storeOrganization(org)}>
                             <img src={org.image} alt="" />
                             <h4>{org.name}</h4>
+                            <StatGroup>
+                                <Stat>
+                                    <StatLabel>All Conversations</StatLabel>
+                                    <StatNumber>{org.totalConversations}</StatNumber>
+                                    <StatHelpText>
+                                        <StatArrow type='increase' />
+                                        23.36%
+                                    </StatHelpText>
+                                </Stat>
+                                <br/>
+                                <Stat>
+                                    <StatLabel>Prioritized</StatLabel>
+                                    <StatNumber>{org.prioritized}</StatNumber>
+                                    <StatHelpText>
+                                        <StatArrow type='decrease' />
+                                        9.05%
+                                    </StatHelpText>
+                                </Stat>
+                                <br/>
+                                <Stat>
+                                    <StatLabel>Closed Conversations</StatLabel>
+                                    <StatNumber>{org.closed}</StatNumber>
+                                    <StatHelpText>
+                                        <StatArrow type='decrease' />
+                                        9.05%
+                                    </StatHelpText>
+                                </Stat>
+                                <br/>
+                                <Stat>
+                                    <StatLabel>Customers</StatLabel>
+                                    <StatNumber>{org.totalConversations-org.closed}</StatNumber>
+                                    <StatHelpText>
+                                        <StatArrow type='decrease' />
+                                        9.05%
+                                    </StatHelpText>
+                                </Stat>
+                                <br/>
+                                <Stat>
+                                    <StatLabel>Staff</StatLabel>
+                                    <StatNumber>{JSON.parse(org.addresses).length}</StatNumber>
+                                    <StatHelpText>
+                                        <StatArrow type='decrease' />
+                                        9.05%
+                                    </StatHelpText>
+                                </Stat>
+                            </StatGroup>
                         </Link>
                     ))}
 

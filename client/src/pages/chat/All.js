@@ -7,9 +7,9 @@ import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
 import Web3Context from "../../contexts/web3/Web3Context";
-const SERVER = "https://dashboard.highfi.me";
+const SERVER = "http://localhost:3000";
 
-function All(props) {
+export default function All(props) {
   const { accessToken } = useContext(UserContext);
   const { organization } = useContext(UserContext);
   const { address, setAddress } = useContext(Web3Context);
@@ -23,6 +23,7 @@ function All(props) {
   useEffect(() => {
     loadChannels();
     configureSocket();
+    updateConversationDetails();
   }, []);
 
   function configureSocket() {
@@ -129,7 +130,12 @@ function All(props) {
     var accessToken = channel.accessToken;
     var raw = JSON.stringify({
       userAddress: userAdderss,
-      accessToken: accessToken
+      accessToken: accessToken,
+      organizationId: organization.organizationId,
+      createdBy: organization.createdBy,
+      prioritized: organization.prioritized,
+      closed: organization.closed + 1,
+      totalConversations: organization.totalConversations
     });
 
     var requestOptions = {
@@ -140,6 +146,49 @@ function All(props) {
     };
 
     fetch("/closeConversation", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }
+
+  function updateConversationDetails() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    console.log(channels.users.length);
+    for (var i = 0; i < channels.users.length; i++) {
+      var prioritized = 0;
+      if (channels.users != null) {
+        console.log(channels.users[i].tag)
+        if (channels.users[i].tag == 'prioritized') {
+          prioritized++
+        }
+      }
+    }
+    for (var i = 0; i < channels.users.length; i++) {
+      var closed = 0;
+      if (channels.users != null) {
+        console.log(channels.users[i].status)
+        if (channels.users[i].status == 'closed') {
+          closed++
+        }
+      }
+    }
+    var raw = JSON.stringify({
+      organizationId: organization.organizationId,
+      createdBy: organization.createdBy,
+      prioritized: prioritized,
+      closed: closed,
+      totalConversations: channels.users.length
+    });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch("/updateConversationDetails", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -257,4 +306,4 @@ function All(props) {
   );
 }
 
-export default All;
+//export default All;
