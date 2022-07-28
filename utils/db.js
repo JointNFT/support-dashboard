@@ -165,7 +165,9 @@ const assignConversation = async (userAddress, token, assignedTo) => {
     return await response;
 };
 
-const addNewOrganization = async (organizationName, address, image, organizationId, createdBy) => {
+const addNewOrganization = async (organizationName, address, image, organizationId, createdBy, staff) => {
+    var initialValues = {'staff' : 0, 'closed' : 0, 'prioritized' : 0, 'customers': 0, 'totalConversations': 0};
+    //console.log(initialValues)
     let dbParams = {
         TableName: "Organization",
         Item: {
@@ -174,7 +176,13 @@ const addNewOrganization = async (organizationName, address, image, organization
             addresses: address,
             image: image,
             name: organizationName,
-            accessToken: makeAccessToken(24)            
+            accessToken: makeAccessToken(24),
+            staff: staff,
+            closed: 0,
+            prioritized: 0,
+            customers: 0,
+            totalConversations:0,
+            initialValues: initialValues,         
         },
     };
 
@@ -182,23 +190,19 @@ const addNewOrganization = async (organizationName, address, image, organization
     return await response;
 };
 
-const updateOrganizationDetails = async (organizationId, createdBy, totalConversations, prioritized, closed) => {
+const updateClosedConversations = async (organizationId, createdBy) => {
     let dbParams = {
         TableName: "Organization",
         ExpressionAttributeNames: {
-            "#totalConversations": "totalConversations",
-            "#prioritized": "prioritized",
             "#closed" : "closed"
         },
         Key: {
             organizationId: organizationId,
             createdBy: createdBy,
         },
-        UpdateExpression: 'set #totalConversations = :totalConversations, #prioritized= :prioritized, #closed = :closed',
+        UpdateExpression: 'ADD #closed :closed',
         ExpressionAttributeValues: {
-            ':totalConversations': totalConversations,
-            ':prioritized' : prioritized,
-            ':closed' : closed
+            ':closed' : 1
         },
     };
 
@@ -206,6 +210,49 @@ const updateOrganizationDetails = async (organizationId, createdBy, totalConvers
     console.log("response", await response);
     return await response;
 };
+
+const updatePrioritizedConversations = async (organizationId, createdBy) => {
+    let dbParams = {
+        TableName: "Organization",
+        ExpressionAttributeNames: {
+            "#prioritized" : "prioritized"
+        },
+        Key: {
+            organizationId: organizationId,
+            createdBy: createdBy,
+        },
+        UpdateExpression: 'ADD #prioritized :prioritized',
+        ExpressionAttributeValues: {
+            ':prioritized' : 1
+        },
+    };
+
+    let response = await db.update(dbParams).promise();
+    console.log("response", await response);
+    return await response;
+};
+
+const updateTotalConversations = async (organizationId, createdBy) => {
+    let dbParams = {
+        TableName: "Organization",
+        ExpressionAttributeNames: {
+            "#totalConverations" : "totalConversations"
+        },
+        Key: {
+            organizationId: organizationId,
+            createdBy: createdBy,
+        },
+        UpdateExpression: 'ADD #totalConversations :totalConversations',
+        ExpressionAttributeValues: {
+            ':totalConversations' : 1
+        },
+    };
+
+    let response = await db.update(dbParams).promise();
+    console.log("response", await response);
+    return await response;
+};
+
 
 const getStaffDetails = async (userAddress) => {
     var address = userAddress;
@@ -263,5 +310,6 @@ const addNewOrganizationStaff = async (organizationId, address) => {
 module.exports = {
     getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, updateUserTag, 
     addNewOrganization, addNewOrganizationStaff, getStaffDetails, getOrganizationDetails,
-    assignConversation, closeConversation, updateOrganizationDetails 
+    assignConversation, closeConversation, updateClosedConversations, updatePrioritizedConversations,
+    updateTotalConversations
 };

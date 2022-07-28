@@ -1,4 +1,4 @@
-const { getMessages, storeMessages, getUser, getUsers, updateUser, updateUserTag } = require("./db");
+const { getMessages, storeMessages, getUser, getUsers, updateUser, updateTotalConversations, updateUserTag } = require("./db");
 const { getDiscordSettings, alertInSupportChannel } = require("./discordHandlers");
 
 const handleCustomerMessage = async (address, message, accessToken, to, from) => {
@@ -14,9 +14,11 @@ const handleCustomerMessage = async (address, message, accessToken, to, from) =>
 const createNewUser = async (address, accessToken) => {
     console.log("creating User", address, accessToken);
     // check with db is thread is present
+    var totalConversations = 22; //change
     const userAccount = await getUser(address, accessToken);
     if (userAccount == null) {
         await updateUser(address, accessToken);
+        await db.updateTotalConversations(organizationId, createdBy);
     }
 };
 

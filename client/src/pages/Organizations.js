@@ -63,8 +63,8 @@ const Organizations = () => {
                                     <StatLabel>All Conversations</StatLabel>
                                     <StatNumber>{org.totalConversations}</StatNumber>
                                     <StatHelpText>
-                                        <StatArrow type='increase' />
-                                        23.36%
+                                        <StatArrow type={org.totalSign} />
+                                        {org.totalPercentage}%
                                     </StatHelpText>
                                 </Stat>
                                 <br/>
@@ -72,8 +72,8 @@ const Organizations = () => {
                                     <StatLabel>Prioritized</StatLabel>
                                     <StatNumber>{org.prioritized}</StatNumber>
                                     <StatHelpText>
-                                        <StatArrow type='decrease' />
-                                        9.05%
+                                        <StatArrow type='{org.prioritizedSign}' />
+                                        {org.prioritizedPercentage}%
                                     </StatHelpText>
                                 </Stat>
                                 <br/>
@@ -81,26 +81,26 @@ const Organizations = () => {
                                     <StatLabel>Closed Conversations</StatLabel>
                                     <StatNumber>{org.closed}</StatNumber>
                                     <StatHelpText>
-                                        <StatArrow type='decrease' />
-                                        9.05%
+                                        <StatArrow type={org.closedSign} />
+                                        {org.closedPercentage}%
                                     </StatHelpText>
                                 </Stat>
                                 <br/>
                                 <Stat>
                                     <StatLabel>Customers</StatLabel>
-                                    <StatNumber>{org.totalConversations-org.closed}</StatNumber>
+                                    <StatNumber>{org.customers}</StatNumber>
                                     <StatHelpText>
-                                        <StatArrow type='decrease' />
-                                        9.05%
+                                        <StatArrow type={org.customerSign} />
+                                        {org.customerPercentage}%
                                     </StatHelpText>
                                 </Stat>
                                 <br/>
                                 <Stat>
                                     <StatLabel>Staff</StatLabel>
-                                    <StatNumber>{JSON.parse(org.addresses).length}</StatNumber>
+                                    <StatNumber>{org.staff}</StatNumber>
                                     <StatHelpText>
-                                        <StatArrow type='decrease' />
-                                        9.05%
+                                        <StatArrow type={org.staffSign} />
+                                        {org.staffPercentage}%
                                     </StatHelpText>
                                 </Stat>
                             </StatGroup>
