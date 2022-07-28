@@ -60,7 +60,7 @@ export default function WagmiSignIn({
                       </CustomButton>
                     ))}
         
-                    {error && <div>{error.message}</div>}
+                    {error && <div style={{color: "red"}}>{error.message}</div>}
                   </div>
                 ):(
                     <CustomButton

@@ -3,10 +3,9 @@ import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { infuraProvider } from "wagmi/providers/infura";
 
 const infuraId = "85db4049c00b4783a425412807ff92e9";
-
 const { chains, provider, webSocketProvider } = configureChains(
   [chain.mainnet, chain.polygon],
-  [infuraProvider({ infuraId })]
+  [infuraProvider({ apiKey: infuraId })]
 );
 
 // Set up client
