@@ -37,11 +37,8 @@ function App() {
     signOut,
     signInLoading
   } = useContext(WagmiContext);
-  const connectHandler = async (e) => {
-    await connect();
-  };
 
-  const disconnectHandler = async (e) => {
+  const disconnectHandler = async () => {
    // disconnect();
    await signOut()
   };
@@ -52,7 +49,7 @@ function App() {
          connectors={connectors}
          isLoading={isLoading}
          pendingConnector={pendingConnector}
-         connect={connectHandler}
+         connect={connect}
          error={error}
          signIn={signIn}
          isConnected={isConnected}
