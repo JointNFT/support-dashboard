@@ -14,7 +14,8 @@ const discord_token = process.env.DISCORD_TOKEN;
 const compareStaff = require('./helper/compare-list');
 const SERVER = "https://dashboard.highfi.me";
 const { generateNonce, SiweMessage }= require('siwe');
-const session = require('express-session')
+const { authentication } = require('./middleware/authMiddleware');
+const session = require('express-session');
 var app = express();
 app.use(express.json());
 
@@ -127,13 +128,13 @@ io.on("connection", (socket) => {
 /**
  * @description This methos retirves the static channels
  */
-app.get("/getChannels", (req, res) => {
+app.get("/getChannels", authentication, (req, res) => {
     res.json({
         channels: STATIC_CHANNELS,
     });
 });
 
-app.get("/getUsers", async (req, res) => {
+app.get("/getUsers", authentication, async (req, res) => {
     console.log(req.query.accessToken);
     const users = await chatHandlers.getUsers(req.query.accessToken);
     res.statusCode = 200;
@@ -141,7 +142,7 @@ app.get("/getUsers", async (req, res) => {
 
 });
 
-app.get("/getMessages", async (req, res) => {
+app.get("/getMessages", authentication, async (req, res) => {
     chatMessages = await chatHandlers.getMessages(req.query.address, req.query.accessToken);
     res.send(JSON.stringify({ messages: chatMessages }));
 });
@@ -153,11 +154,11 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });*/
 
-app.get("/api", (req, res) => {
+app.get("/api", authentication, (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
-app.post("/updateUserTag", async function (req, res) {
+app.post("/updateUserTag", authentication, async function (req, res) {
     var payload = req.body;
     var accessToken = payload.accessToken;
     var userAddress = payload.userAddress;
@@ -166,7 +167,7 @@ app.post("/updateUserTag", async function (req, res) {
     res.send({ status: "success" });
 });
 
-app.post("/closeConversation", async function (req, res) {
+app.post("/closeConversation", authentication, async function (req, res) {
     var payload = req.body;
     var accessToken = payload.accessToken;
     var userAddress = payload.userAddress;
@@ -174,7 +175,7 @@ app.post("/closeConversation", async function (req, res) {
     res.send({ status: "success" });
 });
 
-app.post("/assignConversation", async function (req, res) {
+app.post("/assignConversation", authentication, async function (req, res) {
     var payload = req.body;
     var accessToken = payload.accessToken;
     var userAddress = payload.userAddress;
@@ -183,7 +184,7 @@ app.post("/assignConversation", async function (req, res) {
     res.send({ status: "success" });
 });
 
-app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function (req, res) {
+app.post("/createOrganization", authentication,s3.uploadLogo.single("imageURL"), async function (req, res) {
     var name = req.body.organizationName;
     var createdBy = req.body.createdBy;
     var organizationId = +new Date();
@@ -213,7 +214,7 @@ app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function
     res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
 });
 //
-app.patch("/updateOrganization", s3.uploadLogo.single("image"), async(req,res) => {
+app.patch("/updateOrganization", authentication,s3.uploadLogo.single("image"), async(req,res) => {
     const orgID = req.query?.orgID
     const { name, addresses, createdBy } = req.body || {};
  
@@ -230,7 +231,7 @@ app.patch("/updateOrganization", s3.uploadLogo.single("image"), async(req,res) =
     res.json({organization: response?.Attributes})
      
 })
-app.get("/getOrganizationDetails", async (req, res) => {
+app.get("/getOrganizationDetails", authentication, async (req, res) => {
     var address = req.query.address;
     var details = await db.getStaffDetails(address);
     var organizationDetails = [];
@@ -246,7 +247,7 @@ app.get("/getOrganizationDetails", async (req, res) => {
         res.send({ organizationDetails: organizationDetails });
     }
 });
-app.get('/getOrganization', async (req, res) => {
+app.get('/getOrganization', authentication, async (req, res) => {
     try {
         const id = req.query.orgID;
         const organization = await db.getOrganizationDetails(parseInt(id));
@@ -259,7 +260,7 @@ app.get('/getOrganization', async (req, res) => {
     }
 
 })
-app.get("/transactions", async function (req, res) {
+app.get("/transactions", authentication, async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");
 
     let address = req?.query?.userAddress;
@@ -282,7 +283,7 @@ app.get("/transactions", async function (req, res) {
     res.send(JSON.stringify({ filteredTransactions: populatedTransactions }));
 });
 
-app.get("/test", (req, res) => {
+app.get("/test", authentication, (req, res) => {
     chatHandlers.pushToDiscord(
         {
             accessToken: "some-token",
