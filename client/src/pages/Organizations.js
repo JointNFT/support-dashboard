@@ -26,7 +26,7 @@ const Organizations = () => {
             redirect: "follow",            
         };
 
-        fetch("/getOrganizationDetails?address=" + userAddress, requestOptions)
+        fetch("/organizations/getOrganizationDetails?address=" + userAddress, requestOptions)
             .then((response) => response.text())
             .then((result) => (
                 setOrganizations(JSON.parse(result).organizationDetails)             

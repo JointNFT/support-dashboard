@@ -113,7 +113,7 @@ function Prioritized(props) {
       redirect: "follow",
     };
 
-    fetch("/updateUserTag", requestOptions)
+    fetch("/conversations/updateUserTag", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -121,7 +121,7 @@ function Prioritized(props) {
 
   async function loadChannels() {
     console.log("accessToken - ", accessToken);
-    fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(
+    fetch(SERVER + "/chat/getUsers?accessToken=" + accessToken).then(
       async (response) => {
         let data = await response.json();
         console.log("channel list", data);
@@ -148,7 +148,7 @@ function Prioritized(props) {
     }
 
     fetch(
-      SERVER + "/getMessages?address=" + address + "&accessToken=" + accessToken
+      SERVER + "/chat/getMessages?address=" + address + "&accessToken=" + accessToken
     ).then(async (response) => {
       let data = await response.json();
       channel.messages = data?.messages || "";

@@ -46,7 +46,7 @@ const Chat = (props) => {
       redirect: "follow",
     };
 
-    fetch("/assignConversation", requestOptions)
+    fetch("/conversations/assignConversation", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -143,7 +143,7 @@ const Chat = (props) => {
       redirect: "follow",
     };
 
-    fetch("/updateUserTag", requestOptions)
+    fetch("/conversations/updateUserTag", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -151,7 +151,7 @@ const Chat = (props) => {
 
   async function loadChannels() {
     console.log("accessToken - ", accessToken);
-    fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(
+    fetch(SERVER + "/chat/getUsers?accessToken=" + accessToken).then(
       
       async (response) => {
         console.log('res', response);
@@ -180,7 +180,7 @@ const Chat = (props) => {
 
       fetch(
         SERVER +
-          "/getMessages?address=" +
+          "/chat/getMessages?address=" +
           address +
           "&accessToken=" +
           accessToken

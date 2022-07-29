@@ -28,7 +28,7 @@ const Organizations = () => {
     };
 
     useEffect(() => {
-        fetch("/getOrganizationDetails?address=" + address.toLowerCase(), requestOptions).then((res) => {
+        fetch("/organizations/getOrganizationDetails?address=" + address.toLowerCase(), requestOptions).then((res) => {
             res.json().then((resData) => resData && setOrganizations(resData.organizationDetails));
         });
     }, []);

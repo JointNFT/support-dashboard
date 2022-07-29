@@ -51,7 +51,7 @@ function ModalForm({ org, onUpdateSuccess }) {
     }
   };
   const updateOrgInfo = (orgID, formData) => {
-    fetch("/updateOrganization?orgID=" + orgID, {
+    fetch("/organizations/updateOrganization?orgID=" + orgID, {
       method: "PATCH",
       body: formData,
     })
