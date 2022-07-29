@@ -8,6 +8,7 @@ const Web3 = require("web3");
 const utils = require("./utils/transactionDecoders");
 const db = require("./utils/db");
 const s3 = require("./utils/s3");
+const organizationHandlers = require("./utils/organizationHandlers");
 const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
@@ -275,49 +276,9 @@ app.patch("/updateOrganization", s3.uploadLogo.single("image"), async(req,res) =
 app.get("/getOrganizationDetails", async (req, res) => {
     var address = req.query.address;
     if (address != "") {
-        var details = await db.getStaffDetails(address);
-        var organizationDetails = [];
-        if (details.length == 0) {
-            res.send({ "organizationDetails": [{ "image": "https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788", "organizationId": 1657871686003, "addresses": '["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]', "createdBy": "0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72", "name": "test", "accessToken": "some-token" }] });
-
-        } else {
-            for (var i = 0; i < details.length; i++) {
-                var organizationId = details[i].organizationId;
-                organizationDetails[i] = await db.getOrganizationDetails(organizationId);
-            }
-            organizationDetails.push({ "image": "https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788", "organizationId": 1657871686003, "addresses": '["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]', "createdBy": "0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72", "name": "test", "accessToken": "some-token" })
-            for (var i = 0; i < organizationDetails.length; i++) {
-                if (organizationDetails[i].initialValues != undefined) {
-                    organizationDetails[i].closedPercentage =
-                        (organizationDetails[i].closed - organizationDetails[i].initialValues.closed) * 100 / ((organizationDetails[i].initialValues.closed == 0) ?
-                            1 : organizationDetails[i].initialValues.closed);
-                    organizationDetails[i].closedSign = (organizationDetails[i].closedPercentage >= 0) ? "increase" : "decrease";
-
-                    organizationDetails[i].prioritizedPercentage =
-                        (organizationDetails[i].prioritized - organizationDetails[i].initialValues.prioritized) * 100 / ((organizationDetails[i].initialValues.prioritized == 0) ?
-                            1 : organizationDetails[i].initialValues.prioritized);
-                    organizationDetails[i].prioritizedSign = (organizationDetails[i].prioritizedPercentage >= 0) ? "increase" : "decrease";
-
-                    organizationDetails[i].totalPercentage =
-                        (organizationDetails[i].totalConversations - organizationDetails[i].initialValues.totalConversations) * 100 / ((organizationDetails[i].initialValues.totalConversations == 0) ?
-                            1 : organizationDetails[i].initialValues.totalConversations);
-                    organizationDetails[i].totalSign = (organizationDetails[i].totalPercentage >= 0) ? "increase" : "decrease";
-
-                    organizationDetails[i].staffPercentage =
-                        (organizationDetails[i].staff - organizationDetails[i].initialValues.staff) * 100 / ((organizationDetails[i].initialValues.staff == 0) ?
-                            1 : organizationDetails[i].initialValues.staff);
-                    organizationDetails[i].staffSign = (organizationDetails[i].staffPercentage >= 0) ? "increase" : "decrease";
-
-                    organizationDetails[i].customers = organizationDetails[i].totalConversations - organizationDetails[i].closed;
-                    organizationDetails[i].customerPercentage =
-                        (organizationDetails[i].customers - organizationDetails[i].initialValues.customers) * 100 / ((organizationDetails[i].initialValues.customers == 0) ?
-                            1 : organizationDetails[i].initialValues.customers);
-                    organizationDetails[i].customerSign = (organizationDetails[i].customerPercentage >= 0) ? "increase" : "decrease";
-                }
-            }
+            var organizationDetails = await organizationHandlers.handleFetchOrganizationDetails(address);
             res.send({ organizationDetails: organizationDetails });
-        }
-    } else {
+        } else {
         res.send({ error: "couldn't get organization details" })
     }
 });

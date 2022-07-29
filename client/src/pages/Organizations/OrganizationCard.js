@@ -59,11 +59,11 @@ const OrganizationCard = ({ storeAccessToken, organization, setOrganizationID, s
         Todays data
       </Heading>
       <Flex direction={"column"} justifyContent="space-between">
-        <OrganizationStack />
-        <OrganizationStack button={"Open"} icon="up" />
-        <OrganizationStack icon="up" />
-        <OrganizationStack icon="down" />
-        <OrganizationStack />
+        <OrganizationStack fieldName = {'All Conversations'} fieldData = {organization.totalConversations} fieldPercent ={organization.totalPercentage} icon={organization.totalSign}/>
+        <OrganizationStack fieldName = {'Prioritized'} fieldData = {organization.prioritized} fieldPercent={organization.prioritizedPercentage} button={"Open"} icon={organization.prioritizedSign} />
+        <OrganizationStack fieldName = {'Closed Conversations'} fieldData = {organization.closed} fieldPercent={organization.closedPercentage} icon={organization.closedSign} />
+        <OrganizationStack fieldName = {'Customers'} fieldData = {organization.customers} fieldPercent={organization.customerPercentage} icon={organization.customerSign} />
+        <OrganizationStack fieldName = {'staff'} fieldData = {organization.staff} fieldPercent={organization.staffPercentage} icon={organization.staffSign}/>
       </Flex>
     </Box>
   );
