@@ -265,59 +265,33 @@ app.get("/getOrganizationDetails", async (req, res) => {
                 organizationDetails[i] = await db.getOrganizationDetails(organizationId);
             }
             organizationDetails.push({ "image": "https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788", "organizationId": 1657871686003, "addresses": '["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]', "createdBy": "0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72", "name": "test", "accessToken": "some-token" })
-            for(var i = 0; i<organizationDetails.length; i++){
-                if(organizationDetails[i].initialValues != undefined){
-                    if(organizationDetails[i].initialValues.closed == 0){
-                        organizationDetails[i].closedPercentage = (organizationDetails[i].closed - organizationDetails[i].initialValues.closed)*100
-                    }else{
-                    organizationDetails[i].closedPercentage = (organizationDetails[i].closed - organizationDetails[i].initialValues.closed)*100/organizationDetails[i].initialValues.closed;
-                    }
-                    if(organizationDetails[i].closedPercentage>=0){
-                        organizationDetails[i].closedSign = 'increase';
-                    }else{
-                        organizationDetails[i].closedSign = 'decrease';
-                    }
-                    if(organizationDetails[i].initialValues.prioritized == 0){
-                        organizationDetails[i].prioritizedPercentage = (organizationDetails[i].prioritized - organizationDetails[i].initialValues.prioritized)*100
-                    }else{
-                    organizationDetails[i].prioritizedPercentage = (organizationDetails[i].prioritized - organizationDetails[i].initialValues.prioritized)*100/organizationDetails[i].initialValues.prioritized;
-                    }
-                    if(organizationDetails[i].prioritizedPercentage>=0){
-                        organizationDetails[i].prioritizedSign = 'increase';
-                    }else{
-                        organizationDetails[i].prioritizedSign = 'decrease';
-                    }
-                    if(organizationDetails[i].initialValues.totalConversations == 0){
-                        organizationDetails[i].totalPercentage = (organizationDetails[i].totalConversations - organizationDetails[i].initialValues.totalConversations)*100
-                    }else{
-                    organizationDetails[i].totalPercentage = (organizationDetails[i].totalConversations - organizationDetails[i].initialValues.totalConversations)*100/organizationDetails[i].initialValues.totalConversations;
-                    }
-                    if(organizationDetails[i].totalPercentage>=0){
-                        organizationDetails[i].totalSign = 'increase';
-                    }else{
-                        organizationDetails[i].totalSign = 'decrease';
-                    }
-                    if(organizationDetails[i].initialValues.staff == 0){
-                        organizationDetails[i].staffPercentage = (organizationDetails[i].staff - organizationDetails[i].initialValues.staff)*100
-                    }else{
-                    organizationDetails[i].staffPercentage = (organizationDetails[i].staff - organizationDetails[i].initialValues.staff)*100/organizationDetails[i].initialValues.staff;
-                    }
-                    if(organizationDetails[i].staffPercentage>=0){
-                        organizationDetails[i].staffSign = 'increase';
-                    }else{
-                        organizationDetails[i].staffSign = 'decrease';
-                    }
+            for (var i = 0; i < organizationDetails.length; i++) {
+                if (organizationDetails[i].initialValues != undefined) {
+                    organizationDetails[i].closedPercentage =
+                        (organizationDetails[i].closed - organizationDetails[i].initialValues.closed) * 100 / ((organizationDetails[i].initialValues.closed == 0) ?
+                            1 : organizationDetails[i].initialValues.closed);
+                    organizationDetails[i].closedSign = (organizationDetails[i].closedPercentage >= 0) ? "increase" : "decrease";
+
+                    organizationDetails[i].prioritizedPercentage =
+                        (organizationDetails[i].prioritized - organizationDetails[i].initialValues.prioritized) * 100 / ((organizationDetails[i].initialValues.prioritized == 0) ?
+                            1 : organizationDetails[i].initialValues.prioritized);
+                    organizationDetails[i].prioritizedSign = (organizationDetails[i].prioritizedPercentage >= 0) ? "increase" : "decrease";
+
+                    organizationDetails[i].totalPercentage =
+                        (organizationDetails[i].totalConversations - organizationDetails[i].initialValues.totalConversations) * 100 / ((organizationDetails[i].initialValues.totalConversations == 0) ?
+                            1 : organizationDetails[i].initialValues.totalConversations);
+                    organizationDetails[i].totalSign = (organizationDetails[i].totalPercentage >= 0) ? "increase" : "decrease";
+
+                    organizationDetails[i].staffPercentage =
+                        (organizationDetails[i].staff - organizationDetails[i].initialValues.staff) * 100 / ((organizationDetails[i].initialValues.staff == 0) ?
+                            1 : organizationDetails[i].initialValues.staff);
+                    organizationDetails[i].staffSign = (organizationDetails[i].staffPercentage >= 0) ? "increase" : "decrease";
+
                     organizationDetails[i].customers = organizationDetails[i].totalConversations - organizationDetails[i].closed;
-                    if(organizationDetails[i].initialValues.customers == 0){
-                        organizationDetails[i].customerPercentage = (organizationDetails[i].customers - organizationDetails[i].initialValues.customers)*100
-                    }else{
-                    organizationDetails[i].customerPercentage = (organizationDetails[i].customers - organizationDetails[i].initialValues.customers)*100/organizationDetails[i].initialValues.customers;
-                    }     
-                    if(organizationDetails[i].customerPercentage>=0){
-                        organizationDetails[i].customerSign = 'increase';
-                    }else{
-                        organizationDetails[i].customerSign = 'decrease';
-                    }                                  
+                    organizationDetails[i].customerPercentage =
+                        (organizationDetails[i].customers - organizationDetails[i].initialValues.customers) * 100 / ((organizationDetails[i].initialValues.customers == 0) ?
+                            1 : organizationDetails[i].initialValues.customers);
+                    organizationDetails[i].customerSign = (organizationDetails[i].customerPercentage >= 0) ? "increase" : "decrease";
                 }
             }
             res.send({ organizationDetails: organizationDetails });

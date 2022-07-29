@@ -167,7 +167,6 @@ const assignConversation = async (userAddress, token, assignedTo) => {
 
 const addNewOrganization = async (organizationName, address, image, organizationId, createdBy, staff) => {
     var initialValues = {'staff' : 0, 'closed' : 0, 'prioritized' : 0, 'customers': 0, 'totalConversations': 0};
-    //console.log(initialValues)
     let dbParams = {
         TableName: "Organization",
         Item: {
@@ -180,7 +179,6 @@ const addNewOrganization = async (organizationName, address, image, organization
             staff: staff,
             closed: 0,
             prioritized: 0,
-            customers: 0,
             totalConversations:0,
             initialValues: initialValues,         
         },

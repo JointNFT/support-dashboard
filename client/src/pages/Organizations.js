@@ -72,8 +72,8 @@ const Organizations = () => {
                                     <StatLabel>Prioritized</StatLabel>
                                     <StatNumber>{org.prioritized}</StatNumber>
                                     <StatHelpText>
-                                        <StatArrow type='{org.prioritizedSign}' />
-                                        {org.prioritizedPercentage}%
+                                        <StatArrow type={org.prioritizedSign} />
+                                        {org.prioritizedPercentage}% 
                                     </StatHelpText>
                                 </Stat>
                                 <br/>
