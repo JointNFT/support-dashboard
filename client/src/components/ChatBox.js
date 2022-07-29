@@ -1,7 +1,7 @@
 import { Avatar, Box, Flex, Heading, Tag, Text } from "@chakra-ui/react";
 import React from "react";
 
-const ChatBox = ({ active, name, info, lastActivityTime, src, handleClick }) => {
+const ChatBox = ({ id, isActive, name, info, lastActivityTime, src, handleClick }) => {
   return (
     <Flex
       align="center"
@@ -10,7 +10,7 @@ const ChatBox = ({ active, name, info, lastActivityTime, src, handleClick }) => 
       as={"a"}
       p="2"
       href="#"
-      bg={active ? "white" : "transparent"}
+      bg={isActive === id ? "pink.100" : "transparent"}
       _active={{ background: "pink.100" }}
       onClick={handleClick}
       

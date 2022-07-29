@@ -147,7 +147,7 @@ const Chat = (props) => {
     }
 
     async function loadChannels() {
-        console.log("accessToken - ", accessToken);
+        console.log("accessToken -- ", accessToken);
         fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(async (response) => {
             let data = await response.json();
             setChannels(data.users);

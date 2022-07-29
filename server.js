@@ -11,7 +11,7 @@ const s3 = require("./utils/s3");
 const axios = require("axios");
 const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
-
+const compareStaff = require('./helper/compare-list');
 const SERVER = "https://dashboard.highfi.me";
 
 var app = express();
@@ -131,6 +131,7 @@ app.get("/getUsers", async (req, res) => {
     console.log(req.query.accessToken);
     if(req.query.accessToken){
     const users = await chatHandlers.getUsers(req.query.accessToken);
+    res.statusCode = 200;
     res.send(JSON.stringify({ users: users }));
     }else{
         res.send({ error : " Couldn't fetch users"})
@@ -207,6 +208,8 @@ app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function
     var organizationId = +new Date();
 
     if (name != "" && createdBy != "") {
+    console.log(req.body.address)
+    await db.addNewOrganizationStaff(organizationId, createdBy);
 
         await db.addNewOrganizationStaff(organizationId, createdBy);
 
@@ -251,6 +254,24 @@ app.post("/updateOrganizationDetails", async function (req, res) {
     }
 });
 
+//
+app.patch("/updateOrganization", s3.uploadLogo.single("image"), async(req,res) => {
+    const orgID = req.query?.orgID
+    const { name, addresses, createdBy } = req.body || {};
+ 
+    const addressList = addresses.split(',');
+    const submitStaff = addressList.map(a => ({ organizationId: parseInt(orgID), address: a}));
+    const currentStaffs = await db.getStaffs(parseInt(orgID));
+  
+    const deleteList = compareStaff(submitStaff,currentStaffs);
+    const addList = compareStaff(currentStaffs,submitStaff);
+
+    await db.deleteOrganizationStaffs(deleteList)
+    await db.updateOrganizationStaffs(addList);
+    const response = await db.updateOrganization( name, addressList, req?.file?.location , orgID, createdBy);
+    res.json({organization: response?.Attributes})
+     
+})
 app.get("/getOrganizationDetails", async (req, res) => {
     var address = req.query.address;
     if (address != "") {
@@ -300,7 +321,14 @@ app.get("/getOrganizationDetails", async (req, res) => {
         res.send({ error: "couldn't get organization details" })
     }
 });
-
+app.get('/getOrganization', async (req, res) => {
+    const id = req.query.orgID;
+    const organization = await db.getOrganizationDetails(parseInt(id));
+    if(!organization) {
+        res.status(404).json({ message: "Not found"})
+    }
+    res.json({data: organization})
+})
 app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");
 

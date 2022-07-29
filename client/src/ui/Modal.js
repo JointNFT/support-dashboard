@@ -4,7 +4,6 @@ import { GrAddCircle } from "react-icons/gr";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
 import Web3Context from "../contexts/web3/Web3Context";
 
-
 function ModalForm() {
   const [show, setShow] = useState(false);
   const [addressCount, setAddressCount] = useState(0);
