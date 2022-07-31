@@ -6,7 +6,7 @@ import WithSubnavigation from "./components/layout/Navbar/Navbar";
 import SignIn from "./components/SignIn";
 import UserContext from "./contexts/user/UserContext";
 import Web3Context from "./contexts/web3/Web3Context";
-import WagmiContext from "./contexts/wagmi/WagmiContext";
+import WagmiContext from "./contexts/wagmi/wagmiContext";
 import AccessKeys from "./pages/AccessKeys";
 import GetStarted from "./pages/conversations/GetStarted";
 import Customers from "./pages/Customers";
@@ -15,7 +15,7 @@ import Integrations from "./pages/Integrations";
 import Organizations from "./pages/Organizations/Organizations";
 import WagmiSignIn from "./components/WagmiSignIn";
 //const SERVER = "http://127.0.0.1:3000";
-const SERVER = "http://localhost:3001";
+const SERVER = "https://dashboard.highfi.me";
 
 const ChatComponent = React.lazy(() =>
   isMobile
