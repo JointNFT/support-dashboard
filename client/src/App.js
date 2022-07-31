@@ -6,7 +6,7 @@ import WithSubnavigation from "./components/layout/Navbar/Navbar";
 import SignIn from "./components/SignIn";
 import UserContext from "./contexts/user/UserContext";
 import Web3Context from "./contexts/web3/Web3Context";
-import WagmiContext from "./contexts/wagmi/wagmiContext";
+import WagmiContext from "./contexts/wagmi/WagmiContext";
 import AccessKeys from "./pages/AccessKeys";
 import GetStarted from "./pages/conversations/GetStarted";
 import Customers from "./pages/Customers";
