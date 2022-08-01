@@ -6,14 +6,6 @@ const chatHandlers = require("./utils/chatHandlers");
 const { Client, Intents } = require("discord.js");
 const Web3 = require("web3");
 const utils = require("./utils/transactionDecoders");
-<<<<<<< HEAD
-const db = require("./utils/db");
-const s3 = require("./utils/s3");
-const organizationHandlers = require("./utils/organizationHandlers");
-const axios = require("axios");
-const { start } = require("repl");
-=======
->>>>>>> origin/dev
 const discord_token = process.env.DISCORD_TOKEN;
 const wagmiRouter = require('./routes/wagmi-authen-route.js');
 const organizationRouter = require('./routes/organization-route.js');

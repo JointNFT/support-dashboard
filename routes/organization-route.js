@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require("../utils/db");
+const organizationHandlers = require("../utils/organizationHandlers");
 const s3 = require("../utils/s3");
 const compareStaff = require('../helper/compare-list');
 
@@ -51,22 +52,7 @@ router.patch("/updateOrganization", s3.uploadLogo.single("image"), async(req,res
     res.json({organization: response?.Attributes})
      
 })
-router.get("/getOrganizationDetails", async (req, res) => {
-    var address = req.query.address;
-    var details = await db.getStaffDetails(address);
-    var organizationDetails = [];
-    if (details.length == 0) {
-        res.send({"organizationDetails":[{"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788","organizationId":1657871686003,"addresses":'["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]',"createdBy":"0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72","name":"test","accessToken":"some-token"}]});
 
-    } else {
-        for (var i = 0; i < details.length; i++) {
-            var organizationId = details[i].organizationId;
-            organizationDetails[i] = await db.getOrganizationDetails(organizationId);
-        }
-        organizationDetails.push({"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788","organizationId":1657871686003,"addresses":'["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]',"createdBy":"0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72","name":"test","accessToken":"some-token"})
-        res.send({ organizationDetails: organizationDetails });
-    }
-});
 router.get('/getOrganization', async (req, res) => {
     try {
         const id = req.query.orgID;
@@ -79,6 +65,15 @@ router.get('/getOrganization', async (req, res) => {
         console.log(error)
     }
 
+});
+router.get("/getOrganizationDetails", async (req, res) => {
+    var address = req.query.address;
+    if (address != "") {
+            var organizationDetails = await organizationHandlers.handleFetchOrganizationDetails(address);
+            res.send({ organizationDetails: organizationDetails });
+        } else {
+        res.send({ error: "couldn't get organization details" })
+    }
 });
 
 module.exports = router;
