@@ -12,7 +12,7 @@ import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import userContext from "../../contexts/user/UserContext";
 
-const SERVER = "http://localhost:3000";
+const SERVER = "https://dashboard.highfi.me";
 
 const Chat = (props) => {
   const { accessToken, organization } = useContext(userContext);
