@@ -29,7 +29,7 @@ export default function WagmiSignIn({
   return (
     <div>
       <main>
-        <h1 className="title">HighFy Me </h1>
+        <h1 className="title">HighFy Me  {process.env.REACT_APP_TITLE}</h1>
         <Flex h="35vh" justify="center" alignItems="center" bg="#e5f4f1"></Flex>
         <Flex h="5vh" justify="center" alignItems="center" bg="#e5f4f1">
           <Text>Connect Wallet to Login or Sign Up</Text>

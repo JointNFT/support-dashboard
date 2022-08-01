@@ -58,6 +58,7 @@ function App() {
      );
   return (
     <>
+    {process.env.REACT_APP_TITLE}
           <Router>
             {isDesktop && <WithSubnavigation />}
             {/*<Sidebar signOut={signOut}/>*/}

@@ -12,7 +12,13 @@ import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import userContext from "../../contexts/user/UserContext";
 
-const SERVER = "https://dashboard.highfi.me";
+let SERVER;
+if (process.env.REACT_APP_ENV == "local") {
+   SERVER = "http://localhost:3000";
+} else {
+   SERVER = "https://dashboard.highfi.me";
+}
+
 
 const Chat = (props) => {
   const { accessToken, organization } = useContext(userContext);
