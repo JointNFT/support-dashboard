@@ -8,12 +8,14 @@ import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
 import Web3Context from "../../contexts/web3/Web3Context";
-const SERVER = "http://localhost:3000";
+import WagmiContext from "../../contexts/wagmi/WagmiContext";
+const SERVER = "https://dashboard.highfi.me";
 
 function All(props) {
     const { accessToken } = useContext(UserContext);
     const { organization } = useContext(UserContext);
-    const { address, setAddress } = useContext(Web3Context);
+    //const { address, setAddress } = useContext(Web3Context);
+    const { address } = useContext(WagmiContext);
     const [channels, setChannels] = useState([]);
     const [arrivalMessage, setArrivalMessage] = useState({});
     const [newAccount, setNewAccount] = useState({});
@@ -117,7 +119,7 @@ function All(props) {
             redirect: "follow",
         };
 
-        fetch("/updateUserTag", requestOptions)
+        fetch("/conversations/updateUserTag", requestOptions)
             .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.log("error", error));
@@ -140,7 +142,7 @@ function All(props) {
             redirect: "follow",
         };
 
-        fetch("/closeConversation", requestOptions)
+        fetch("/conversations/closeConversation", requestOptions)
             .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.log("error", error));
@@ -164,7 +166,7 @@ function All(props) {
             redirect: "follow",
         };
 
-        fetch("/assignConversation", requestOptions)
+        fetch("/conversations/assignConversation", requestOptions)
             .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.log("error", error));
@@ -173,7 +175,7 @@ function All(props) {
     function loadChannels() {
         console.log("accessToken - ", accessToken);
 
-        fetch(SERVER + "/getUsers?accessToken=" + accessToken).then((res) => {
+        fetch(SERVER + "/chat/getUsers?accessToken=" + accessToken).then((res) => {
             console.log("res-- ", res);
             // res.json().then((response) => {
             //     let data = await response.json();
@@ -203,7 +205,7 @@ function All(props) {
                 return;
             }
 
-            fetch(SERVER + "/getMessages?address=" + address + "&accessToken=" + accessToken).then(async (response) => {
+            fetch(SERVER + "/chat/getMessages?address=" + address + "&accessToken=" + accessToken).then(async (response) => {
                 let data = await response.json();
                 channel.messages = data?.messages || "";
                 channelsCopy.forEach((c) => {
@@ -218,114 +220,6 @@ function All(props) {
         [channels]
     );
 
-<<<<<<< HEAD
-    console.log('arrival')
-    setChannel(newChannel);
-  }, [arrivalMessage]);
-
-  function handleUserTag(tag) {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var userAdderss = channel.userAddress;
-    var accessToken = channel.accessToken;
-    var raw = JSON.stringify({
-      userAddress: userAdderss,
-      accessToken: accessToken,
-      tag: tag,
-      organizationId: organization.organizationId,
-      createdBy: organization.createdBy
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch("/updateUserTag", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  }
-
-  function closeConversation() {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var userAdderss = channel.userAddress;
-    var accessToken = channel.accessToken;
-    var raw = JSON.stringify({
-      userAddress: userAdderss,
-      accessToken: accessToken,
-      organizationId: organization.organizationId,
-      createdBy: organization.createdBy
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch("/closeConversation", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  }
-
-  function assignConversation(address) {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    var userAdderss = channel.userAddress;
-    var accessToken = channel.accessToken;
-    var raw = JSON.stringify({
-      userAddress: userAdderss,
-      accessToken: accessToken,
-      assignTo: address,
-    });
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    fetch("/assignConversation", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  }
-
-  async function loadChannels() {
-    console.log("testing")
-    console.log("accessToken - ", accessToken);
-    fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(
-      async (response) => {
-        let data = await response.json();
-        console.log("channel list", data);
-        setChannels(data.users);
-        console.log("channels list =" + channels);
-      }
-    );
-  }
-
-  const handleChannelSelect = useCallback((address) => {
-    let channelsCopy = channels;
-    console.log("first handle channel select", channels);
-
-    let channel = channelsCopy.find((c) => {
-      console.log(address)
-      if(c.userAddress === address) {
-        console.log('jednako', address)
-      }
-      return c.userAddress == address;
-    });
-
-    if (channel == undefined) {
-      return;
-=======
     function handleSendMessage(address, text) {
         socket.current.emit("send-message", {
             id: Date.now(),
@@ -336,7 +230,6 @@ function All(props) {
             from: "support",
             timestamp: +new Date(),
         });
->>>>>>> origin/dev
     }
 
     return (

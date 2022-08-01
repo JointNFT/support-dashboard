@@ -6,18 +6,25 @@ const chatHandlers = require("./utils/chatHandlers");
 const { Client, Intents } = require("discord.js");
 const Web3 = require("web3");
 const utils = require("./utils/transactionDecoders");
+<<<<<<< HEAD
 const db = require("./utils/db");
 const s3 = require("./utils/s3");
 const organizationHandlers = require("./utils/organizationHandlers");
 const axios = require("axios");
 const { start } = require("repl");
+=======
+>>>>>>> origin/dev
 const discord_token = process.env.DISCORD_TOKEN;
-const compareStaff = require('./helper/compare-list');
-const SERVER = "https://dashboard.highfi.me";
+const wagmiRouter = require('./routes/wagmi-authen-route.js');
+const organizationRouter = require('./routes/organization-route.js');
+const chatRouter = require('./routes/chat-route.js');
+const conversationRouter =  require('./routes/conversation-route.js');
+const { authentication } = require('./middleware/authMiddleware.js');
+const innitSocket = require('./socket')
+const session = require('express-session');
 
 var app = express();
 app.use(express.json());
-
 app.use(express.static("public"));
 
 const w3 = new Web3(new Web3.providers.HttpProvider("https://rpcapi.fantom.network"));
@@ -34,263 +41,46 @@ client.on("ready", () => {
 // Middleware
 app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use(cors());
+app.use(session({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }));
+
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 const port = process.env.PORT || 3000;
-
+// Config socket
 var server = require("http").createServer(app);
-
 var io = require("socket.io")(server, {
     cors: {
         origin: "*",
     },
 }).listen(server);
 
-var sockets = { support: {}, customers: {} };
+innitSocket(io);
 
-io.on("connection", (socket) => {
-    // socket object may be used to send specific messages to the new connected client
-
-    socket.emit("connection", (data) => {
-        // experimental , we want to move to setting up the account during the connection ideally.
-        if ("type" in data && data.type == "support") {
-            if (!(data.accessToken in sockets.support)) {
-                sockets.support[data.accessToken] = {};
-            }
-            sockets.support[data.accessToken][data.userAddress] = socket.id;
-        } else {
-            if (!(data.accessToken in sockets.customers)) {
-                sockets.customers[data.accessToken] = {};
-            }
-            sockets.customers[data.accessToken][data.userAddress] = socket.id;
-        }
-    });
-
-    socket.on("test", (arg) => {
-        socket.emit("response", "online");
-    });
-
-    socket.on("create-account", (data) => {
-        if (data == null || data.userAddress == null || data.accessToken == null) {
-            return;
-        }
-        if (data.type != "support") {
-            chatHandlers.createNewUser(data.userAddress, data.accessToken);
-        }
-        if ("type" in data && data.type == "support") {
-            if (!(data.accessToken in sockets.support)) {
-                sockets.support[data.accessToken] = {};
-            }
-            sockets.support[data.accessToken][data.userAddress] = socket.id;
-        } else {
-            if (!(data.accessToken in sockets.customers)) {
-                sockets.customers[data.accessToken] = {};
-            }
-            sockets.customers[data.accessToken][data.userAddress] = socket.id;
-        }
-        for (supportStaff in sockets.support[data.accessToken]) {
-            io.to(sockets.support[data.accessToken][supportStaff]).emit("new-account", data);
-        }
-        io.to(socket.id).emit("new-account", data);
-        
-    });
-
-    socket.on("send-message", (data) => {
-        if (data == null || data.accessToken == null || data.message == null || data.to == null) {
-            io.emit("message", "errored out");
-        }
-        chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
-        // chatHandlers.pushToDiscord(data, client);
-        let customer = (data.to == "support") ? data.from: data.to;
-        
-        if (sockets.customers[data.accessToken]) io.to(sockets.customers[data.accessToken][customer]).emit("message", data);
-        
-        for (supportStaff in sockets.support[data.accessToken]) {
-            io.to(sockets.support[data.accessToken][supportStaff]).emit("message", data);
-        }
-        
-    });
-
-    socket.on("disconnect", () => {
-        io.emit("userDisconnected");
-    });
-
-    socket.on("connect", (d) => {
-        console.log("connected", d);
-    });
-});
-
-/**
- * @description This methos retirves the static channels
- */
-app.get("/getChannels", (req, res) => {
-    res.json({
-        channels: STATIC_CHANNELS,
-    });
-});
-
-app.get("/getUsers", async (req, res) => {
-    console.log(req.query.accessToken);
-    if(req.query.accessToken){
-    const users = await chatHandlers.getUsers(req.query.accessToken);
-    res.statusCode = 200;
-    res.send(JSON.stringify({ users: users }));
-    }else{
-        res.send({ error : " Couldn't fetch users"})
-    }
-});
-
-app.get("/getMessages", async (req, res) => {
-    if(req.query.address != "" && req.query.accessToken != ""){
-    chatMessages = await chatHandlers.getMessages(req.query.address, req.query.accessToken);
-    res.send(JSON.stringify({ messages: chatMessages }));
-    }else{
-        res.send({error : "Couldn't fetch messages"})
-    }
-});
-// Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, "./client/build")));
-
-/*
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});*/
-
+// APIs
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
-app.post("/updateUserTag", async function (req, res) {
-    var payload = req.body;
-    var accessToken = payload.accessToken;
-    var userAddress = payload.userAddress;
-    var tag = payload.tag;
-    var organizationId = payload.organizationId;
-    var createdBy = payload.createdBy;
-    if (accessToken != "" && userAddress != "" && organizationId != "" && createdBy != "") {
-        await db.updateUserTag(userAddress, accessToken, tag);
-        await db.updatePrioritizedConversations(organizationId, createdBy);
-        res.send({ status: "success" });
-    } else {
-        res.send({ error: "Couldn't update user tag" });
-    }
-});
+// Chat APIs
+/**
+ * @description This method retrieves the static channels
+ */
+app.use("/chat", authentication, chatRouter);
 
-app.post("/closeConversation", async function (req, res) {
-    var payload = req.body;
-    var accessToken = payload.accessToken;
-    var userAddress = payload.userAddress;
-    var organizationId = payload.organizationId;
-    var createdBy = payload.createdBy;
-    if (accessToken != "" && userAddress != "" && organizationId != "" && createdBy != "") {
-        await db.closeConversation(userAddress, accessToken);
-        await db.updateClosedConversations(organizationId, createdBy);
-        res.send({ status: "success" });
-    }else{
-        res.send({ error : "couldn't close the conversation"})
-    }
-});
+// Conversation APIs
+app.use("/conversations", authentication, conversationRouter);
 
-app.post("/assignConversation", async function (req, res) {
-    var payload = req.body;
-    var accessToken = payload.accessToken;
-    var userAddress = payload.userAddress;
-    var assignTo = payload.assignTo;
-    if (accessToken != "" && userAddress != "" && assignTo != "") {
-        await db.assignConversation(userAddress, accessToken, assignTo);    
-        res.send({ status: "success" });
-    }else{
-        res.send({error : "couldn't assign conversation"})
-    }
-});
+// Organization APIs
+app.use('/organizations', authentication, organizationRouter);
 
-app.post("/createOrganization", s3.uploadLogo.single("imageURL"), async function (req, res) {
-    var name = req.body.organizationName;
-    var createdBy = req.body.createdBy;
-    var organizationId = +new Date();
-
-    if (name != "" && createdBy != "") {
-    console.log(req.body.address)
-    await db.addNewOrganizationStaff(organizationId, createdBy);
-
-        await db.addNewOrganizationStaff(organizationId, createdBy);
-
-        var addressList = [];
-        addressList[0] = createdBy;
-
-        if (req.body.address != null) {
-            var address = req.body.address.count;
-
-            if (typeof address === "string") {
-                var addressString = address.toLowerCase();
-                addressList[1] = addressString;
-                await db.addNewOrganizationStaff(organizationId, addressString);
-            } else if (typeof address === "object") {
-                for (let i = 0; i < address.length; i++) {
-                    let addressString = address[i].toLowerCase();
-                    addressList[i + 1] = address[i]
-                    await db.addNewOrganizationStaff(organizationId, addressString);
-                }
-            }
-        }
-        await db.addNewOrganization(name, JSON.stringify(addressList), req.file.location, organizationId, createdBy, addressList.length);
-
-        res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
-    } else {
-        res.send({ error: "Couldn't add organization" })
-    }
-});
-
-app.post("/updateOrganizationDetails", async function (req, res) {
-    var payload = req.body;
-    var organizationId = payload.organizationId;
-    var createdBy = payload.createdBy;
-    var totalConversations = payload.totalConversations;
-    var prioritized = payload.prioritized;
-    var closed = payload.closed;
-    if (organizationId != "" && crreatedBy != "" && totalConversations != "" && prioritized != "" && closed != "") {
-        await db.updateOrganizationDetails(organizationId, createdBy, totalConversations, prioritized, closed);
-        res.send({ status: "success" });
-    }else{
-        res.send({ error: "couldn't update organization Details" })
-    }
-});
-
-//
-app.patch("/updateOrganization", s3.uploadLogo.single("image"), async(req,res) => {
-    const orgID = req.query?.orgID
-    const { name, addresses, createdBy } = req.body || {};
- 
-    const addressList = addresses.split(',');
-    const submitStaff = addressList.map(a => ({ organizationId: parseInt(orgID), address: a}));
-    const currentStaffs = await db.getStaffs(parseInt(orgID));
-  
-    const deleteList = compareStaff(submitStaff,currentStaffs);
-    const addList = compareStaff(currentStaffs,submitStaff);
-
-    await db.deleteOrganizationStaffs(deleteList)
-    await db.updateOrganizationStaffs(addList);
-    const response = await db.updateOrganization( name, addressList, req?.file?.location , orgID, createdBy);
-    res.json({organization: response?.Attributes})
-     
-})
-app.get("/getOrganizationDetails", async (req, res) => {
-    var address = req.query.address;
-    if (address != "") {
-            var organizationDetails = await organizationHandlers.handleFetchOrganizationDetails(address);
-            res.send({ organizationDetails: organizationDetails });
-        } else {
-        res.send({ error: "couldn't get organization details" })
-    }
-});
-app.get('/getOrganization', async (req, res) => {
-    const id = req.query.orgID;
-    const organization = await db.getOrganizationDetails(parseInt(id));
-    if(!organization) {
-        res.status(404).json({ message: "Not found"})
-    }
-    res.json({data: organization})
-})
-app.get("/transactions", async function (req, res) {
+// Transaction APIs
+app.get("/transactions", authentication, async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses.split(",");
 
     let address = req?.query?.userAddress;
@@ -313,7 +103,11 @@ app.get("/transactions", async function (req, res) {
     res.send(JSON.stringify({ filteredTransactions: populatedTransactions }));
 });
 
-app.get("/test", (req, res) => {
+// Wagmi authentication APIs
+app.use('/wagmi', wagmiRouter);
+
+// Testing APIs
+app.get("/test", authentication, (req, res) => {
     chatHandlers.pushToDiscord(
         {
             accessToken: "some-token",

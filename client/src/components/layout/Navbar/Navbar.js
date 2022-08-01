@@ -29,12 +29,13 @@ import { useContext} from "react";
 import UserContext from "../../../contexts/user/UserContext";
 
 import { Link as ReactLink, useNavigate } from "react-router-dom";
+import WagmiContext from "../../../contexts/wagmi/WagmiContext";
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
   const { organization, setOrganization } = useContext(UserContext);
-
+  const { signOut } = useContext(WagmiContext)
   const resetOrganization = () => {
     setOrganization(null);
     navigate('/', {replace: true})
@@ -128,6 +129,7 @@ export default function WithSubnavigation() {
                   as={ReactLink}
                   style={{ textDecoration: "none", color: "#666" }}
                   to="/logout"
+                  onClick={signOut}
                 >
                   Logout
                 </Link>

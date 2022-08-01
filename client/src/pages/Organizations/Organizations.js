@@ -4,11 +4,11 @@ import OrganizationCard from "./OrganizationCard";
 import AddOrganization from "./AddOrganization";
 import web3Context from "../../contexts/web3/Web3Context";
 import userContext from "../../contexts/user/UserContext";
-
+import WagmiContext from "../../contexts/wagmi/WagmiContext";
 const Organizations = () => {
     const { accessToken, setAccessToken, setOrganizationID, organization, setOrganization } = useContext(userContext);
 
-    const { address } = useContext(web3Context);
+    const { address } = useContext(WagmiContext);
     const [organizations, setOrganizations] = useState([]);
 
     const storeAccessToken = (accessToken) => {
@@ -28,7 +28,7 @@ const Organizations = () => {
     };
 
     useEffect(() => {
-        fetch("/getOrganizationDetails?address=" + address.toLowerCase(), requestOptions).then((res) => {
+        fetch("/organizations/getOrganizationDetails?address=" + address.toLowerCase(), requestOptions).then((res) => {
             res.json().then((resData) => resData && setOrganizations(resData.organizationDetails));
         });
     }, []);

@@ -40,7 +40,7 @@ const AccessKeys = ({signOut}) => {
         redirect: "follow",            
     };
 
-    fetch("/getOrganization?orgID=" + orgID, requestOptions)
+    fetch("/organizations/getOrganization?orgID=" + orgID, requestOptions)
         .then((response) => response.json())
         .then(async(result) => {
           console.log(result)

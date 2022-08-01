@@ -14,9 +14,11 @@ import {
     StatGroup,
   } from '@chakra-ui/react'
 
+import WagmiContext from "../contexts/wagmi/WagmiContext";
 const Organizations = () => {
     const { accessToken, setAccessToken, setOrganizationID } = useContext(UserContext);
-    const { address, setAddress } = useContext(Web3Context);
+    //const { address, setAddress } = useContext(Web3Context);
+    const { address  } = useContext(WagmiContext);
     const [organizations, setOrganizations] = useState([]);
 
     const storeAccessToken = (accessToken) => {
@@ -33,7 +35,7 @@ const Organizations = () => {
             redirect: "follow",            
         };
 
-        fetch("/getOrganizationDetails?address=" + userAddress, requestOptions)
+        fetch("/organizations/getOrganizationDetails?address=" + userAddress, requestOptions)
             .then((response) => response.text())
             .then((result) => (
                 setOrganizations(JSON.parse(result).organizationDetails)             
