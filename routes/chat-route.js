@@ -17,6 +17,7 @@ router.get("/getUsers", async (req, res) => {
 });
 
 router.get("/getMessages", async (req, res) => {
+    console.log('here',req.query.accessToken)
     chatMessages = await chatHandlers.getMessages(req.query.address, req.query.accessToken);
     res.send(JSON.stringify({ messages: chatMessages }));
 });
