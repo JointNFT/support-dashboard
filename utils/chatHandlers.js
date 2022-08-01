@@ -18,7 +18,7 @@ const createNewUser = async (address, accessToken) => {
     const userAccount = await getUser(address, accessToken);
     if (userAccount == null) {
         await updateUser(address, accessToken);
-        await db.updateTotalConversations(organizationId, createdBy);
+        await updateTotalConversations(organizationId, createdBy);
     }
 };
 

@@ -4,13 +4,15 @@ const handleFetchOrganizationDetails = async (address) =>{
     var details = await getStaffDetails(address);
         var organizationDetails = [];
         if (details.length == 0) {
-            organizationDetails.push({ "image": "https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788", "organizationId": 1657871686003, "addresses": '["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]', "createdBy": "0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72", "name": "test", "accessToken": "some-token" })
+           // organizationDetails.push({ "image": "https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788", "organizationId": 1657871686003, "addresses": '["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]', "createdBy": "0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72", "name": "test", "accessToken": "some-token" })
+            organizationDetails.push(await getOrganizationDetails(1657871686003));
         } else {
             for (var i = 0; i < details.length; i++) {
                 var organizationId = details[i].organizationId;
                 organizationDetails[i] = await getOrganizationDetails(organizationId);
             }
-            organizationDetails.push({ "image": "https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788", "organizationId": 1657871686003, "addresses": '["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]', "createdBy": "0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72", "name": "test", "accessToken": "some-token" })
+            organizationDetails.push(await getOrganizationDetails(1657871686003));
+           // organizationDetails.push({ "image": "https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788", "organizationId": 1657871686003, "addresses": '["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]', "createdBy": "0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72", "name": "test", "accessToken": "some-token" })
             for (var i = 0; i < organizationDetails.length; i++) {
                 if (organizationDetails[i].initialValues != undefined) {
                     organizationDetails[i].closedPercentage =

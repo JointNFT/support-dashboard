@@ -35,7 +35,7 @@ const OrganizationCard = ({ storeAccessToken, organization, setOrganizationID, s
         gap="10px"
       >
         <Image src={organization.image} width='50px' />
-        <Text fontSize="18px">{organization.title}</Text>
+        <Text fontSize="18px">{organization.name}</Text>
       </Flex>
       <HStack>
         <Button
