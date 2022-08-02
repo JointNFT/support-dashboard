@@ -12,7 +12,6 @@ import DiscordContact from "./pages/DiscordContact";
 import Integrations from "./pages/Integrations";
 import Organizations from "./pages/Organizations/Organizations";
 
-import WagmiSignIn from "./components/WagmiSignIn";
 //const SERVER = "http://127.0.0.1:3000";
 const SERVER = "https://dashboard.highfi.me";
 
