@@ -285,3 +285,15 @@ body {
   align-items: center;
   margin-left: 3px;
 }
+.rotate {
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(359deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
