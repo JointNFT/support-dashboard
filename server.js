@@ -73,7 +73,7 @@ app.use('/organizations', authentication, organizationRouter);
 
 // Transaction APIs
 app.get("/transactions", authentication, async function (req, res) {
-    let contractAddresses = req?.query?.contractAddresses.split(",");
+    let contractAddresses = req?.query?.contractAddresses?.split(",");
     let address = req?.query?.userAddress;
     let chain = req?.query?.chain;
     console.log(address, contractAddresses, chain)
