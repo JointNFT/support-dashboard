@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./transaction.css";
 import AddressForm from "./addressForm";
 import TransactionList from "./transactionList";
-const SERVER = "https://dashboard.highfi.me";
+import { SERVER } from "../../config";
+
 const Transaction = () => {
     let [transactions, setTransactions] = useState([]);
 
