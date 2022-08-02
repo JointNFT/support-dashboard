@@ -1,5 +1,7 @@
-// Dev environment
-const SERVER = process.env.REACT_APP_SERVER_URL_TEST;
-// Prod environment
-//const SERVER = process.env.REACT_APP_SERVER_URL;
+let SERVER;
+if (process.env.REACT_APP_ENV === "local") {
+   SERVER = "http://localhost:3000";
+} else {
+   SERVER = "https://dashboard.highfi.me";
+}
 export default SERVER

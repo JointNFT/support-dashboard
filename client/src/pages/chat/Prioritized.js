@@ -6,13 +6,7 @@ import ChatList from "../../components/ChatList";
 import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
-
-let SERVER;
-if (process.env.REACT_APP_ENV == "local") {
-   SERVER = "http://localhost:3000";
-} else {
-   SERVER = "https://dashboard.highfi.me";
-}
+import { SERVER } from '../../config'
 
 function Prioritized(props) {
   const { accessToken } = useContext(UserContext);
