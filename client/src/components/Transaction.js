@@ -31,7 +31,7 @@ import loader from "../loader.svg";
 
 const initState = {
   userAddress: "",
-  contractAddresses: process.env.REACT_APP_DEFAULT_CONTRACT_ADDRESS,
+  contractAddresses: "0xad337077480134028b7c68af290e891ce28076eb",
   chain: "ftm",
 };
 const TRANSACTION_STATUS = {
