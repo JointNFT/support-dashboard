@@ -12,7 +12,7 @@ import React from "react";
 const MessageHeader = ({src, userName, lastMessage, onCloseConversation, prioritizeConversation}) => {
 
   const closeConversation = async () => {
-    await this.onCloseConversation(); 
+    await onCloseConversation(); 
     window.location.href = "/conversations/all"
   }
   const markPrioritized = async () => {
