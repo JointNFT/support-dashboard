@@ -6,7 +6,8 @@ import ChatList from "../../components/ChatList";
 import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
-const SERVER = "https://dashboard.highfi.me";
+import { SERVER } from "../../config";
+
 
 function Closed(props) {
   const { accessToken } = useContext(UserContext);
