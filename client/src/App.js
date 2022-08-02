@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { isDesktop, isMobile } from "react-device-detect";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.scss";
 import WithSubnavigation from "./components/layout/Navbar/Navbar";
-import SignIn from "./components/SignIn";
-import UserContext from "./contexts/user/UserContext";
-import Web3Context from "./contexts/web3/Web3Context";
+import WagmiSignIn from "./components/WagmiSignIn";
 import WagmiContext from "./contexts/wagmi/WagmiContext";
 import AccessKeys from "./pages/AccessKeys";
 import GetStarted from "./pages/conversations/GetStarted";
@@ -13,9 +11,6 @@ import Customers from "./pages/Customers";
 import DiscordContact from "./pages/DiscordContact";
 import Integrations from "./pages/Integrations";
 import Organizations from "./pages/Organizations/Organizations";
-import WagmiSignIn from "./components/WagmiSignIn";
-//const SERVER = "http://127.0.0.1:3000";
-const SERVER = "http://localhost:3001";
 
 const ChatComponent = React.lazy(() =>
   isMobile
