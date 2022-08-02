@@ -33,7 +33,7 @@ const ChatBox = ({ id, isActive, name, info, lastActivityTime, src, handleClick,
                 <Tag>Priority</Tag>
             </Box>
             <Box flex={1} ml="auto">
-                <Badge colorScheme="red">20</Badge>
+                <Badge colorScheme="red">{unreadCnt}</Badge>
                 <Tag></Tag>
             </Box>
         </Flex>
