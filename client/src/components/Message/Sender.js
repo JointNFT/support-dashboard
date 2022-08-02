@@ -1,7 +1,7 @@
 import { Box, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 
-const Sender = ({message}) => {
+const Sender = ({message, src}) => {
   return (
     <Flex gap={"10px"} mt="5" mr="5">
       <Box flex="1">
@@ -14,7 +14,7 @@ const Sender = ({message}) => {
           ms="auto"
         >
           <Heading as="h6" size="sm">
-            2ixoafusafpsoakfsfafs
+            Adam
           </Heading>
         </Flex>
         <Stack
@@ -35,7 +35,7 @@ const Sender = ({message}) => {
         <Image
           boxSize="100%"
           objectFit="cover"
-          src="https://picsum.photos/id/237/200/300"
+          src={src}
           alt="Dan Abramov"
         />
       </Box>

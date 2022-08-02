@@ -135,7 +135,7 @@ const MessageList = (props) => {
                         ))}
                     </MenuList>
                 </Menu>
-            <IconButton colorScheme="teal" aria-label="Call Segun" size="xs" />
+            {/* <IconButton colorScheme="teal" aria-label="Call Segun" size="xs" /> */}
             <Heading as="h6" size="sm">
               @Adam
             </Heading>

@@ -12,7 +12,6 @@ const MessageBox = ({list, channel}) => {
 		containerRef.current?.scrollIntoView({behavior: 'smooth'});
 		//bottomRef.current
 		if(containerRef && containerRef.current) {
-			console.log('postoji')
 			const element = containerRef.current;
 			element.scroll({
 				top: element.scrollHeight,
@@ -56,7 +55,15 @@ const MessageBox = ({list, channel}) => {
 							/>
 						)}
 						{messageInfo.position === "outgoing" && (
-							<Sender message={messageInfo.text} />
+							<Sender 
+							src={
+								"https://storage.googleapis.com/opensea-static/opensea-profile/" +
+								((parseInt('10') % 30) + 1) +
+								".png"
+							}
+							message={messageInfo.text}
+							sentTime={format(messageInfo.date)}
+							userName={channel.userAddress} />
 						)}
 					</>
 				);
