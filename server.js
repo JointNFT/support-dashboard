@@ -260,13 +260,22 @@ app.get('/getOrganization', authentication, async (req, res) => {
     }
 
 })
-app.get("/transactions", authentication, async function (req, res) {
-    let contractAddresses = req?.query?.contractAddresses.split(",");
+app.get("/transactions", authentication,async function (req, res) {
+    let contractAddresses = req?.query?.contractAddresses?.split(",");
 
     let address = req?.query?.userAddress;
     let chain = req?.query?.chain;
-    if (address == null) {
-        res.send({ error: "Please enter the address" });
+    console.log(address, contractAddresses, chain)
+    if (!address) {
+        res.send({ error: "Please enter the customer address" });
+        return;
+    }
+    if (!contractAddresses) {
+        res.send({ error: "Please enter the contract address" });
+        return;
+    }
+    if (!chain) {
+        res.send({ error: "Please choose one protocol" });
         return;
     }
     let startBlock = "0";
@@ -274,7 +283,7 @@ app.get("/transactions", authentication, async function (req, res) {
     const userTransactions = await utils.getTransactions(address, startBlock, chain);
 
     if (userTransactions == null) {
-        res.send({ error: "couldnt fetch transactions for user" });
+        res.send({ error: "Could not fetch transactions for user" });
     }
 
     let filteredTransactions = utils.filter_for_useful_transactions(userTransactions, contractAddresses);
