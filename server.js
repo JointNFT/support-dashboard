@@ -63,7 +63,7 @@ app.get("/api", (req, res) => {
 /**
  * @description This method retrieves the static channels
  */
-app.use("/chat", authentication, chatRouter);
+app.use("/chat", chatRouter);
 
 // Conversation APIs
 app.use("/conversations", authentication, conversationRouter);
