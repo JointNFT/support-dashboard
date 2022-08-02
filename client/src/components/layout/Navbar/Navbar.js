@@ -128,7 +128,7 @@ export default function WithSubnavigation() {
                 <Link
                   as={ReactLink}
                   style={{ textDecoration: "none", color: "#666" }}
-                  to="/logout"
+                  to="/"
                   onClick={signOut}
                 >
                   Logout
