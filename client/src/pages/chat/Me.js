@@ -5,8 +5,13 @@ import ChatList from "../../components/ChatList";
 import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
-import { SERVER } from "../../config";
 
+let SERVER;
+if (process.env.REACT_APP_ENV == "local") {
+   SERVER = "http://localhost:3000";
+} else {
+   SERVER = "https://dashboard.highfi.me";
+}
 
 function Me(props) {
   const { accessToken } = useContext(UserContext);
@@ -113,7 +118,7 @@ function Me(props) {
       redirect: "follow",
     };
 
-    fetch("/updateUserTag", requestOptions)
+    fetch("/conversations/updateUserTag", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));
@@ -121,7 +126,7 @@ function Me(props) {
 
   async function loadChannels() {
     console.log("accessToken - ", accessToken);
-    fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(
+    fetch(SERVER + "/chat/getUsers?accessToken=" + accessToken).then(
       async (response) => {
         let data = await response.json();
         console.log("channel list", data);
@@ -148,7 +153,7 @@ function Me(props) {
     }
 
     fetch(
-      SERVER + "/getMessages?address=" + address + "&accessToken=" + accessToken
+      SERVER + "/chat/getMessages?address=" + address + "&accessToken=" + accessToken
     ).then(async (response) => {
       let data = await response.json();
       channel.messages = data?.messages || "";

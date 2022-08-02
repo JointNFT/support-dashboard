@@ -117,7 +117,7 @@ const Chat = (props) => {
             redirect: "follow",
         };
 
-        fetch("/updateUserTag", requestOptions)
+        fetch("/conversations/updateUserTag", requestOptions)
             .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.log("error", error));
@@ -141,7 +141,7 @@ const Chat = (props) => {
             redirect: "follow",
         };
 
-        fetch("/assignConversation", requestOptions)
+        fetch("/conversations/assignConversation", requestOptions)
             .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.log("error", error));
@@ -149,7 +149,7 @@ const Chat = (props) => {
 
     async function loadChannels() {
         console.log("accessToken -- ", accessToken);
-        fetch(SERVER + "/getUsers?accessToken=" + accessToken).then(async (response) => {
+        fetch(SERVER + "/chat/getUsers?accessToken=" + accessToken).then(async (response) => {
             let data = await response.json();
             setChannels(data.users);
         });
@@ -171,7 +171,7 @@ const Chat = (props) => {
         }
         
 
-        fetch(SERVER + "/getMessages?address=" + address + "&accessToken=" + accessToken).then(async (response) => {
+        fetch(SERVER + "/chat/getMessages?address=" + address + "&accessToken=" + accessToken).then(async (response) => {
             let data = await response.json();
             channel.messages = data?.messages || "";
             channelsCopy.forEach((c) => {

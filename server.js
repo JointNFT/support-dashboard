@@ -6,19 +6,17 @@ const chatHandlers = require("./utils/chatHandlers");
 const { Client, Intents } = require("discord.js");
 const Web3 = require("web3");
 const utils = require("./utils/transactionDecoders");
-const db = require("./utils/db");
-const s3 = require("./utils/s3");
-const axios = require("axios");
-const { start } = require("repl");
 const discord_token = process.env.DISCORD_TOKEN;
-const compareStaff = require('./helper/compare-list');
-const SERVER = "https://dashboard.highfi.me";
-const { generateNonce, SiweMessage }= require('siwe');
-const { authentication } = require('./middleware/authMiddleware');
+const wagmiRouter = require('./routes/wagmi-authen-route.js');
+const organizationRouter = require('./routes/organization-route.js');
+const chatRouter = require('./routes/chat-route.js');
+const conversationRouter =  require('./routes/conversation-route.js');
+const { authentication } = require('./middleware/authMiddleware.js');
+const innitSocket = require('./socket')
 const session = require('express-session');
+
 var app = express();
 app.use(express.json());
-
 app.use(express.static("public"));
 
 const w3 = new Web3(new Web3.providers.HttpProvider("https://rpcapi.fantom.network"));
@@ -40,229 +38,42 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
-  }))
+  }));
+
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, "./client/build")));
+
 const port = process.env.PORT || 3000;
-
+// Config socket
 var server = require("http").createServer(app);
-
 var io = require("socket.io")(server, {
     cors: {
         origin: "*",
     },
 }).listen(server);
 
-var sockets = { support: {}, customers: {} };
+innitSocket(io);
 
-io.on("connection", (socket) => {
-    // socket object may be used to send specific messages to the new connected client
-
-    socket.emit("connection", (data) => {
-        // experimental , we want to move to setting up the account during the connection ideally.
-        if ("type" in data && data.type == "support") {
-            if (!(data.accessToken in sockets.support)) {
-                sockets.support[data.accessToken] = {};
-            }
-            sockets.support[data.accessToken][data.userAddress] = socket.id;
-        } else {
-            if (!(data.accessToken in sockets.customers)) {
-                sockets.customers[data.accessToken] = {};
-            }
-            sockets.customers[data.accessToken][data.userAddress] = socket.id;
-        }
-    });
-
-    socket.on("test", (arg) => {
-        socket.emit("response", "online");
-    });
-
-    socket.on("create-account", (data) => {
-        if (data == null || data.userAddress == null || data.accessToken == null) {
-            return;
-        }
-        if (data.type != "support") {
-            chatHandlers.createNewUser(data.userAddress, data.accessToken);
-        }
-        if ("type" in data && data.type == "support") {
-            if (!(data.accessToken in sockets.support)) {
-                sockets.support[data.accessToken] = {};
-            }
-            sockets.support[data.accessToken][data.userAddress] = socket.id;
-        } else {
-            if (!(data.accessToken in sockets.customers)) {
-                sockets.customers[data.accessToken] = {};
-            }
-            sockets.customers[data.accessToken][data.userAddress] = socket.id;
-        }
-        for (supportStaff in sockets.support[data.accessToken]) {
-            io.to(sockets.support[data.accessToken][supportStaff]).emit("new-account", data);
-        }
-        io.to(socket.id).emit("new-account", data);
-        
-    });
-
-    socket.on("send-message", (data) => {
-        if (data == null || data.accessToken == null || data.message == null || data.to == null) {
-            io.emit("message", "errored out");
-        }
-        chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
-        // chatHandlers.pushToDiscord(data, client);
-        let customer = (data.to == "support") ? data.from: data.to;
-        
-        if (sockets.customers[data.accessToken]) io.to(sockets.customers[data.accessToken][customer]).emit("message", data);
-        
-        for (supportStaff in sockets.support[data.accessToken]) {
-            io.to(sockets.support[data.accessToken][supportStaff]).emit("message", data);
-        }
-        
-    });
-
-    socket.on("disconnect", () => {
-        io.emit("userDisconnected");
-    });
-
-    socket.on("connect", (d) => {
-        console.log("connected", d);
-    });
-});
-
-/**
- * @description This methos retirves the static channels
- */
-app.get("/getChannels", authentication, (req, res) => {
-    res.json({
-        channels: STATIC_CHANNELS,
-    });
-});
-
-app.get("/getUsers", authentication, async (req, res) => {
-    console.log(req.query.accessToken);
-    const users = await chatHandlers.getUsers(req.query.accessToken);
-    res.statusCode = 200;
-    res.send(JSON.stringify({ users: users }));
-
-});
-
-app.get("/getMessages", authentication, async (req, res) => {
-    chatMessages = await chatHandlers.getMessages(req.query.address, req.query.accessToken);
-    res.send(JSON.stringify({ messages: chatMessages }));
-});
-// Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, "./client/build")));
-
-/*
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});*/
-
-app.get("/api", authentication, (req, res) => {
+// APIs
+app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
-app.post("/updateUserTag", authentication, async function (req, res) {
-    var payload = req.body;
-    var accessToken = payload.accessToken;
-    var userAddress = payload.userAddress;
-    var tag = payload.tag;
-    if (accessToken != "" && userAddress != "") await db.updateUserTag(userAddress, accessToken, tag);
-    res.send({ status: "success" });
-});
+// Chat APIs
+/**
+ * @description This method retrieves the static channels
+ */
+app.use("/chat", authentication, chatRouter);
 
-app.post("/closeConversation", authentication, async function (req, res) {
-    var payload = req.body;
-    var accessToken = payload.accessToken;
-    var userAddress = payload.userAddress;
-    if (accessToken != "" && userAddress != "") await db.closeConversation(userAddress, accessToken);
-    res.send({ status: "success" });
-});
+// Conversation APIs
+app.use("/conversations", authentication, conversationRouter);
 
-app.post("/assignConversation", authentication, async function (req, res) {
-    var payload = req.body;
-    var accessToken = payload.accessToken;
-    var userAddress = payload.userAddress;
-    var assignTo = payload.assignTo;
-    if (accessToken != "" && userAddress != "") await db.assignConversation(userAddress, accessToken, assignTo);
-    res.send({ status: "success" });
-});
+// Organization APIs
+app.use('/organizations', authentication, organizationRouter);
 
-app.post("/createOrganization", authentication,s3.uploadLogo.single("imageURL"), async function (req, res) {
-    var name = req.body.organizationName;
-    var createdBy = req.body.createdBy;
-    var organizationId = +new Date();
-    console.log(req.body.address)
-    await db.addNewOrganizationStaff(organizationId, createdBy);
-
-    var addressList = [];
-    addressList[0] = createdBy;
-
-    if (req.body.address != null) {
-        var address = req.body.address.count;
-
-        if (typeof address === "string") {
-            var addressString = address.toLowerCase();
-            addressList[1] = addressString;
-            await db.addNewOrganizationStaff(organizationId, addressString);
-        } else if (typeof address === "object") {
-            for (let i = 0; i < address.length; i++) {
-                let addressString = address[i].toLowerCase();
-                addressList[i + 1] = address[i]
-                await db.addNewOrganizationStaff(organizationId, addressString);
-            }
-        }
-    }
-    await db.addNewOrganization(name, JSON.stringify(addressList), req.file.location, organizationId, createdBy);
-
-    res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
-});
-//
-app.patch("/updateOrganization", authentication,s3.uploadLogo.single("image"), async(req,res) => {
-    const orgID = req.query?.orgID
-    const { name, addresses, createdBy } = req.body || {};
- 
-    const addressList = addresses.split(',');
-    const submitStaff = addressList.map(a => ({ organizationId: parseInt(orgID), address: a}));
-    const currentStaffs = await db.getStaffs(parseInt(orgID));
-  
-    const deleteList = compareStaff(submitStaff,currentStaffs);
-    const addList = compareStaff(currentStaffs,submitStaff);
-
-    await db.deleteOrganizationStaffs(deleteList)
-    await db.updateOrganizationStaffs(addList);
-    const response = await db.updateOrganization( name, addressList, req?.file?.location , orgID, createdBy);
-    res.json({organization: response?.Attributes})
-     
-})
-app.get("/getOrganizationDetails", authentication, async (req, res) => {
-    var address = req.query.address;
-    var details = await db.getStaffDetails(address);
-    var organizationDetails = [];
-    if (details.length == 0) {
-        res.send({"organizationDetails":[{"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788","organizationId":1657871686003,"addresses":'["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]',"createdBy":"0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72","name":"test","accessToken":"some-token"}]});
-
-    } else {
-        for (var i = 0; i < details.length; i++) {
-            var organizationId = details[i].organizationId;
-            organizationDetails[i] = await db.getOrganizationDetails(organizationId);
-        }
-        organizationDetails.push({"image":"https://the-organization-logo.s3.ap-south-1.amazonaws.com/imageURL-1657871685788","organizationId":1657871686003,"addresses":'["0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72"]',"createdBy":"0xa85a8f2de5bccfb35ad70fe4fcf8f2ada7323c72","name":"test","accessToken":"some-token"})
-        res.send({ organizationDetails: organizationDetails });
-    }
-});
-app.get('/getOrganization', authentication, async (req, res) => {
-    try {
-        const id = req.query.orgID;
-        const organization = await db.getOrganizationDetails(parseInt(id));
-        if(!organization) {
-            res.status(404).json({ message: "Not found"})
-        }
-        res.json({data: organization})
-    } catch (error) {
-        console.log(error)
-    }
-
-})
-app.get("/transactions", authentication,async function (req, res) {
-    let contractAddresses = req?.query?.contractAddresses?.split(",");
-
+// Transaction APIs
+app.get("/transactions", authentication, async function (req, res) {
+    let contractAddresses = req?.query?.contractAddresses.split(",");
     let address = req?.query?.userAddress;
     let chain = req?.query?.chain;
     console.log(address, contractAddresses, chain)
@@ -292,6 +103,10 @@ app.get("/transactions", authentication,async function (req, res) {
     res.send(JSON.stringify({ filteredTransactions: populatedTransactions }));
 });
 
+// Wagmi authentication APIs
+app.use('/wagmi', wagmiRouter);
+
+// Testing APIs
 app.get("/test", authentication, (req, res) => {
     chatHandlers.pushToDiscord(
         {
@@ -305,36 +120,7 @@ app.get("/test", authentication, (req, res) => {
     );
     res.send("hehe");
 });
-// API for SIWE authentication
-app.get("/wagmi/nonce", async (req,res) => {
-    req.session.nonce = generateNonce()
-    await req.session.save()
-    res.setHeader('Content-Type', 'text/plain');
-    res.send(req.session.nonce);
-})
-app.post("/wagmi/verify", async (req,res) => {
-    try {
-        console.log('/verify')
-        const { message, signature } = req.body
-        const siweMessage = new SiweMessage(message)
-        const fields = await siweMessage.validate(signature)
-        if (fields.nonce !== req.session.nonce)
-          return res.status(422).json({ message: 'Invalid nonce.' })
-        req.session.siwe = {...fields}
-        await req.session.save();
-        res.json({ ok: true })
-    } catch (error) {
-        res.json({ ok: false })
-    }
-   
-});
-app.get("/wagmi/me", async(req,res) => {
-    res.send({ address: req.session.siwe?.address })
-})
-app.get("/wagmi/logout", async(req,res) => {
-    req.session.destroy()
-    res.send({ ok: true })
-})  
+
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));

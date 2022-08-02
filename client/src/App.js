@@ -12,6 +12,10 @@ import DiscordContact from "./pages/DiscordContact";
 import Integrations from "./pages/Integrations";
 import Organizations from "./pages/Organizations/Organizations";
 
+import WagmiSignIn from "./components/WagmiSignIn";
+//const SERVER = "http://127.0.0.1:3000";
+const SERVER = "https://dashboard.highfi.me";
+
 const ChatComponent = React.lazy(() =>
   isMobile
     ? import("./components/mobile/ChatList")
@@ -53,6 +57,7 @@ function App() {
      );
   return (
     <>
+    {process.env.REACT_APP_TITLE}
           <Router>
             {isDesktop && <WithSubnavigation />}
             {/*<Sidebar signOut={signOut}/>*/}
