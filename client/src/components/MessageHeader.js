@@ -9,10 +9,14 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const MessageHeader = ({src, userName, onCloseConversation, lastMessage}) => {
+const MessageHeader = ({src, userName, lastMessage, onCloseConversation, prioritizeConversation}) => {
 
-  const closeConversation = () => {
-    onCloseConversation(); 
+  const closeConversation = async () => {
+    await this.onCloseConversation(); 
+    window.location.href = "/conversations/all"
+  }
+  const markPrioritized = async () => {
+    await prioritizeConversation(); 
     window.location.href = "/conversations/all"
   }
   return (
@@ -52,12 +56,13 @@ const MessageHeader = ({src, userName, onCloseConversation, lastMessage}) => {
             Assign to Me
           </MenuButton>
           <MenuList>
-            <MenuItem isDisabled>Download</MenuItem>
+            {/*<MenuItem isDisabled>Download</MenuItem>
             <MenuItem isDisabled>Create a Copy</MenuItem>
             <MenuItem isDisabled>Mark as Draft</MenuItem>
             <MenuItem isDisabled>Delete</MenuItem>
-            <MenuItem isDisabled>Attend a Workshop</MenuItem>
-            <MenuItem onClick={() => closeConversation() }>Close</MenuItem>
+            <MenuItem isDisabled>Attend a Workshop</MenuItem>*/}
+            <MenuItem onClick={() => markPrioritized()}>Mark as prioritized</MenuItem>
+            <MenuItem onClick={() => closeConversation()}>Close conversation</MenuItem>
           </MenuList>
         </Menu>
       </Box>

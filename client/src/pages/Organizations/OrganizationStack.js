@@ -14,14 +14,16 @@ const OrganizationStack = ({ fieldName, fieldData, fieldPercent, button, icon })
           </Button>
         )}
       </Flex>
-      <Text fontSize={"16px"}>
-        {Math.abs(fieldPercent)}%{" "}
-        {icon === "up" ? (
-          <ChevronDownIcon color={"red"} />
-        ) : (
-          <ChevronUpIcon color={"green"} />
-        )}{" "}
-      </Text>
+      {Math.abs(fieldPercent) === 0 ? (<Text fontSize={"16px"}></Text>) : (
+        <Text fontSize={"16px"}>
+          {Math.abs(fieldPercent)}%{" "}
+          {icon === "up" ? (
+            <ChevronDownIcon color={"red"} />
+          ) : (
+            <ChevronUpIcon color={"green"} />
+          )}{" "}
+        </Text>
+      )}{" "}
     </Stack>
   );
 };

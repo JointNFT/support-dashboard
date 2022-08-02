@@ -45,21 +45,28 @@ const MessageList = (props) => {
       send();
     }
   };
-
   const assignConversation = (address) =>{
     props.assignConversation(address);
-  }
+  };
+  const onCloseConversation = () =>{
+    props.onCloseConversation();
+  };
+  const prioritizeConversation = () =>{
+    props.prioritizeConversation();
+  };
 
   const getStatus = () => {
-    console.log(props.channel);
     if (props.channel != null) {
-      console.log(props.channel.status)
-      if (props.channel.status == 'closed') {
-        return ('closed');
-      } else {
-        return ('open')
-      }
+      var isClosed = props.channel.status === 'closed' ?  'closed' :  'open'
+      return isClosed;
     }
+  };
+  const isPrioritized = () => {
+    var isPrioritized = false
+    if (props.channel != null) {
+      isPrioritized = props.channel.tag === 'prioritized' ?  'priority' :  false
+    }
+    return isPrioritized;
   };
 
   const style = {
@@ -106,7 +113,7 @@ const MessageList = (props) => {
         <Flex bg="white" borderRadius={"5px"} py="3">
           <Box width="98%" mx="auto" marginLeft="2">
             <Tag bg="pink.100" mr="2">
-              Priority
+            {isPrioritized()}
             </Tag>
             <Tag bg="yellow.100">{getStatus()}</Tag>
           </Box>
@@ -143,8 +150,9 @@ const MessageList = (props) => {
             ".png"
           }
           userName={props.channel.userAddress}
-          onCloseConversation={props.onCloseConversation}
           lastMessage = {props.channel.lastMessage}
+          onCloseConversation={onCloseConversation}
+          prioritizeConversation={prioritizeConversation}
         />
         <MessageBox channel={props.channel} list={list} />
 

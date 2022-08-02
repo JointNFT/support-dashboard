@@ -101,15 +101,20 @@ function All(props) {
         setChannel(newChannel);
     }, [arrivalMessage]);
 
-    function handleUserTag(tag) {
+    function handlePrioritizeConversation() {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         var userAdderss = channel.userAddress;
         var accessToken = channel.accessToken;
+        var organizationId = organization.organizationId;
+        var createdBy = organization.createdBy;
+        var tag = 'prioritized'
         var raw = JSON.stringify({
             userAddress: userAdderss,
             accessToken: accessToken,
             tag: tag,
+            organizationId: organizationId,
+            createdBy: createdBy
         });
 
         var requestOptions = {
@@ -130,9 +135,13 @@ function All(props) {
         myHeaders.append("Content-Type", "application/json");
         var userAdderss = channel.userAddress;
         var accessToken = channel.accessToken;
+        var organizationId = organization.organizationId;
+        var createdBy = organization.createdBy;
         var raw = JSON.stringify({
             userAddress: userAdderss,
             accessToken: accessToken,
+            organizationId: organizationId,
+            createdBy: createdBy
         });
 
         var requestOptions = {
@@ -245,7 +254,7 @@ function All(props) {
                 />
                 <MessageList
                     onSendMessage={handleSendMessage}
-                    onTagClick={handleUserTag}
+                    prioritizeConversation={handlePrioritizeConversation}
                     channel={channel}
                     organization={organization}
                     assignConversation={assignConversation}
