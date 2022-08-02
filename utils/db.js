@@ -305,7 +305,39 @@ const addNewOrganizationStaff = async (organizationId, address) => {
     let response = await db.put(dbParams).promise();
     return await response;
 };
-//
+
+const updateOrganization = async(organizationName, addresses, image, organizationId, createdBy) => {
+    try {
+         let dbParams = {
+            TableName: "Organization",
+            Key: {
+                "organizationId": parseInt(organizationId),
+                createdBy
+            },
+            UpdateExpression: `set #nameOrg = :orgName, addresses = :orgAddresses${image ? ', image = :orgImage' : '' }`,
+            ExpressionAttributeNames: {'#nameOrg' : 'name'},
+            ExpressionAttributeValues: {
+                ":orgName": organizationName,
+                ":orgAddresses": addresses 
+            },
+            ReturnValues: "ALL_NEW",
+        };
+        if(image) {
+            dbParams = {
+             ...dbParams,
+             ExpressionAttributeValues: {
+                ":orgName": organizationName,
+                ":orgAddresses": addresses,
+                ":orgImage": image
+             }
+            }
+         }
+        let response = await db.update(dbParams).promise();
+        return await response;
+    } catch (error) {
+        console.log(error)
+    }
+}
 const getStaffs = async(organizationId) => {
     try {
         const params = {
@@ -370,5 +402,5 @@ module.exports = {
     getMessages, storeMessages, getUser, getUsers, updateUser, getDiscordSettings, updateUserTag, 
     addNewOrganization, addNewOrganizationStaff, getStaffDetails, getOrganizationDetails,
     assignConversation, closeConversation, updateClosedConversations, updatePrioritizedConversations,
-    updateTotalConversations
+    updateTotalConversations, getStaffs, updateOrganizationStaffs, deleteOrganizationStaffs, updateOrganization
 };
