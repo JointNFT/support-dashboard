@@ -10,8 +10,8 @@ const ChatBox = ({ id, isActive, name, info, lastActivityTime, src, handleClick,
             as={"a"}
             p="2"
             href="#"
-            bg={isActive === id ? "pink.100" : "transparent"}
-            _active={{ background: "pink.100" }}
+            bg={isActive === id ? "white" : "transparent"}
+            _active={{ background: "white" }}
             onClick={handleClick}
         >
             <Box flex={1}>
@@ -25,14 +25,16 @@ const ChatBox = ({ id, isActive, name, info, lastActivityTime, src, handleClick,
                     {info}
                 </Text>
             </Box>
-            <Box flex={1} ml="auto">
-                <Badge colorScheme="red">20</Badge>
-            </Box>
+            
             <Box flex={1} ml="auto">
                 <Text noOfLines={1} fontSize="sm">
                     {lastActivityTime}
                 </Text>
                 <Tag>Priority</Tag>
+            </Box>
+            <Box flex={1} ml="auto">
+                <Badge colorScheme="red">20</Badge>
+                <Tag></Tag>
             </Box>
         </Flex>
         // );

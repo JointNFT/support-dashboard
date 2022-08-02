@@ -33,12 +33,15 @@ function All(props) {
 
     function configureSocket() {
         socket.current = io(SERVER, {
-            userAdderss: "support",
-            accessToken: accessToken,
+            type: "support",
+            userAddress: address,
+            accessToken: accessToken
         });
+
         socket.current.emit("create-account", {
-            userAddress: "support",
-            accessToken: accessToken,
+            type: "support",
+            userAddress: address,
+            accessToken: accessToken
         });
         if (socket == null) {
             return;
@@ -81,6 +84,7 @@ function All(props) {
     }, [newAccount]);
 
     useEffect(() => {
+        console.log('arrivedMessage', arrivalMessage);
         if (arrivalMessage != null && Object.keys(arrivalMessage).length == 0) return;
         let channelCopy = [...channels];
         channelCopy.forEach((c) => {

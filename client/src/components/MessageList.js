@@ -106,7 +106,7 @@ const MessageList = (props) => {
       return messageBodyParams;
     });
   } 
-
+  
   if (props.channel) {
     return (
       <Box height={"70vh"} width="40%" mt="5">
@@ -125,18 +125,16 @@ const MessageList = (props) => {
             marginRight="2"
           >
             
-            <div>
-                  <Menu>
+            <Menu>
                     <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                      Assign To
+                        Assign To
                     </MenuButton>
                     <MenuList>
-                    {JSON.parse(props.organization.addresses).map((address) => (
-                        <MenuItem onClick={() => assignConversation(address)}>{address}</MenuItem>
-                    ))}
+                        {props.organization.addresses.map((address) => (
+                            <MenuItem onClick={() => assignConversation(address)}>{address}</MenuItem>
+                        ))}
                     </MenuList>
-                  </Menu>
-                </div>
+                </Menu>
             <IconButton colorScheme="teal" aria-label="Call Segun" size="xs" />
             <Heading as="h6" size="sm">
               @Adam
@@ -153,6 +151,8 @@ const MessageList = (props) => {
           lastMessage = {props.channel.lastMessage}
           onCloseConversation={onCloseConversation}
           prioritizeConversation={prioritizeConversation}
+          assignConversation={assignConversation}
+          organization={props.organization}
         />
         <MessageBox channel={props.channel} list={list} />
 
@@ -160,6 +160,7 @@ const MessageList = (props) => {
           handleInput={handleInput}
           input={input}
           handleKeypress={handleKeypress}
+          assignConversation={assignConversation}
           send={send}
         />
       </Box>

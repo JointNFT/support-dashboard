@@ -48,7 +48,7 @@ const ChatList = (props) => {
       </Heading>
       <Tabs variant="unstyled" colorScheme="blue">
         <TabList mx={"auto"} justifyContent="center" gap="10px">
-          <Tab
+          {/* <Tab
             style={{ color: "#2C5282" }}
             bg={"#bee3f8"}
             width="60px"
@@ -79,7 +79,7 @@ const ChatList = (props) => {
             fontSize={"12px"}
           >
             Shortest
-          </Tab>
+          </Tab> */}
         </TabList>
         <Box
           h={"70vh"}

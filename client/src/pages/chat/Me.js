@@ -5,10 +5,12 @@ import ChatList from "../../components/ChatList";
 import MessageList from "../../components/MessageList";
 import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
+import WagmiContext from "../../contexts/wagmi/WagmiContext";
 import { SERVER } from '../../config';
 
 function Me(props) {
   const { accessToken } = useContext(UserContext);
+  const { address } = useContext(WagmiContext);
   const [channels, setChannels] = useState([]);
   const [arrivalMessage, setArrivalMessage] = useState({});
   const [newAccount, setNewAccount] = useState({});
@@ -23,13 +25,16 @@ function Me(props) {
 
   function configureSocket() {
     socket.current = io(SERVER, {
-      userAdderss: "support",
-      accessToken: accessToken,
-    });
-    socket.current.emit("create-account", {
-      userAddress: "support",
-      accessToken: accessToken,
-    });
+      type: "support",
+      userAddress: address,
+      accessToken: accessToken
+  });
+
+  socket.current.emit("create-account", {
+      type: "support",
+      userAddress: address,
+      accessToken: accessToken
+  });
     if (socket == null) {
       return;
     }

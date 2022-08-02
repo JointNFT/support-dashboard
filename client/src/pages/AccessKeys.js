@@ -61,7 +61,6 @@ const AccessKeys = ({signOut}) => {
   console.log(organization)
   return (
     <div className="wrapp">
-	    <Sidebar signOut={signOut} />
       <div className="content" style={{overflowY: 'auto'}}>
         <div className="customers" style={{width: '100%', maxWidth: 1000, margin: '0 auto'}}>
           <div className="justify">
