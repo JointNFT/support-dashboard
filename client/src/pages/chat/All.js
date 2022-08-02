@@ -9,13 +9,7 @@ import Tranasaction from "../../components/Tranasaction";
 import UserContext from "../../contexts/user/UserContext";
 import Web3Context from "../../contexts/web3/Web3Context";
 import WagmiContext from "../../contexts/wagmi/WagmiContext";
-let SERVER;
-if (process.env.REACT_APP_ENV == "local") {
-   SERVER = "http://localhost:3000";
-} else {
-   SERVER = "https://dashboard.highfi.me";
-}
-
+import { SERVER } from '../../config'
 
 function All(props) {
     const { accessToken } = useContext(UserContext);

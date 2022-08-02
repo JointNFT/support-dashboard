@@ -9,16 +9,9 @@ import React, {
 import { io } from "socket.io-client";
 import ChatList from "../../components/ChatList";
 import MessageList from "../../components/MessageList";
-import Tranasaction from "../../components/Tranasaction";
+import Transaction from "../../components/Transaction";
 import userContext from "../../contexts/user/UserContext";
-
-let SERVER;
-if (process.env.REACT_APP_ENV == "local") {
-   SERVER = "http://localhost:3000";
-} else {
-   SERVER = "https://dashboard.highfi.me";
-}
-
+import { SERVER } from '../../config'
 
 const Chat = (props) => {
   const { accessToken, organization } = useContext(userContext);
@@ -240,7 +233,7 @@ const Chat = (props) => {
           organization={organization}
           assignConversation={assignConversation}
         />
-        <Tranasaction />
+        <Transaction userAddress={channel?.userAddress}/>
       </Flex>
     </Box>
   );

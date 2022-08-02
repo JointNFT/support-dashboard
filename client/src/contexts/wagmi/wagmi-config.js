@@ -2,7 +2,7 @@ import { chain, configureChains, createClient } from "wagmi";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { infuraProvider } from "wagmi/providers/infura";
 
-const infuraId = "85db4049c00b4783a425412807ff92e9";
+const infuraId = process.env.REACT_APP_INFURA_ID;
 const { chains, provider, webSocketProvider } = configureChains(
   [chain.mainnet, chain.polygon],
   [infuraProvider({ apiKey: infuraId })]

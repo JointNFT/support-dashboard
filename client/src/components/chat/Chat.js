@@ -7,7 +7,8 @@ import { io } from "socket.io-client";
 import UserContext from "../../contexts/user/UserContext";
 import Web3Context from "../../contexts/web3/Web3Context";
 import userContext from "../../contexts/user/UserContext";
-const SERVER = "https://dashboard.highfi.me";
+import { SERVER } from "../../config";
+
 
 const Chat = (props) => {
     const { accessToken } = useContext(UserContext);
