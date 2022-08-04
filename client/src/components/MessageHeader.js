@@ -14,10 +14,10 @@ const MessageHeader = ({ src, userName, lastMessage, onCloseConversation, priori
     return (
         <Flex align="center" mb={"5"} width="100%" as={"a"} href="#" mt="3">
             <Box width="60px">
-                <Image boxSize="100%" objectFit="cover" src={src} alt={userName} />
+                <Image boxSize="100%" objectFit="cover" src={src} alt={userName} borderRadius="6px"/>
             </Box>
 
-            <Box flex={5} marginRight="5" alignItems="center" ml="3">
+            <Box flex={5} marginRight="5" alignItems="center" ml="3" maxWidth="50%">
                 <Heading as="h4" size={"sm"} color="#2C5282">
                     {userName.slice(1, 20) + "..."}
                 </Heading>

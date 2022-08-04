@@ -24,19 +24,21 @@ const Sender = ({message, src}) => {
           width={"90%"}
           p="2"
           ms="auto"
+          boxShadow="base"
         >
-          <Text p="1" textAlign={"justify"}>
+          <Text p="1" textAlign={"justify"} wordBreak="break-word">
             {message}
           </Text>
         </Stack>
       </Box>
 
-      <Box width="40px" height={"40px"}>
+      <Box width="32px" height={"32px"}>
         <Image
           boxSize="100%"
           objectFit="cover"
           src={src}
           alt="Dan Abramov"
+          borderRadius="6px"
         />
       </Box>
     </Flex>

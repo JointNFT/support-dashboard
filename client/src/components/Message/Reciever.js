@@ -4,12 +4,13 @@ import React from "react";
 const Reciever = ({src, userName, message}) => {
   return (
     <Flex gap={"10px"} mb='10px'>
-      <Box width="40px" height={"40px"}>
+      <Box width="32px" height={"32px"}>
         <Image
           boxSize="100%"
           objectFit="cover"
           src={src}
           alt="Dan Abramov"
+          borderRadius="6px"
         />
       </Box>
 
@@ -20,8 +21,8 @@ const Reciever = ({src, userName, message}) => {
           </Heading>
           <Text>1 hour ago</Text>
         </Flex>
-        <Stack mt="2" borderRadius="4px" bg="white" width={"90%"} p="2">
-          <Text p="1" textAlign={"justify"}>
+        <Stack mt="2" borderRadius="4px" bg="white" width={"90%"} p="2"   boxShadow="base">
+          <Text p="1" textAlign={"justify"} wordBreak="break-word">
            {message}
           </Text>
         </Stack>

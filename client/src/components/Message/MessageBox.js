@@ -29,12 +29,13 @@ const MessageBox = ({list, channel}) => {
 			marginTop="20px"
 			sx={{
 				"&::-webkit-scrollbar": {
-					width: "10px",
+					width: "6px",
 					borderRadius: "8px",
 					backgroundColor: `rgba(0, 0, 0, 0.05)`,
 				},
 				"&::-webkit-scrollbar-thumb": {
-					backgroundColor: `rgba(255, 255, 255, 1)`,
+					backgroundColor: `#90CDF4`,
+					borderRadius: "2px",
 				},
 			}}
 			overflowY={"scroll"}

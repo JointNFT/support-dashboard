@@ -110,7 +110,7 @@ const MessageList = (props) => {
   if (props.channel) {
     return (
       <Box height={"70vh"} width="40%" mt="5">
-        <Flex bg="white" borderRadius={"5px"} py="3">
+        <Flex bg="white" borderRadius={"5px"} p="3"    boxShadow="base">
           <Box width="98%" mx="auto" marginLeft="2">
             <Tag bg="pink.100" mr="2">
             {isPrioritized()}
