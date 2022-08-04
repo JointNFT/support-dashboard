@@ -27,19 +27,19 @@ import {
 import React, { useRef, useState } from "react";
 import { format } from "timeago.js";
 import { SERVER } from "../config";
-import loader from "../loader.svg";
+import loader from "../assets/loader.svg";
 
 const initState = {
   userAddress: "",
   contractAddresses: "0xad337077480134028b7c68af290e891ce28076eb",
   chain: "ftm",
 };
-const TRANSACTION_STATUS = {
+const TRANSACTION_FILTER = {
   NEWEST: "Newest",
   PENDING: "Pending",
   OLDEST: "Oldest",
 };
-const TransactionStatusTab = ({ title, active, onClick }) => {
+export const TransactionStatusTab = ({ title, active, onClick }) => {
   return (
     <Button
       size="xs"
@@ -80,7 +80,7 @@ const TransactionItem = ({ item }) => {
           <Flex gap={2}>
             {isPending && (
               <Tag bg="yellow.200" size="sm" color="yellow.900">
-                Pending
+               {TRANSACTION_FILTER.PENDING}
               </Tag>
             )}
             <Tag
@@ -102,18 +102,18 @@ const TransactionItem = ({ item }) => {
     </Box>
   );
 };
-const sortTransactions = (transactions, mode) => {
+const sortTransactions = (transactions, filter) => {
   let result = transactions ? [...transactions] : [];
-  switch (mode) {
-    case TRANSACTION_STATUS.NEWEST:
+  switch (filter) {
+    case TRANSACTION_FILTER.NEWEST:
       result = result?.sort(
         (a, b) => parseInt(b.timeStamp) - parseInt(a.timeStamp)
       );
       break;
-    case TRANSACTION_STATUS.PENDING:
+    case TRANSACTION_FILTER.PENDING:
       result = result?.filter((t) => t.txreceipt_status === "0");
       break;
-    case TRANSACTION_STATUS.OLDEST:
+    case TRANSACTION_FILTER.OLDEST:
       result = result?.sort(
         (a, b) => parseInt(a.timeStamp) - parseInt(b.timeStamp)
       );
@@ -127,7 +127,7 @@ const Transaction = ({ userAddress }) => {
   const [transactions, setTransactions] = useState();
   const [sortedTransactions, setSortedTransactions] = useState();
 
-  const [mode, setMode] = useState(TRANSACTION_STATUS.NEWEST);
+  const [filter, setFilter] = useState(TRANSACTION_FILTER.NEWEST);
   const [autoFetch, setAutoFetch] = useState(false);
 
   const toast = useToast();
@@ -149,6 +149,7 @@ const Transaction = ({ userAddress }) => {
 
   const fetchTransactions = async (state) => {
     setIsFetching(true);
+    setShowFetchedTransactions(true)
     fetch(
       SERVER +
         `/transactions?${
@@ -202,8 +203,8 @@ const Transaction = ({ userAddress }) => {
     });
   };
 
-  const handleChangeTransactionsMode = React.useCallback((value) => {
-    setMode(value);
+  const handleChangeTransactionsfilter = React.useCallback((value) => {
+    setFilter(value);
   }, []);
 
   React.useEffect(() => {
@@ -217,8 +218,8 @@ const Transaction = ({ userAddress }) => {
   }, [userAddress]);
 
   React.useEffect(() => {
-    setSortedTransactions(sortTransactions(transactions, mode));
-  }, [mode, transactions]);
+    setSortedTransactions(sortTransactions(transactions, filter));
+  }, [filter, transactions]);
 
   const toggleAutoFetch = (e) => {
     setAutoFetch(e.target.checked);
@@ -246,7 +247,7 @@ const Transaction = ({ userAddress }) => {
 
   return (
     <Box width="30%" mt="5">
-      <Box bg="#fff" p="5" ref={transactionRef}>
+      <Box bg="#fff" p="5" ref={transactionRef}   boxShadow="base"  borderRadius="6px">
         <Flex align={"center"} justifyContent="center" bg={"white"}>
           <Heading as="h6" size="md">
             Transactions
@@ -350,7 +351,7 @@ const Transaction = ({ userAddress }) => {
             justifyContent={"space-between"}
           >
             <Button
-              colorScheme="teal"
+            colorScheme='blue'
               size="sm"
               p={"4"}
               fontSize="sm"
@@ -375,7 +376,7 @@ const Transaction = ({ userAddress }) => {
         </div>
       </Box>
 
-      <Box bg="#fff" p="5" mt="5" ref={fetchedTransactionsRef}>
+      <Box bg="#fff" p="5" mt="5" ref={fetchedTransactionsRef}   boxShadow="base"  borderRadius="6px">
         <Flex align={"center"} justifyContent="center" mb="2" bg={"white"}>
           <Heading as="h6" size="md">
             Fetched Transactions
@@ -408,12 +409,12 @@ const Transaction = ({ userAddress }) => {
                 gap={"2"}
                 mb={"2"}
               >
-                {Object.values(TRANSACTION_STATUS).map((k) => (
+                {Object.values(TRANSACTION_FILTER).map((k) => (
                   <TransactionStatusTab
                     key={k}
                     title={k}
-                    active={mode === k}
-                    onClick={() => handleChangeTransactionsMode(k)}
+                    active={filter === k}
+                    onClick={() => handleChangeTransactionsfilter(k)}
                   />
                 ))}
               </Flex>
