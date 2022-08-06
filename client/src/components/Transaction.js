@@ -28,7 +28,7 @@ import React, { useRef, useState } from "react";
 import { format } from "timeago.js";
 import { SERVER } from "../config";
 import loader from "../assets/loader.svg";
-
+import Loading from '../ui/Loading';
 const initState = {
   userAddress: "",
   contractAddresses: "0xad337077480134028b7c68af290e891ce28076eb",
@@ -249,7 +249,7 @@ const Transaction = ({ userAddress }) => {
     <Box width="30%" mt="5">
       <Box bg="#fff" p="5" ref={transactionRef}   boxShadow="base"  borderRadius="6px">
         <Flex align={"center"} justifyContent="center" bg={"white"}>
-          <Heading as="h6" size="md">
+          <Heading as="h6" size="md" color="blue.700">
             Transactions
             <InfoIcon ml="2" color={"blue.100"} />
           </Heading>
@@ -260,15 +260,15 @@ const Transaction = ({ userAddress }) => {
             onClick={() => setShowTransaction((o) => !o)}
           >
             {showTransaction ? (
-              <ArrowUpIcon fontSize={"md"} color="blue.200" />
+              <ArrowUpIcon fontSize={"md"} color="blue.900" />
             ) : (
-              <ArrowDownIcon fontSize={"md"} color="blue.200" />
+              <ArrowDownIcon fontSize={"md"} color="blue.900" />
             )}
           </Button>
         </Flex>
         <div style={{ display: showTransaction ? "" : "none" }}>
           <Box bg="#fff" mt="7">
-            <Heading as="h6" size="sm" mb="4">
+            <Heading as="h6" size="sm" mb="4" color="blue.700">
               Customer address
               <InfoIcon ml="2" color={"blue.100"} />
             </Heading>
@@ -312,7 +312,7 @@ const Transaction = ({ userAddress }) => {
             </Stack>
           </Box>
           <Box bg="#fff" mt="5">
-            <Heading as="h6" size="sm" mb="4">
+            <Heading as="h6" size="sm" mb="4" color="blue.700">
               Contract Address
               <InfoIcon ml="2" color={"blue.100"} />
             </Heading>
@@ -327,7 +327,7 @@ const Transaction = ({ userAddress }) => {
             </Stack>
           </Box>
           <Box bg="#fff" mt="5">
-            <Heading as="h6" size="sm" mb="4">
+            <Heading as="h6" size="sm" mb="4" color="blue.700">
               Protocol
               <InfoIcon ml="2" color={"blue.100"} />
             </Heading>
@@ -366,7 +366,7 @@ const Transaction = ({ userAddress }) => {
                   isChecked={autoFetch}
                   onChange={toggleAutoFetch}
                 />
-                <FormLabel htmlFor="email-alerts" mb="0" fontSize={"sm"}>
+                <FormLabel htmlFor="email-alerts" mb="0" fontSize={"sm"} color="blue.700">
                   Auto Fetch
                 </FormLabel>
               </FormControl>
@@ -378,7 +378,7 @@ const Transaction = ({ userAddress }) => {
 
       <Box bg="#fff" p="5" mt="5" ref={fetchedTransactionsRef}   boxShadow="base"  borderRadius="6px">
         <Flex align={"center"} justifyContent="center" mb="2" bg={"white"}>
-          <Heading as="h6" size="md">
+          <Heading as="h6" size="md" color="blue.700">
             Fetched Transactions
             <InfoIcon ml="2" color={"blue.100"} />
           </Heading>
@@ -389,9 +389,9 @@ const Transaction = ({ userAddress }) => {
             onClick={() => setShowFetchedTransactions((o) => !o)}
           >
             {showFetchedTransactions ? (
-              <ArrowUpIcon fontSize={"md"} color="blue.200" />
+              <ArrowUpIcon fontSize={"md"} color="blue.900" />
             ) : (
-              <ArrowDownIcon fontSize={"md"} color="blue.200" />
+              <ArrowDownIcon fontSize={"md"} color="blue.900" />
             )}
           </Button>
         </Flex>
@@ -430,9 +430,7 @@ const Transaction = ({ userAddress }) => {
                   bg="blue.50"
                   style={{ width: 56, height: 56, borderRadius: "50%", marginTop: 50,marginBottom: 50 }}
                 >
-                  <img
-                    src={loader}
-                    className="rotate"
+                  <Loading
                     width={30}
                     height={22}
                     style={{marginTop: 47}}
