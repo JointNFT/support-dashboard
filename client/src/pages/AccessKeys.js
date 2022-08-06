@@ -28,7 +28,7 @@ const AccessKey = ({ content }) => {
   </span>
 }
 const AccessKeys = ({signOut}) => {
-  const { orgID } = useContext(UserContext);
+  const { orgID, setOrganization: setGlobalOrganization } = useContext(UserContext);
   const [organization, setOrganization ] = React.useState();
 
   function getOrganization(orgID) {
@@ -52,7 +52,8 @@ const AccessKeys = ({signOut}) => {
     getOrganization(orgID)
   },[]);
   const onUpdateSuccess = React.useCallback((org) => {
-    setOrganization(org)
+    setOrganization(org);
+    setGlobalOrganization(org)
   },[])
   let addresses = organization?.addresses;
   if(typeof organization?.addresses === "string") {
