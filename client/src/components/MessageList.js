@@ -1,29 +1,13 @@
 import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  IconButton,
-  Input,
-  Stack,
-  Tag,
-  Text,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem
+  Box, Flex,
+  Heading, Text
 } from "@chakra-ui/react";
-import { ChevronDownIcon } from '@chakra-ui/icons';
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { RiErrorWarningFill } from "react-icons/ri";
-import { format } from "timeago.js";
+import { ConversationTag, TAG_TYPE } from "./ChatBox";
 import MessageBar from "./Message/MessageBar";
 import MessageBox from "./Message/MessageBox";
-import Reciever from "./Message/Reciever";
-import Sender from "./Message/Sender";
 import MessageHeader from "./MessageHeader";
-
 const MessageList = (props) => {
   const [input, setInput] = useState("");
 
@@ -57,14 +41,14 @@ const MessageList = (props) => {
 
   const getStatus = () => {
     if (props.channel != null) {
-      var isClosed = props.channel.status === 'closed' ?  'closed' :  'open'
+      var isClosed = props.channel.status === TAG_TYPE.CLOSED ?  TAG_TYPE.CLOSED :  TAG_TYPE.OPEN
       return isClosed;
     }
   };
   const isPrioritized = () => {
     var isPrioritized = false
     if (props.channel != null) {
-      isPrioritized = props.channel.tag === 'prioritized' ?  'priority' :  false
+      isPrioritized = props.channel.tag === TAG_TYPE.PRIORITIZED
     }
     return isPrioritized;
   };
@@ -74,7 +58,7 @@ const MessageList = (props) => {
     ".rce-container-mlist > width": "inherit",
   };
 
-  const markPrioritized = () => {
+/*   const markPrioritized = () => {
     var property = document.getElementById("button1");
     property.style.backgroundColor = "pink";
     props.onTagClick("prioritized");
@@ -88,7 +72,7 @@ const MessageList = (props) => {
     var property = document.getElementById("button1");
     property.style.backgroundColor = "pink";
     props.onTagClick("deleted");
-  };
+  }; */
 
 
   let list = [];
@@ -112,10 +96,11 @@ const MessageList = (props) => {
       <Box height={"70vh"} width="40%" mt="5">
         <Flex bg="white" borderRadius={"5px"} p="3"    boxShadow="base">
           <Box width="98%" mx="auto" marginLeft="2">
-            <Tag bg="pink.100" mr="2">
-            {isPrioritized()}
-            </Tag>
-            <Tag bg="yellow.100">{getStatus()}</Tag>
+            {
+              isPrioritized() && <ConversationTag type={TAG_TYPE.PRIORITIZED}/>
+            }
+            {' '}
+            <ConversationTag type={getStatus()}/>
           </Box>
           <Flex
             width="100%"
@@ -124,9 +109,9 @@ const MessageList = (props) => {
             gap={"10px"}
             marginRight="2"
           >
-            
-            <Menu>
-                    <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+           <Box fontSize={14} color="blue.800">Assigned to</Box> 
+          {/*   <Menu>
+                    <MenuButton as={Button} rightIcon={<ChevronDownIcon />} colorScheme="blue">
                         Assign To
                     </MenuButton>
                     <MenuList>
@@ -134,10 +119,12 @@ const MessageList = (props) => {
                             <MenuItem onClick={() => assignConversation(address)}>{address}</MenuItem>
                         ))}
                     </MenuList>
-                </Menu>
+                </Menu> */}
             {/* <IconButton colorScheme="teal" aria-label="Call Segun" size="xs" /> */}
             <Heading as="h6" size="sm">
-              @Adam
+              {
+                props?.channel?.assignedTo ? `${props.channel.assignedTo.substring(0,5)}...` : ' @Adam'
+              }          
             </Heading>
           </Flex>
         </Flex>
@@ -153,6 +140,7 @@ const MessageList = (props) => {
           prioritizeConversation={prioritizeConversation}
           assignConversation={assignConversation}
           organization={props.organization}
+          assignedTo={props?.channel?.assignedTo}
         />
         <MessageBox channel={props.channel} list={list} />
 

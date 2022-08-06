@@ -2,23 +2,29 @@ import {
   Box,
   Heading,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import ChatBox from "./ChatBox";
 import { format } from "timeago.js";
 import { useState } from "react";
 import { getChannelList } from "../contexts/ChannelContext";
 import { TransactionStatusTab as ConversationStatusTab } from "./Transaction";
-
+import{ WagmiContext }from '../contexts/wagmi'
 const CONVERSATION_FILTER = {
   NEWEST: "Newest",
   OLDEST: "Oldest",
 };
+const CONVERSATION_TYPE = {
+  ALL: 'all',
+  PRIORITIZED: 'prioritized',
+  CLOSED: 'closed',
+  ME: 'me'
+}
 const getTime = (date) =>{ 
   const d = new Date(date);
   if(isNaN(d)) return '';
   return Math.floor(d.getTime() / 1000)
 };
-const sortConversations = (conversations, filter) => {
+const sortConversationsByTime = (conversations, filter) => {
   let result = conversations ? [...conversations] : [];
   switch (filter) {
     case CONVERSATION_FILTER.NEWEST:
@@ -32,11 +38,31 @@ const sortConversations = (conversations, filter) => {
   }
   return result;
 };
+const sortConversationsByType = (conversations, userAddress, type) => {
+  let res = conversations ? [...conversations] : [];
+  switch (type) {
+    case CONVERSATION_TYPE.PRIORITIZED:
+      res = res.filter(r => r?.tag ===  CONVERSATION_TYPE.PRIORITIZED);
+      console.log(res)
+      break;
+    case CONVERSATION_TYPE.CLOSED:
+      res = res.filter(r => r?.status === CONVERSATION_TYPE.CLOSED);
+      console.log(res)
+      break;
+    case CONVERSATION_TYPE.ME:
+      console.log(userAddress)
+      res = res.filter(r => r?.assignedTo === userAddress);
+      break;
+    default:
+      break;
+  }
+  return res;
+};
 const ChatList = (props) => {
   const [isActive, setIsActive] = useState(null);
   const [list, setList] = useState([]);
   const [currentList, setCurrentList] = useState([]);
-
+  const { address } = useContext(WagmiContext);
   const [filter, setFilter] = useState(CONVERSATION_FILTER.NEWEST);
   const handleFilterConversations = React.useCallback((value) => {
     setFilter(value);
@@ -44,12 +70,13 @@ const ChatList = (props) => {
 
   useEffect(() => {
     const list = getChannelList(props);
-    setList(list);
     console.log(list)
-  }, [props.channels]);
+    const listByType = sortConversationsByType(list, address, props.type)
+    setList(listByType);
+  }, [props.channels, props.type, address]);
 
   useEffect(() => {
-    setCurrentList(sortConversations(list, filter));
+    setCurrentList(sortConversationsByTime(list, filter));
   }, [filter, list]);
 
   const handleClick = (channelId, id) => {
@@ -72,7 +99,7 @@ const ChatList = (props) => {
         Conversations / {props.heading}
       </Heading>
       <Heading as="h4" size={"md"} my="3" color="#2C5282">
-        {props.heading}{' '}{list?.length && `(${list.length})` }
+        {props.heading}{' '}{list?.length ? `(${list.length})` : '' }
       </Heading>
         {Object.values(CONVERSATION_FILTER).map((k) => (
           <ConversationStatusTab
@@ -111,6 +138,9 @@ const ChatList = (props) => {
                 lastActivityTime={!isNaN(new Date(conversationInfo.date)) ? format(conversationInfo.date) : ''}
                 handleClick={() => handleClick(conversationInfo.title)}
                 id={conversationInfo.title}
+                tag={conversationInfo?.tag}
+                status={conversationInfo?.status}
+                assignedTo={conversationInfo?.assignedTo}
               />
             ))
           ) : (

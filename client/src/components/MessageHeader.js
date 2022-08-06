@@ -13,8 +13,14 @@ import {
   Stack,
   Tag,
   Text,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
 } from "@chakra-ui/react";
 import React, { forwardRef } from "react";
+import { FaCheckCircle } from "react-icons/fa";
 
 const MessageHeader = ({
   src,
@@ -24,6 +30,7 @@ const MessageHeader = ({
   prioritizeConversation,
   organization,
   assignConversation,
+  assignedTo,
 }) => {
   const closeConversation = async () => {
     await onCloseConversation();
@@ -31,14 +38,9 @@ const MessageHeader = ({
   const markPrioritized = async () => {
     await prioritizeConversation();
   };
+  const ref = React.useRef();
   return (
-    <Flex
-      align="center"
-      mb={"5"}
-      width="100%"
-      mt="3"
-      as="a"
-    >
+    <Flex align="center" mb={"5"} width="100%" mt="3" as="a">
       <Box width="60px">
         <Image
           boxSize="100%"
@@ -90,6 +92,55 @@ const MessageHeader = ({
             </MenuItem>
             <MenuItem onClick={() => closeConversation()}>
               Close conversation
+            </MenuItem>
+            <MenuItem>
+              <Popover
+                initialFocusRef={ref}
+                placement="right-start"
+                trigger="hover"
+              >
+                <PopoverTrigger>
+                  <Box textAlign="left" width="100%">
+                    Assign to
+                  </Box>
+                </PopoverTrigger>
+                <PopoverContent width="max-content" boxShadow="base">
+                  <PopoverHeader>Staff addresses:</PopoverHeader>
+                  <PopoverBody>
+                    <Flex
+                      direction={"column"}
+                      width="max-content"
+                      align={"flex-start"}
+                    >
+                      {organization.addresses.map((address) => (
+                        <Flex
+                          width="100%"
+                          justify="space-between"
+                          gap="20px"
+                          align="center"
+                          px="5px"
+                          sx={{ "&:hover": { backgroundColor: "gray.200" } }}
+                        >
+                          <Box py="3px" 
+                                fontSize="14px"
+                                 onClick={() =>{ 
+                                    if(address !== assignConversation) {
+                                        assignConversation(address);
+                                    }
+                                }}>
+                            {address}
+                          </Box>
+                          <div>
+                            { address === assignedTo && (
+                              <FaCheckCircle size={14} color="#38A169" />
+                            )}
+                          </div>
+                        </Flex>
+                      ))}
+                    </Flex>
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
             </MenuItem>
           </MenuList>
         </Menu>
