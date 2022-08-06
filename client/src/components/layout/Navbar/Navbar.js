@@ -30,7 +30,7 @@ import UserContext from "../../../contexts/user/UserContext";
 
 import { Link as ReactLink, useNavigate } from "react-router-dom";
 import WagmiContext from "../../../contexts/wagmi/WagmiContext";
-
+import profileIcon from '../../../assets/profile.svg';
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
   const navigate = useNavigate();
@@ -100,7 +100,11 @@ export default function WithSubnavigation() {
               _active={{ background: "#ebf8ff" }}
               rightIcon={<ChevronDownIcon />}
             >
-              User
+              <Box display="flex" alignItems="center" gap="10px" color="blue.700" mr="10px" fontWeight={600}>
+                <img src={profileIcon} width={16} height={16}/>
+                <span>User</span> 
+              </Box>
+           
             </MenuButton>
             <MenuList>
               <MenuItem _hover={{ background: "#ebf8ff" }}>
@@ -155,7 +159,7 @@ export default function WithSubnavigation() {
 }
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
+  const linkColor = useColorModeValue("blue.700", "blue.200");
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
@@ -170,7 +174,7 @@ const DesktopNav = () => {
                 as={ReactLink}
                 to={navItem.href ?? "#"}
                 fontSize={"sm"}
-                fontWeight={500}
+                fontWeight={600}
                 color={linkColor}
                 _hover={{
                   textDecoration: "none",
