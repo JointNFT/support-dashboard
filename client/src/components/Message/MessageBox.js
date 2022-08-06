@@ -37,6 +37,9 @@ const MessageBox = ({list, channel}) => {
 					backgroundColor: `#90CDF4`,
 					borderRadius: "2px",
 				},
+				'-webkit-mask-image':
+				  "-webkit-gradient(linear, center bottom, center top, color-stop(0.9,rgba(0,0,0,1)), color-stop(1.00,  rgba(0,0,0,0)))",
+			  
 			}}
 			overflowY={"scroll"}
 		>
