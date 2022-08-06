@@ -6,7 +6,6 @@ export const initialState = {
     accessToken: "",
     loading: true,
     connectedCount: 0,
-    accessToken: "",
     organization: null,
     orgID: null
 };
