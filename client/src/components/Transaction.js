@@ -32,7 +32,7 @@ import loader from "../assets/loader.svg";
 const initState = {
   userAddress: "",
   contractAddresses: "0xad337077480134028b7c68af290e891ce28076eb",
-  chain: "ftm",
+  chain: "poly",
 };
 const TRANSACTION_FILTER = {
   NEWEST: "Newest",
@@ -340,6 +340,7 @@ const Transaction = ({ userAddress }) => {
               >
                 <option value="ftm">FATOM</option>
                 <option value="eth">ETHERIUM</option>
+                <option value="poly">POLYGON</option>
               </Select>
             </Stack>
           </Box>
