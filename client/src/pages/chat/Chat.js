@@ -28,6 +28,7 @@ const Chat = (props) => {
     const [loading, setLoading] = useState(true);
     const toast = useToast();
 
+
     useEffect(() => {
         loadChannels();
         configureSocket();
@@ -152,6 +153,7 @@ const Chat = (props) => {
             .catch((error) => console.log("error", error));
     }, [channel, organization, loadChannels]); */
 
+    // Handle tagging and assigning
     const handleMutate = (url, data, successMsg, callback) => {
         const userAddress = channel?.userAddress;
         const accessToken = channel?.accessToken;
@@ -191,12 +193,12 @@ const Chat = (props) => {
         handleMutate(url, {tag: 'prioritized'}, MSG, () => setChannel({...channel, tag: 'prioritized'}) );
     }, [handleMutate, channel]);
     const assignConversation = useCallback((address) => {
-        const MSG = `The conversation has been assigned to  ${address?.substring(0.7)}... successfully`;
+        const MSG = `The conversation has been assigned to  ${address?.substring(0,7)}... successfully`;
         const url = "/conversations/assignConversation";
         handleMutate(url, { assignTo: address}, MSG, () =>  setChannel({...channel, assignedTo: address}))
     },[handleMutate, channel])
 
-
+// Handle select conversation and send messages
     const handleChannelSelect = useCallback(
         (address) => {
             let channelsCopy = channels;
