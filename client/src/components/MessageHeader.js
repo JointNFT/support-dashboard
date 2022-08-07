@@ -112,7 +112,7 @@ const MessageHeader = ({
                       width="max-content"
                       align={"flex-start"}
                     >
-                      {organization.addresses.map((address) => (
+                      {organization?.addresses?.map((address) => (
                         <Flex
                           width="100%"
                           justify="space-between"

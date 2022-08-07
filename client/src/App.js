@@ -98,6 +98,14 @@ function App() {
                   </React.Suspense>
                 }
               />
+                 <Route
+                path="/conversations/open"
+                element={
+                  <React.Suspense fallback="Loading...">
+                    <ChatComponent type="open" heading="Open" />
+                  </React.Suspense>
+                }
+              />
               <Route
                 path="/integrations"
                 element={<Integrations signOut={disconnectHandler} />}

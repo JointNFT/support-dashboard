@@ -17,7 +17,8 @@ const CONVERSATION_TYPE = {
   ALL: 'all',
   PRIORITIZED: 'prioritized',
   CLOSED: 'closed',
-  ME: 'me'
+  ME: 'me',
+  OPEN: 'open'
 }
 const getTime = (date) =>{ 
   const d = new Date(date);
@@ -43,12 +44,13 @@ const sortConversationsByType = (conversations, userAddress, type) => {
   switch (type) {
     case CONVERSATION_TYPE.PRIORITIZED:
       res = res.filter(r => r?.tag ===  CONVERSATION_TYPE.PRIORITIZED);
-      console.log(res)
       break;
     case CONVERSATION_TYPE.CLOSED:
       res = res.filter(r => r?.status === CONVERSATION_TYPE.CLOSED);
-      console.log(res)
       break;
+    case CONVERSATION_TYPE.OPEN:
+      res = res.filter(r => r?.status !== CONVERSATION_TYPE.CLOSED);
+    break;
     case CONVERSATION_TYPE.ME:
       console.log(userAddress)
       res = res.filter(r => r?.assignedTo === userAddress);
