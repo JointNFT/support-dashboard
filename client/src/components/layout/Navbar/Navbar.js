@@ -334,6 +334,10 @@ const NAV_ITEMS = [
         label: "Closed",
         href: "/conversations/closed",
       },
+      {
+        label: "Open",
+        href: "/conversations/open",
+      },
     ],
   },
   {
