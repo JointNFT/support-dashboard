@@ -103,45 +103,54 @@ const getMessages = async (userAddress, accesToken) => {
 };
 
 const updateUserTag = async (address, token, newTag) => {
-    let dbParams = {
-        TableName: "ChatUsers",
-        ExpressionAttributeNames: {
-            "#tag": "tag",
-        },
-        Key: {
-            userAddress: address,
-            accessToken: token,
-        },
-        UpdateExpression: 'set #tag = :newTag',
-        ExpressionAttributeValues: {
-            ':newTag': newTag
-        },
-    };
-
-    let response = await db.update(dbParams).promise();
-    console.log("response", await response);
-    return await response;
+    try {
+        let dbParams = {
+            TableName: "ChatUsers",
+            ExpressionAttributeNames: {
+                "#tag": "tag",
+            },
+            Key: {
+                userAddress: address,
+                accessToken: token,
+            },
+            UpdateExpression: 'set #tag = :newTag',
+            ExpressionAttributeValues: {
+                ':newTag': newTag
+            },
+        };
+    
+        let response = await db.update(dbParams).promise();
+        console.log("response", await response);
+        return await response;
+    } catch (error) {
+        console.log(error)
+    }
+   
 };
 
 const closeConversation = async (address, token) => {
-    let dbParams = {
-        TableName: "ChatUsers",
-        ExpressionAttributeNames: {
-            "#status": "status",
-        },
-        Key: {
-            userAddress: address,
-            accessToken: token,
-        },
-        UpdateExpression: 'set #status = :status',
-        ExpressionAttributeValues: {
-            ':status': 'closed'
-        },
-    };
-    
-    let response = await db.update(dbParams).promise();
-    console.log("response", await response);
-    return await response;
+    try {
+        let dbParams = {
+            TableName: "ChatUsers",
+            ExpressionAttributeNames: {
+                "#status": "status",
+            },
+            Key: {
+                userAddress: address,
+                accessToken: token,
+            },
+            UpdateExpression: 'set #status = :status',
+            ExpressionAttributeValues: {
+                ':status': 'closed'
+            },
+        };
+        
+        let response = await db.update(dbParams).promise();
+        console.log("response", await response);
+        return await response;
+    } catch (error) {
+        console.log(error)
+    }
 };
 
 const assignConversation = async (userAddress, token, assignedTo) => {
@@ -189,45 +198,55 @@ const addNewOrganization = async (organizationName, address, image, organization
 };
 
 const updateClosedConversations = async (organizationId, createdBy) => {
-    let dbParams = {
-        TableName: "Organization",
-        ExpressionAttributeNames: {
-            "#closed" : "closed"
-        },
-        Key: {
-            organizationId: organizationId,
-            createdBy: createdBy,
-        },
-        UpdateExpression: 'ADD #closed :closed',
-        ExpressionAttributeValues: {
-            ':closed' : 1
-        },
-    };
-
-    let response = await db.update(dbParams).promise();
-    console.log("response", await response);
-    return await response;
+    try {
+        let dbParams = {
+            TableName: "Organization",
+            ExpressionAttributeNames: {
+                "#closed" : "closed"
+            },
+            Key: {
+                organizationId: organizationId,
+                createdBy: createdBy,
+            },
+            UpdateExpression: 'ADD #closed :closed',
+            ExpressionAttributeValues: {
+                ':closed' : 1
+            },
+        };
+    
+        let response = await db.update(dbParams).promise();
+        console.log("response", await response);
+        return await response;
+    } catch (error) {
+        console.log(error)
+    }
+   
 };
 
 const updatePrioritizedConversations = async (organizationId, createdBy) => {
-    let dbParams = {
-        TableName: "Organization",
-        ExpressionAttributeNames: {
-            "#prioritized" : "prioritized"
-        },
-        Key: {
-            organizationId: organizationId,
-            createdBy: createdBy,
-        },
-        UpdateExpression: 'ADD #prioritized :prioritized',
-        ExpressionAttributeValues: {
-            ':prioritized' : 1
-        },
-    };
-
-    let response = await db.update(dbParams).promise();
-    console.log("response", await response);
-    return await response;
+    try {
+        let dbParams = {
+            TableName: "Organization",
+            ExpressionAttributeNames: {
+                "#prioritized" : "prioritized"
+            },
+            Key: {
+                organizationId: organizationId,
+                createdBy: createdBy,
+            },
+            UpdateExpression: 'ADD #prioritized :prioritized',
+            ExpressionAttributeValues: {
+                ':prioritized' : 1
+            },
+        };
+    
+        let response = await db.update(dbParams).promise();
+        console.log("response", await response);
+        return await response;
+    } catch (error) {
+        console.log(error)
+    }
+   
 };
 
 const updateTotalConversations = async (organizationId, createdBy) => {
@@ -306,7 +325,7 @@ const addNewOrganizationStaff = async (organizationId, address) => {
     return await response;
 };
 
-const updateOrganization = async(organizationName, addresses, image, organizationId, createdBy) => {
+const updateOrganization = async(organizationName, addresses, image, organizationId, createdBy, staff) => {
     try {
          let dbParams = {
             TableName: "Organization",
@@ -314,11 +333,12 @@ const updateOrganization = async(organizationName, addresses, image, organizatio
                 "organizationId": parseInt(organizationId),
                 createdBy
             },
-            UpdateExpression: `set #nameOrg = :orgName, addresses = :orgAddresses${image ? ', image = :orgImage' : '' }`,
+            UpdateExpression: `set #nameOrg = :orgName, addresses = :orgAddresses, staff = :orgStaff${image ? ', image = :orgImage' : '' }`,
             ExpressionAttributeNames: {'#nameOrg' : 'name'},
             ExpressionAttributeValues: {
                 ":orgName": organizationName,
-                ":orgAddresses": addresses 
+                ":orgAddresses": addresses,
+                ":orgStaff": staff
             },
             ReturnValues: "ALL_NEW",
         };
@@ -328,7 +348,8 @@ const updateOrganization = async(organizationName, addresses, image, organizatio
              ExpressionAttributeValues: {
                 ":orgName": organizationName,
                 ":orgAddresses": addresses,
-                ":orgImage": image
+                ":orgImage": image,
+                ":orgStaff": staff
              }
             }
          }

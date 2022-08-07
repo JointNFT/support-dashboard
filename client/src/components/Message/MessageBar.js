@@ -7,7 +7,7 @@ const MessageBar = (props) => {
     <Stack mt="5" direction={"row"} spacing={3} width="100%">
       <Input
         variant="filled"
-        placeholder="Send message..."
+        placeholder="Type your message..."
         value={props.input}
         onKeyDown={props.handleKeypress}
         onChange={props.handleInput}

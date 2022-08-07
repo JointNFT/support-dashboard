@@ -1,20 +1,20 @@
 import { Image, Box, Flex, Heading, Tag, Text, Badge } from "@chakra-ui/react";
 import React from "react";
-const TAG_TYPE = {
-  PRIORITY: "priority",
+ export const TAG_TYPE = {
+  PRIORITIZED: "prioritized",
   OPEN: "open",
   CLOSED: "closed",
 };
-const TAG_COLOR = {
-  [TAG_TYPE.PRIORITY]: "red.100",
+export const TAG_COLOR = {
+  [TAG_TYPE.PRIORITIZED]: "red.100",
   [TAG_TYPE.OPEN]: "yellow.100",
-  [TAG_TYPE.CLOSED]: "red.100",
+  [TAG_TYPE.CLOSED]: "gray.100",
 };
-const ConversationTag = ({ type }) => {
+export const ConversationTag = ({ type }) => {
   return (
     <Tag bg={TAG_COLOR[type]}>
       <span style={{ color: "#63171B", textTransform: "capitalize" }}>
-        {type}
+        {type === TAG_TYPE.PRIORITIZED ? 'priority' : type}
       </span>
     </Tag>
   );
@@ -28,6 +28,9 @@ const ChatBox = ({
   src,
   handleClick,
   unreadCnt,
+  status,
+  tag,
+  assignedTo
 }) => {
   return (
     <Flex
@@ -41,7 +44,7 @@ const ChatBox = ({
       bg={isActive === id ? "white" : "transparent"}
       _active={{ background: "white" }}
       onClick={handleClick}
-      boxShadow={ isActive === id && 'base'}
+      boxShadow={isActive === id && "base"}
       borderRadius="6px"
     >
       <Flex align={"center"} justifyContent={"stretch"} maxWidth="80%">
@@ -76,7 +79,13 @@ const ChatBox = ({
         <Text noOfLines={1} fontSize="sm">
           {lastActivityTime}
         </Text>
-        {<ConversationTag type={TAG_TYPE.PRIORITY} />}
+        {tag ? (
+          <ConversationTag type={tag} />
+        ) : status === TAG_TYPE.CLOSED ? (
+          <ConversationTag type={status} />
+        ) : (
+          <ConversationTag type={TAG_TYPE.OPEN} />
+        )}
       </Box>
       {unreadCnt != 0 ?? (
         <Box flex={1} ml="auto">

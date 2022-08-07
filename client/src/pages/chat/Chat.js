@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, useToast } from "@chakra-ui/react";
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import ChatList from "../../components/ChatList";
@@ -7,6 +7,15 @@ import Transaction from "../../components/Transaction";
 import userContext from "../../contexts/user/UserContext";
 import WagmiContext from "../../contexts/wagmi/WagmiContext";
 import { SERVER } from "../../config";
+
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    redirect: "follow",
+};
 
 const Chat = (props) => {
     const { accessToken, organization } = useContext(userContext);
@@ -17,34 +26,18 @@ const Chat = (props) => {
     const socket = useRef();
     const [channel, setChannel] = useState(null);
     const [loading, setLoading] = useState(true);
+    const toast = useToast();
 
     useEffect(() => {
         loadChannels();
         configureSocket();
     }, []);
-
-    function assignConversation(address) {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        var userAdderss = channel.userAddress;
-        var accessToken = channel.accessToken;
-        var raw = JSON.stringify({
-            userAddress: userAdderss,
-            accessToken: accessToken,
-            assignTo: address,
+    async function loadChannels() {
+        console.log("accessToken - ", accessToken);
+        fetch(SERVER + "/chat/getUsers?accessToken=" + accessToken).then(async (response) => {
+            let data = await response.json();
+            setChannels(data.users);
         });
-
-        var requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-        };
-
-        fetch("/conversations/assignConversation", requestOptions)
-            .then((response) => response.text())
-            .then((result) => console.log(result))
-            .catch((error) => console.log("error", error));
     }
 
     function configureSocket() {
@@ -119,18 +112,22 @@ const Chat = (props) => {
         setChannel(newChannel);
     }, [arrivalMessage]);
 
-    function handleUserTag(tag) {
-        var myHeaders = new Headers();
+/*     const handleUserTag = React.useCallback((tag) => {
+        const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        var userAdderss = channel.userAddress;
-        var accessToken = channel.accessToken;
-        var raw = JSON.stringify({
-            userAddress: userAdderss,
-            accessToken: accessToken,
+        const userAddress = channel?.userAddress;
+        const accessToken = channel?.accessToken;
+        const organizationId = organization?.organizationId;
+        const createdBy = organization?.createdBy;
+        const raw = JSON.stringify({
+            userAddress,
+            accessToken,
+            createdBy,
+            organizationId,
             tag: tag,
         });
 
-        var requestOptions = {
+        const requestOptions = {
             method: "POST",
             headers: myHeaders,
             body: raw,
@@ -139,20 +136,66 @@ const Chat = (props) => {
 
         fetch("/conversations/updateUserTag", requestOptions)
             .then((response) => response.text())
-            .then((result) => console.log(result))
+            .then((result) => {
+                console.log(result);
+                if(result.status === 'success') {
+                    toast({
+                        title: 'Account created.',
+                        description: "We've created your account for you.",
+                        status: 'success',
+                        duration: 3000,
+                        isClosable: true,
+                      });
+                      loadChannels()
+                }
+            })
             .catch((error) => console.log("error", error));
-    }
+    }, [channel, organization, loadChannels]); */
 
-    async function loadChannels() {
-        console.log("accessToken - ", accessToken);
-        fetch(SERVER + "/chat/getUsers?accessToken=" + accessToken).then(async (response) => {
-            console.log("res", response);
-            console.log("did we even get here?");
-            let data = await response.json();
-            setChannels(data.users);
-            console.log("data");
-        });
+    const handleMutate = (url, data, successMsg, callback) => {
+        const userAddress = channel?.userAddress;
+        const accessToken = channel?.accessToken;
+        const organizationId = organization?.organizationId;
+        const createdBy = organization?.createdBy;
+        const raw = {
+            userAddress,
+            accessToken,
+            createdBy,
+            organizationId
+        };
+        console.log({...raw, ...data})
+        fetch(url, {...requestOptions, body: JSON.stringify({...raw, ...data})})
+        .then((response) => response.json())
+        .then((result) => {
+            if(result.status === 'success') {
+                toast({
+                    title: successMsg,
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                  loadChannels();
+                  callback();
+            }
+        })
+        .catch((error) => console.log("error", error));
     }
+    const handleCloseConversation = React.useCallback(() => {
+        const MSG = "The conversation has been closed successfully";
+        const url = "/conversations/closeConversation";
+        handleMutate(url, {}, MSG, () => setChannel({...channel, status: 'closed'}));
+    }, [handleMutate, channel]);
+    const handlePrioritizeConversation = React.useCallback(() => {
+        const MSG  = 'The conversation has been marked as Priority';
+        const url = "/conversations/updateUserTag";
+        handleMutate(url, {tag: 'prioritized'}, MSG, () => setChannel({...channel, tag: 'prioritized'}) );
+    }, [handleMutate, channel]);
+    const assignConversation = useCallback((address) => {
+        const MSG = `The conversation has been assigned to  ${address?.substring(0.7)}... successfully`;
+        const url = "/conversations/assignConversation";
+        handleMutate(url, { assignTo: address}, MSG, () =>  setChannel({...channel, assignedTo: address}))
+    },[handleMutate, channel])
+
 
     const handleChannelSelect = useCallback(
         (address) => {
@@ -180,11 +223,9 @@ const Chat = (props) => {
                 setChannel(channel);
                 setChannels(channelsCopy);
             });
-        },
-        [channels]
-    );
+    },[channels, accessToken]);
 
-    function handleSendMessage(address, text) {
+    const handleSendMessage =useCallback((address, text) => {
         socket.current.emit("send-message", {
             id: Date.now(),
             address: address,
@@ -194,7 +235,7 @@ const Chat = (props) => {
             from: "support",
             timestamp: +new Date(),
         });
-    }
+    }, [accessToken, socket]);
 
     return (
         <Box width={"100vw"} height="92vh" bg="#EBF8FF">
@@ -207,11 +248,13 @@ const Chat = (props) => {
                     heading={props.heading}
                 />
                 <MessageList
-                    onSendMessage={handleSendMessage}
-                    onTagClick={handleUserTag}
+                    onSendMessage={handleSendMessage} 
+                    /* onTagClick={handleUserTag} */
                     channel={channel}
                     organization={organization}
                     assignConversation={assignConversation}
+                    onCloseConversation={handleCloseConversation}
+                    prioritizeConversation={handlePrioritizeConversation}
                 />
                 <Transaction userAddress={channel?.userAddress} />
             </Flex>

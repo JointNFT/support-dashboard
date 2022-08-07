@@ -34,7 +34,7 @@ const OrganizationCard = ({ storeAccessToken, organization, setOrganizationID, s
         padding={22}
         gap="10px"
       >
-        <Image src={organization.image} width='50px' />
+        <Image src={organization.image} width={50} height={50} style={{borderRadius: '50%', objectFit: 'cover'}} />
         <Text fontSize="18px">{organization.name}</Text>
       </Flex>
       <HStack>
@@ -51,7 +51,7 @@ const OrganizationCard = ({ storeAccessToken, organization, setOrganizationID, s
         >
           Open Conversations
         </Button>
-        <Button colorScheme="gray" color="darkblue.100" width="30%">
+        <Button colorScheme="gray" color="darkblue.100" width="30%" as={Link} to="/accessKeys">
           Settings
         </Button>
       </HStack>
@@ -60,7 +60,7 @@ const OrganizationCard = ({ storeAccessToken, organization, setOrganizationID, s
       </Heading>
       <Flex direction={"column"} justifyContent="space-between">
         <OrganizationStack fieldName = {'All Conversations'} fieldData = {organization.totalConversations} fieldPercent ={organization.totalPercentage} icon={organization.totalSign}/>
-        <OrganizationStack fieldName = {'Prioritized'} fieldData = {organization.prioritized} fieldPercent={organization.prioritizedPercentage} button={"Open"} icon={organization.prioritizedSign} />
+        <OrganizationStack fieldName = {'Prioritized'} fieldData = {organization.prioritized} fieldPercent={organization.prioritizedPercentage} button={"Open"} icon={organization.prioritizedSign}  to="/conversations/prioritized"/>
         <OrganizationStack fieldName = {'Closed Conversations'} fieldData = {organization.closed} fieldPercent={organization.closedPercentage} icon={organization.closedSign} />
         <OrganizationStack fieldName = {'Customers'} fieldData = {organization.customers} fieldPercent={organization.customerPercentage} icon={organization.customerSign} />
         <OrganizationStack fieldName = {'staff'} fieldData = {organization.staff} fieldPercent={organization.staffPercentage} icon={organization.staffSign}/>

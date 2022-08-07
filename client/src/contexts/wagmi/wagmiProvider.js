@@ -76,7 +76,6 @@ export default function ({ children }) {
       try {
         const res = await fetch("/wagmi/me");
         const json = await res.json();
-        console.log(json)
         setState((x) => ({ ...x, address: json.address }));
       } catch (error) {
         console.log(error);

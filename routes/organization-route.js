@@ -30,7 +30,7 @@ router.post("/createOrganization", s3.uploadLogo.single("imageURL"), async funct
             }
         }
     }
-    await db.addNewOrganization(name, JSON.stringify(addressList), req.file.location, organizationId, createdBy);
+    await db.addNewOrganization(name, JSON.stringify(addressList), req.file.location, organizationId, createdBy, addressList.length || 0);
 
     res.send('<script>alert("Organization added"); window.location.href = "/"; </script>');
 });
@@ -48,7 +48,7 @@ router.patch("/updateOrganization", s3.uploadLogo.single("image"), async(req,res
 
     if(deleteList.length) await db.deleteOrganizationStaffs(deleteList);
     if(addList.length)await db.updateOrganizationStaffs(addList);
-    const response = await db.updateOrganization( name, addressList, req?.file?.location , orgID, createdBy);
+    const response = await db.updateOrganization( name, addressList, req?.file?.location , orgID, createdBy, addressList.length || 0);
     res.json({organization: response?.Attributes})
      
 })

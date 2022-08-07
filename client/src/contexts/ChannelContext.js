@@ -7,11 +7,6 @@ export const getChannelList = (props) => {
       console.log('here!!!!')
         //const list = getChannelList()
         const list = props.channels
-            .filter((c) => {
-                if (props.type != null && props.type == (c.tag != null ? c.tag : "")) return true;
-                else if (props.type == null || props.type == "all") return true;
-                else return false;
-            })
             .map((c) => {
                 if (c.accessToken == props.accessToken) {
                     return {
@@ -24,6 +19,9 @@ export const getChannelList = (props) => {
                         subtitle: c?.messages ? c?.messages[c.messages.length - 1]?.message : c.lastMessage?.message || null,
                         date: new Date(c?.messages ? c?.messages[c.messages.length - 1]?.timestamp : c?.lastMessage?.timestamp),
                         unread: c.unread != null ? c.unread : 0,
+                        tag: c?.tag,
+                        status: c?.status,
+                        assignedTo: c?.assignedTo
                     };
                 }
             });
