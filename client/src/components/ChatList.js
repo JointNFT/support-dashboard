@@ -8,7 +8,11 @@ import { format } from "timeago.js";
 import { useState } from "react";
 import { getChannelList } from "../contexts/ChannelContext";
 import { TransactionStatusTab as ConversationStatusTab } from "./Transaction";
-import{ WagmiContext }from '../contexts/wagmi'
+import{ WagmiContext }from '../contexts/wagmi';
+import userContext from "../contexts/user/UserContext";
+import { useSearchParams, useLocation } from 'react-router-dom';
+import { SERVER } from "../config";
+
 const CONVERSATION_FILTER = {
   NEWEST: "Newest",
   OLDEST: "Oldest",
@@ -66,6 +70,10 @@ const ChatList = (props) => {
   const [currentList, setCurrentList] = useState([]);
   const { address } = useContext(WagmiContext);
   const [filter, setFilter] = useState(CONVERSATION_FILTER.NEWEST);
+  const { setOrganization } = useContext(userContext);
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+
   const handleFilterConversations = React.useCallback((value) => {
     setFilter(value);
   }, []);
@@ -88,6 +96,27 @@ const ChatList = (props) => {
     console.log("chh", channelId);
   };
 
+// Handle fetch organization and select channel automatically
+const fetchOrganization = (organizationId) => {
+        fetch(SERVER + '/organizations/getOrganization?orgID=' + organizationId)
+        .then(res => res.json())
+        .then(result => {
+          setOrganization(result?.data);
+        })
+};
+
+useEffect(() => {
+    const organizationId = searchParams.get('organizationId');
+    const userAddress = searchParams.get('userAddress');
+    if(organizationId && userAddress) {
+        fetchOrganization(organizationId);
+        const conversationIndex = currentList?.findIndex(c => c.title === userAddress);
+        if(conversationIndex !== -1) {
+          props.onSelectChannel(currentList[conversationIndex].title);
+          setIsActive(currentList[conversationIndex].title);
+        }
+    }
+},[location, currentList]);
   return (
     <Box
       width={{

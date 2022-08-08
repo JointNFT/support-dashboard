@@ -66,14 +66,20 @@ function App() {
                 path="/getstarted"
                 element={<GetStarted signOut={disconnectHandler} />}
               />
-              <Route
-                path="/conversations/all"
-                element={
-                  <React.Suspense fallback="Loading...">
-                    <ChatComponent type="all" heading="All Conversations" />
-                  </React.Suspense>
-                }
-              />
+              {
+                ["/conversations/all","/conversations"].map(p => (
+                  <Route
+                  key={p}
+                  path={p}
+                  element={
+                    <React.Suspense fallback="Loading...">
+                      <ChatComponent type="all" heading="All Conversations" />
+                    </React.Suspense>
+                  }
+                />
+                ))
+              }
+       
               <Route
                 path="/conversations/me"
                 element={

@@ -4,24 +4,13 @@ import {
   Button,
   Flex,
   Heading,
-  Image,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  propNames,
-  Stack,
-  Tag,
-  Text,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
+  Image, Text
 } from "@chakra-ui/react";
-import React, { forwardRef } from "react";
+import { Menu, MenuItem, SubMenu } from "@szhsin/react-menu";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
+import React from "react";
 import { FaCheckCircle } from "react-icons/fa";
-
 const MessageHeader = ({
   src,
   userName,
@@ -73,76 +62,56 @@ const MessageHeader = ({
                     <Text>Time: </Text>
                     <Tag bg={"pink.100"}>11:05</Tag>
                 </Stack> */}
-        <Menu>
-          <MenuButton
-            as={Button}
-            rightIcon={<ChevronDownIcon />}
-            colorScheme="blue"
-          >
-            Options
-          </MenuButton>
-          <MenuList>
-            {/*<MenuItem isDisabled>Download</MenuItem>
+     
+        <Menu
+          menuButton={
+            <Button
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              colorScheme="blue"
+            >
+              Options
+            </Button>
+          }
+        >
+          {/*<MenuItem isDisabled>Download</MenuItem>
             <MenuItem isDisabled>Create a Copy</MenuItem>
             <MenuItem isDisabled>Mark as Draft</MenuItem>
             <MenuItem isDisabled>Delete</MenuItem>
             <MenuItem isDisabled>Attend a Workshop</MenuItem>*/}
-            <MenuItem onClick={() => markPrioritized()}>
-              Mark as prioritized
-            </MenuItem>
-            <MenuItem onClick={() => closeConversation()}>
-              Close conversation
-            </MenuItem>
-            <MenuItem>
-              <Popover
-                initialFocusRef={ref}
-                placement="right-start"
-                trigger="hover"
-              >
-                <PopoverTrigger>
-                  <Box textAlign="left" width="100%">
-                    Assign to
+          <MenuItem onClick={() => markPrioritized()}>
+            Mark as prioritized
+          </MenuItem>
+          <MenuItem onClick={() => closeConversation()}>
+            Close conversation
+          </MenuItem>
+            <SubMenu label="Assign to">
+              {organization?.addresses?.map((address) => (
+                <MenuItem>
+                  <Box
+                    py="3px"
+                    fontSize="14px"
+                    onClick={() => {
+                      if (address !== assignedTo) {
+                        assignConversation(address);
+                      }
+                    }}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    gap="20px"
+                  >
+                    <div>{address}</div>
+                    <div>
+                    {address === assignedTo && (
+                      <FaCheckCircle size={14} color="#38A169" />
+                    )}
+                  </div>
                   </Box>
-                </PopoverTrigger>
-                <PopoverContent width="max-content" boxShadow="base">
-                  <PopoverHeader>Staff addresses:</PopoverHeader>
-                  <PopoverBody>
-                    <Flex
-                      direction={"column"}
-                      width="max-content"
-                      align={"flex-start"}
-                    >
-                      {organization?.addresses?.map((address) => (
-                        <Flex
-                          width="100%"
-                          justify="space-between"
-                          gap="20px"
-                          align="center"
-                          px="5px"
-                          sx={{ "&:hover": { backgroundColor: "gray.200" } }}
-                        >
-                          <Box py="3px" 
-                                fontSize="14px"
-                                 onClick={() =>{ 
-                                    if(address !== assignConversation) {
-                                        assignConversation(address);
-                                    }
-                                }}>
-                            {address}
-                          </Box>
-                          <div>
-                            { address === assignedTo && (
-                              <FaCheckCircle size={14} color="#38A169" />
-                            )}
-                          </div>
-                        </Flex>
-                      ))}
-                    </Flex>
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover>
-            </MenuItem>
-          </MenuList>
+
+                </MenuItem>
+              ))}
+            </SubMenu>
         </Menu>
       </Box>
     </Flex>
