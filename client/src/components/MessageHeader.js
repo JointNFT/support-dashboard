@@ -46,7 +46,7 @@ const MessageHeader = ({
           {userName.slice(1, 20) + "..."}
         </Heading>
         <Text noOfLines={1} fontSize="sm">
-          {lastMessage ?? lastMessage.message }
+          {lastMessage != null ? lastMessage.message : '' }
         </Text>
       </Box>
 
