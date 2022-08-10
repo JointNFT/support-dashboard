@@ -12,6 +12,7 @@ const organizationRouter = require('./routes/organization-route.js');
 const chatRouter = require('./routes/chat-route.js');
 const conversationRouter =  require('./routes/conversation-route.js');
 const { authentication } = require('./middleware/authMiddleware.js');
+const { errorMiddleware } = require('./middleware/error.middleware')
 const innitSocket = require('./socket')
 const session = require('express-session');
 
@@ -58,6 +59,10 @@ innitSocket(io);
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
+
+const initializeErrorHandling = () => {
+	app.use(errorMiddleware)
+}
 
 // Chat APIs
 /**
