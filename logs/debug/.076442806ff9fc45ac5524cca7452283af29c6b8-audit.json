@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "/Users/gauthamgsabahit/workspace/highfy/support-dashboard/logs/debug/.076442806ff9fc45ac5524cca7452283af29c6b8-audit.json",
+    "files": [
+        {
+            "date": 1660119780984,
+            "name": "/Users/gauthamgsabahit/workspace/highfy/support-dashboard/logs/debug/2022-08-10.log",
+            "hash": "e1a074d9c9053575d25c76ea0138c0c209abbe896338a2f9ac1258b9b17e2e44"
+        }
+    ],
+    "hashType": "sha256"
+}

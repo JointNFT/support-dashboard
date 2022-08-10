@@ -38,6 +38,8 @@
     "sass": "^1.52.2",
     "siwe": "^1.1.6",
     "socket.io": "^4.5.1",
-    "web3": "^1.7.3"
+    "web3": "^1.7.3",
+    "winston": "^3.8.1",
+    "winston-daily-rotate-file": "^4.7.1"
   }
 }
