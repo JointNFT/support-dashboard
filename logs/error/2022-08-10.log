@@ -10,3 +10,7 @@ Error: listen EADDRINUSE: address already in use :::3000
     at Function.Module._load (node:internal/modules/cjs/loader:822:12)
     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)
     at node:internal/main/run_main_module:17:47
+2022-08-10 18:57:25 error: uncaughtException: organizationId is not defined
+ReferenceError: organizationId is not defined
+    at Object.createNewUser (/Users/gauthamgsabahit/workspace/highfy/support-dashboard/utils/chatHandlers.js:21:40)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)

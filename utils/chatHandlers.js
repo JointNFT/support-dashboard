@@ -11,6 +11,7 @@ const handleCustomerMessage = async (address, message, accessToken, to, from) =>
     // create thread
     const storeMessageRes = await storeMessages(address, accessToken, message, to, from);
 };
+
 const createNewUser = async (address, accessToken) => {
     console.log("creating User", address, accessToken);
     // check with db is thread is present
@@ -18,7 +19,7 @@ const createNewUser = async (address, accessToken) => {
     const userAccount = await getUser(address, accessToken);
     if (userAccount == null) {
         await updateUser(address, accessToken);
-        await updateTotalConversations(organizationId, createdBy);
+        // await updateTotalConversations(organizationId, createdBy);
     }
 };
 
