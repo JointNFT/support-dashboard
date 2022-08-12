@@ -7,4 +7,4 @@ services:
     env_file:
       - .env
     volumes:
-      - "${EB_LOG_BASE_DIR}/server-logs:/var/logs/error"
+      - "${EB_LOG_BASE_DIR}/server-logs:/app/logs/"
