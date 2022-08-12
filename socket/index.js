@@ -50,7 +50,7 @@ let innitSocket = (io) => {
         });
     
         socket.on("send-message", (data) => {
-            if (data == null || data.accessToken == null || data.message == null || data.to == null) {
+            if (data || data.accessToken || data.message || data.to) {
                 io.emit("message", "errored out");
             }
             chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
