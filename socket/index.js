@@ -25,7 +25,7 @@ let innitSocket = (io) => {
         });
     
         socket.on("create-account", (data) => {
-            if (data == null || data.userAddress == null || data.accessToken == null) {
+            if (data == null || data.userAddress  || data.accessToken ) {
                 return;
             }
             if (data.type != "support") {
