@@ -25,7 +25,7 @@ let innitSocket = (io) => {
         });
     
         socket.on("create-account", (data) => {
-            if (data == null || data.userAddress  || data.accessToken ) {
+            if (!data || !data.userAddress  || !data.accessToken ) {
                 return;
             }
             if (data.type != "support") {
@@ -50,7 +50,7 @@ let innitSocket = (io) => {
         });
     
         socket.on("send-message", (data) => {
-            if (data || data.accessToken || data.message || data.to) {
+            if (!data || !data.accessToken || !data.message || !data.to) {
                 io.emit("message", "errored out");
             }
             chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
