@@ -1,8 +1,13 @@
 const db = require("./db");
+const { QueryDbError } = require('../middleware/error.middleware');
 
 
 const getDiscordSettings = async (accessToken) => {
-    return await db.getDiscordSettings(accessToken);
+    try {
+        return await db.getDiscordSettings(accessToken); 
+    } catch(error) {
+        throw new QueryDbError(error);
+    }
 } 
 
 const alertInSupportChannel = async (message, discordSettings, client) => {

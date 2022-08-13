@@ -1,4 +1,5 @@
 const AWS = require("aws-sdk");
+const { QueryDbError } = require('../middleware/error.middleware');
 
 // Update AWS config
 AWS.config.update({
@@ -11,95 +12,118 @@ AWS.config.update({
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: "latest" });
 
 const updateUser = async (userAddress, accessToken, lastMessage = {}) => {
-    let dbParams = {
-        TableName: "ChatUsers",
-        Item: {
-            userAddress: userAddress,
-            accessToken: accessToken,
-            lastMessage: lastMessage,
-        },
-    };
-
-    let response = await db.put(dbParams).promise();
-    console.log("response", await response);
-    return await response;
+    try {
+        let dbParams = {
+            TableName: "ChatUsers",
+            Item: {
+                userAddress: userAddress,
+                accessToken: accessToken,
+                lastMessage: lastMessage,
+            },
+        };
+    
+        let response = await db.put(dbParams).promise();
+        console.log("response", await response);
+        return await response;
+    } catch(error) {
+        throw new QueryDbError(error);
+    }
 };
 
-
 const getUser = async (userAddress, accessToken) => {
-    const params = {
-        TableName: "ChatUsers",
-        KeyConditionExpression: "userAddress = :pkey and accessToken = :skey",
-        ExpressionAttributeValues: {
-            ":pkey": userAddress,
-            ":skey": accessToken,
-        },
-    };
-    const res = await db.query(params).promise();
-    const resPayload = await res;
-    const user = resPayload.Items != [] ? resPayload.Items[0] : null;
-    return user;
+    try {
+        const params = {
+            TableName: "ChatUsers",
+            KeyConditionExpression: "userAddress = :pkey and accessToken = :skey",
+            ExpressionAttributeValues: {
+                ":pkey": userAddress,
+                ":skey": accessToken,
+            },
+        };
+        const res = await db.query(params).promise();
+        const resPayload = await res;
+        const user = resPayload.Items != [] ? resPayload.Items[0] : null;
+        return user;
+    } catch(error) {
+        throw new QueryDbError(error);
+    }  
 };
 
 const getUsers = async (accessToken) => {
-    const params = {
-        TableName: "ChatUsers",
-        IndexName: "accessToken-userAddress-index",
-        KeyConditionExpression: "accessToken = :skey",
-        ExpressionAttributeValues: {
-            ":skey": accessToken,
-        },
-    };
-    const res = await db.query(params).promise();
-    const resPayload = await res;
-    const user = resPayload.Items != [] ? resPayload.Items : null;
-    return user;
+    try {
+        const params = {
+            TableName: "ChatUsers",
+            IndexName: "accessToken-userAddress-index",
+            KeyConditionExpression: "accessToken = :skey",
+            ExpressionAttributeValues: {
+                ":skey": accessToken,
+            },
+        };
+        const res = await db.query(params).promise();
+        const resPayload = await res;
+        const user = resPayload.Items != [] ? resPayload.Items : null;
+        return user;
+    } catch(error) {
+        throw new QueryDbError(error);
+    }  
 };
 
 const getDiscordSettings = async (accessToken) => {
-    const params = {
-        TableName: "DiscordIntegration",
-        KeyConditionExpression: "accessToken = :pkey",
-        ExpressionAttributeValues: {
-            ":pkey": accessToken,
-        },
-    };
-    const res = await db.query(params).promise();
-    const resPayload = await res;
-    const discordServerId = resPayload.Items != [] ? resPayload.Items[0] : null;
-    return discordServerId;
+    try {
+        const params = {
+            TableName: "DiscordIntegration",
+            KeyConditionExpression: "accessToken = :pkey",
+            ExpressionAttributeValues: {
+                ":pkey": accessToken,
+            },
+        };
+        const res = await db.query(params).promise();
+        const resPayload = await res;
+        const discordServerId = resPayload.Items != [] ? resPayload.Items[0] : null;
+        return discordServerId;
+    } catch(error) {
+        throw new QueryDbError(error);
+    }
 };
 
 const storeMessages = async (userAddress, accessToken, message, to, from) => {
-    const params = {
-        TableName: "SupportMessages",
-        Item: {
-            userAddress: userAddress,
-            timestamp: +new Date(),
-            accessToken: accessToken,
-            from: from,
-            to: to,
-            message: message,
-        },
-    };
-    let response = await db.put(params).promise();
-    response = await updateUser(userAddress, accessToken, params.Item);
-    return await response;
+    try {
+        const params = {
+            TableName: "SupportMessages",
+            Item: {
+                userAddress: userAddress,
+                timestamp: +new Date(),
+                accessToken: accessToken,
+                from: from,
+                to: to,
+                message: message,
+            },
+        };
+        let response = await db.put(params).promise();
+        response = await updateUser(userAddress, accessToken, params.Item);
+        return await response;
+    } catch(error) {
+        throw new QueryDbError(error);
+    }
 };
 
 const getMessages = async (userAddress, accesToken) => {
-    const params = {
-        TableName: "SupportMessages",
-        KeyConditionExpression: "userAddress = :pkey",
-        FilterExpression: "accessToken= :aToken",
-        ExpressionAttributeValues: {
-            ":pkey": userAddress,
-            ":aToken": accesToken,
-        },
-    };
-    const res = await db.query(params).promise();
-    const messages = (await res)?.Items;
-    return messages;
+    try {
+        const params = {
+            TableName: "SupportMessages",
+            KeyConditionExpression: "userAddress = :pkey",
+            FilterExpression: "accessToken= :aToken",
+            ExpressionAttributeValues: {
+                ":pkey": userAddress,
+                ":aToken": accesToken,
+            },
+        };
+        const res = await db.query(params).promise();
+        const messages = (await res)?.Items;
+        return messages;
+    } catch(error) {
+        throw new QueryDbError(error);
+    }
 };
 
 const updateUserTag = async (address, token, newTag) => {
@@ -123,7 +147,7 @@ const updateUserTag = async (address, token, newTag) => {
         console.log("response", await response);
         return await response;
     } catch (error) {
-        console.log(error)
+        throw new QueryDbError(error);
     }
    
 };
@@ -149,55 +173,64 @@ const closeConversation = async (address, token) => {
         console.log("response", await response);
         return await response;
     } catch (error) {
-        console.log(error)
+        throw new QueryDbError(error);
     }
 };
 
 const assignConversation = async (userAddress, token, assignedTo) => {
-    let dbParams = {
-        TableName: "ChatUsers",
-        ExpressionAttributeNames: {
-            "#assignedTo": "assignedTo",
-        },
-        Key: {
-            userAddress: userAddress,
-            accessToken: token,
-        },
-        UpdateExpression: 'set #assignedTo = :assignedTo',
-        ExpressionAttributeValues: {
-            ':assignedTo': assignedTo
-        },
-    };
-
-    let response = await db.update(dbParams).promise();
-    console.log("response", await response);
-    return await response;
+    try {
+        let dbParams = {
+            TableName: "ChatUsers",
+            ExpressionAttributeNames: {
+                "#assignedTo": "assignedTo",
+            },
+            Key: {
+                userAddress: userAddress,
+                accessToken: token,
+            },
+            UpdateExpression: 'set #assignedTo = :assignedTo',
+            ExpressionAttributeValues: {
+                ':assignedTo': assignedTo
+            },
+        };
+    
+        let response = await db.update(dbParams).promise();
+        console.log("response", await response);
+        return await response;
+    } catch(error) {
+        throw new QueryDbError(error);
+    }
 };
 
 const addNewOrganization = async (organizationName, address, image, organizationId, createdBy, staff) => {
-    var initialValues = {'staff' : 0, 'closed' : 0, 'prioritized' : 0, 'customers': 0, 'totalConversations': 0};
-    let dbParams = {
-        TableName: "Organization",
-        Item: {
-            organizationId: organizationId,
-            createdBy: createdBy,
-            addresses: address,
-            image: image,
-            name: organizationName,
-            accessToken: makeAccessToken(24),
-            staff: staff,
-            closed: 0,
-            prioritized: 0,
-            totalConversations:0,
-            initialValues: initialValues,         
-        },
-    };
-
-    let response = await db.put(dbParams).promise();
-    return await response;
+    try {
+        var initialValues = {'staff' : 0, 'closed' : 0, 'prioritized' : 0, 'customers': 0, 'totalConversations': 0};
+        let dbParams = {
+            TableName: "Organization",
+            Item: {
+                organizationId: organizationId,
+                createdBy: createdBy,
+                addresses: address,
+                image: image,
+                name: organizationName,
+                accessToken: makeAccessToken(24),
+                staff: staff,
+                closed: 0,
+                prioritized: 0,
+                totalConversations:0,
+                initialValues: initialValues,         
+            },
+        };
+    
+        let response = await db.put(dbParams).promise();
+        return await response;
+    } catch(error) {
+        throw new QueryDbError(error);
+    }
+   
 };
 
-const updateClosedConversations = async (organizationId, createdBy) => {
+const updateClosedConversations = async (organizationId, createdBy) => { 
     try {
         let dbParams = {
             TableName: "Organization",
@@ -218,7 +251,7 @@ const updateClosedConversations = async (organizationId, createdBy) => {
         console.log("response", await response);
         return await response;
     } catch (error) {
-        console.log(error)
+        throw new QueryDbError(error);
     }
    
 };
@@ -244,85 +277,100 @@ const updatePrioritizedConversations = async (organizationId, createdBy) => {
         console.log("response", await response);
         return await response;
     } catch (error) {
-        console.log(error)
+        throw new QueryDbError(error);
     }
    
 };
 
 const updateTotalConversations = async (organizationId, createdBy) => {
-    let dbParams = {
-        TableName: "Organization",
-        ExpressionAttributeNames: {
-            "#totalConverations" : "totalConversations"
-        },
-        Key: {
-            organizationId: organizationId,
-            createdBy: createdBy,
-        },
-        UpdateExpression: 'ADD #totalConversations :totalConversations',
-        ExpressionAttributeValues: {
-            ':totalConversations' : 1
-        },
-    };
-
-    let response = await db.update(dbParams).promise();
-    console.log("response", await response);
-    return await response;
+    try {
+        let dbParams = {
+            TableName: "Organization",
+            ExpressionAttributeNames: {
+                "#totalConverations" : "totalConversations"
+            },
+            Key: {
+                organizationId: organizationId,
+                createdBy: createdBy,
+            },
+            UpdateExpression: 'ADD #totalConversations :totalConversations',
+            ExpressionAttributeValues: {
+                ':totalConversations' : 1
+            },
+        };
+    
+        let response = await db.update(dbParams).promise();
+        console.log("response", await response);
+        return await response;
+    } catch(error) {
+        throw new QueryDbError(error);
+    }
 };
 
 
 const getStaffDetails = async (userAddress) => {
-    var address = userAddress;
-    const params = {
-        TableName: "OrganizationStaff",
-        KeyConditionExpression: "address = :address",
-        IndexName: "address-organizationId-index",
-        ExpressionAttributeValues: {
-            ":address": address,
+    try {
+        var address = userAddress;
+        const params = {
+            TableName: "OrganizationStaff",
+            KeyConditionExpression: "address = :address",
+            IndexName: "address-organizationId-index",
+            ExpressionAttributeValues: {
+                ":address": address,
+            }
         }
+        const res = await db.query(params).promise();
+        const details = (await res)?.Items;
+        return details;
+    } catch(error) {
+        throw new QueryDbError(error);
     }
-    const res = await db.query(params).promise();
-    const details = (await res)?.Items;
-    return details;
 }
 
 const getOrganizationDetails = async (organizationId) => {
-    const params = {
-        TableName: "Organization",
-        KeyConditionExpression: "organizationId = :organizationId",
-        ExpressionAttributeValues: {
-            ":organizationId": organizationId,
+    try {
+        const params = {
+            TableName: "Organization",
+            KeyConditionExpression: "organizationId = :organizationId",
+            ExpressionAttributeValues: {
+                ":organizationId": organizationId,
+            }
         }
+        const res = await db.query(params).promise();
+        const OrganizationDetails = (await res)?.Items;
+        return OrganizationDetails[0];
+    } catch(error) {
+        throw new QueryDbError(error);
     }
-    const res = await db.query(params).promise();
-    const OrganizationDetails = (await res)?.Items;
-    return OrganizationDetails[0];
 }
 
 const makeAccessToken = (length) => {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-      result += characters.charAt(Math.floor(Math.random() * 
- charactersLength));
-   }
-   return result;
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * 
+     charactersLength));
+       }
+       return result; 
 }
 
 
 const addNewOrganizationStaff = async (organizationId, address) => {
-
-    let dbParams = {
-        TableName: "OrganizationStaff",
-        Item: {
-            organizationId: organizationId,
-            address: address,
-        },
-    };
-
-    let response = await db.put(dbParams).promise();
-    return await response;
+    try {
+        let dbParams = {
+            TableName: "OrganizationStaff",
+            Item: {
+                organizationId: organizationId,
+                address: address,
+            },
+        };
+    
+        let response = await db.put(dbParams).promise();
+        return await response;
+    } catch(error) {
+        throw new QueryDbError(error);
+    }
 };
 
 const updateOrganization = async(organizationName, addresses, image, organizationId, createdBy, staff) => {
@@ -356,7 +404,7 @@ const updateOrganization = async(organizationName, addresses, image, organizatio
         let response = await db.update(dbParams).promise();
         return await response;
     } catch (error) {
-        console.log(error)
+        throw new QueryDbError(error);
     }
 }
 const getStaffs = async(organizationId) => {
@@ -374,7 +422,7 @@ const getStaffs = async(organizationId) => {
         return staffs
     
     } catch (error) {
-        console.log(error)
+        throw new QueryDbError(error);
     }
 };
 const deleteOrganizationStaffs = async (list) => {
@@ -396,7 +444,7 @@ const deleteOrganizationStaffs = async (list) => {
       })
       await db.batchWrite(params).promise();
  } catch (error) {
-    console.log(error)
+    throw new QueryDbError(error);
  }
 }
 
@@ -416,7 +464,7 @@ const updateOrganizationStaffs = async  (list) => {
          })
          await db.batchWrite(params).promise();
     } catch (error) {
-       console.log(error)
+        throw new QueryDbError(error);
     }
 }
 module.exports = {
