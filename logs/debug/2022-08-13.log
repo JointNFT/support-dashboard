@@ -1,0 +1,157 @@
+2022-08-13 12:48:05 error: [GET] /organizations/getOrganization >> StatusCode:: undefined, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type, Stack trace: Error: One or more parameter values were invalid: Condition parameter type does not match schema type
+    at Object.getOrganizationDetails (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:303:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\organization-route.js:61:30
+2022-08-13 12:54:03 error: [GET] /organizations/getOrganization >> StatusCode:: 500, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type
+2022-08-13 12:57:52 error: [GET] /organizations/getOrganization >> StatusCode:: 500, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type, 
+ Stacktrace: Error: One or more parameter values were invalid: Condition parameter type does not match schema type  
+2022-08-13 13:00:25 error: [GET] /organizations/getOrganization >> StatusCode:: 500, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type, 
+ Stacktrace: Error: One or more parameter values were invalid: Condition parameter type does not match schema type
+    at Object.getOrganizationDetails (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:303:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\organization-route.js:61:30  
+2022-08-13 13:02:06 error: [GET] /organizations/getOrganization >> StatusCode:: 500, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type, 
+ Stacktrace: Error: One or more parameter values were invalid: Condition parameter type does not match schema type
+    at Object.getOrganizationDetails (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:305:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\organization-route.js:61:30  
+2022-08-13 13:07:27 error: [GET] /organizations/getOrganization >> DynamoErrorCode:: ValidationException, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type, 
+ Details: 
+ Time: Sat Aug 13 2022 13:07:27 GMT+0700 (Indochina Time),  
+2022-08-13 13:16:34 error: DATABASE QUERY ERROR: [GET] /organizations/getOrganization >> StatusCode:: 400, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type, 
+					
+ Details: 
+					
+ time: Sat Aug 13 2022 13:16:34 GMT+0700 (Indochina Time),  
+					
+ requestId: 76GICSSTNL9K626EQJPA9D9E17VV4KQNSO5AEMVJF66Q9ASUAAJG,
+					
+ retryable: false,  
+					
+ requestDelay: undefined,
+					
+2022-08-13 13:20:26 error: DATABASE QUERY ERROR: [GET] /organizations/getOrganization >> StatusCode:: 400, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type, 
+					
+ Details: 
+					time: Sat Aug 13 2022 13:20:26 GMT+0700 (Indochina Time),
+ 
+					requestId: QAS5LK8OVFHP9HKL4JDAJF6N4NVV4KQNSO5AEMVJF66Q9ASUAAJG,
+ 
+					retryable: false,
+  
+					requestDelay: undefined,
+ 
+					stack trace: Error: One or more parameter values were invalid: Condition parameter type does not match schema type
+    at Object.getOrganizationDetails (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:303:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\organization-route.js:61:30
+					
+2022-08-13 13:28:09 error: DATABASE QUERY: [GET] /organizations/getOrganization >> DynamoCode:: 400, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type, 
+					
+ Details:time: Sat Aug 13 2022 13:28:09 GMT+0700 (Indochina Time),
+code: ValidationExceptionrequestId: PNQG599M7SEBQC881JFK1J899VVV4KQNSO5AEMVJF66Q9ASUAAJG,
+retryable: false,
+requestDelay: undefined,
+stack trace: Error: One or more parameter values were invalid: Condition parameter type does not match schema type
+    at Object.getOrganizationDetails (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:303:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\organization-route.js:61:30
+					
+2022-08-13 13:34:12 error: DATABASE QUERY: [GET] /organizations/getOrganization >> DynamoCode:: 400, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type, 
+					
+Details:	time: Sat Aug 13 2022 13:34:11 GMT+0700 (Indochina Time),
+	code: ValidationException
+	requestId: RUUJ3O8LVKL8H66SJ6LOVT1RGFVV4KQNSO5AEMVJF66Q9ASUAAJG,
+	retryable: false,
+	requestDelay: undefined,
+	stack trace: Error: One or more parameter values were invalid: Condition parameter type does not match schema type
+    at Object.getOrganizationDetails (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:303:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\organization-route.js:61:30
+					
+2022-08-13 13:35:59 error: DATABASE QUERY: [GET] /organizations/getOrganization >> DynamoCode:: 400, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type,
+
+		Details:
+	time: Sat Aug 13 2022 13:35:59 GMT+0700 (Indochina Time),
+	code: ValidationException
+	requestId: GTUL0VUJTPAFT7D5DD494U8D1VVV4KQNSO5AEMVJF66Q9ASUAAJG,
+	retryable: false,
+	requestDelay: undefined,
+	stack trace: Error: One or more parameter values were invalid: Condition parameter type does not match schema type
+    at Object.getOrganizationDetails (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:303:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\organization-route.js:61:30
+		
+2022-08-13 13:37:09 error: DATABASE QUERY: [GET] /organizations/getOrganization >> DynamoCode:: 400, Message:: One or more parameter values were invalid: Condition parameter type does not match schema type,
+Details:
+	time: Sat Aug 13 2022 13:37:09 GMT+0700 (Indochina Time),
+	code: ValidationException
+	requestId: 4ML1SI062R91RCBAUFEFJ6EH0JVV4KQNSO5AEMVJF66Q9ASUAAJG,
+	retryable: false,
+	requestDelay: undefined,
+	stack trace: Error: One or more parameter values were invalid: Condition parameter type does not match schema type
+    at Object.getOrganizationDetails (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:303:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\organization-route.js:61:30
+2022-08-13 14:30:49 error: OPERATIONAL: [GET] /organizations/getOrganization >> StatusCode:: undefined, Message:: Cannot convert undefined or null to object,
+ Stack trace: TypeError: Cannot convert undefined or null to object
+    at Function.keys (<anonymous>)
+    at C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\middleware\validation.middleware.js:27:20
+    at Layer.handle [as handle_request] (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\index.js:47:12)
+    at Layer.handle [as handle_request] (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\node_modules\express\lib\router\index.js:280:10)  
+2022-08-13 15:36:18 error: DATABASE QUERY: [POST] /conversations/updateUserTag >> DynamoCode:: 400, Message:: ExpressionAttributeValues must not be empty,
+Details:
+	time: Sat Aug 13 2022 15:36:18 GMT+0700 (Indochina Time),
+	code: ValidationException
+	requestId: 7KF9OBAJIJAH100MKJPHO4BOQ3VV4KQNSO5AEMVJF66Q9ASUAAJG,
+	retryable: false,
+	requestDelay: undefined,
+	stack trace: Error: ExpressionAttributeValues must not be empty
+    at Object.updateUserTag (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:150:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\conversation-route.js:19:9
+2022-08-13 15:36:51 error: DATABASE QUERY: [POST] /conversations/updateUserTag >> DynamoCode:: 400, Message:: ExpressionAttributeValues must not be empty,
+Details:
+	time: Sat Aug 13 2022 15:36:51 GMT+0700 (Indochina Time),
+	code: ValidationException
+	requestId: D7UB5140K1FO4LTGVCVPQK8F77VV4KQNSO5AEMVJF66Q9ASUAAJG,
+	retryable: false,
+	requestDelay: undefined,
+	stack trace: Error: ExpressionAttributeValues must not be empty
+    at Object.updateUserTag (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:150:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\conversation-route.js:19:9
+2022-08-13 15:37:22 error: DATABASE QUERY: [POST] /conversations/updateUserTag >> DynamoCode:: 400, Message:: ExpressionAttributeValues must not be empty,
+Details:
+	time: Sat Aug 13 2022 15:37:22 GMT+0700 (Indochina Time),
+	code: ValidationException
+	requestId: SFCIGR2O707ONQUMB5PP3S359BVV4KQNSO5AEMVJF66Q9ASUAAJG,
+	retryable: false,
+	requestDelay: undefined,
+	stack trace: Error: ExpressionAttributeValues must not be empty
+    at Object.updateUserTag (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:150:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\conversation-route.js:19:9
+2022-08-13 15:37:43 error: DATABASE QUERY: [POST] /conversations/updateUserTag >> DynamoCode:: 400, Message:: ExpressionAttributeValues must not be empty,
+Details:
+	time: Sat Aug 13 2022 15:37:43 GMT+0700 (Indochina Time),
+	code: ValidationException
+	requestId: N0HGLFVM0M3TT9MGQCD8DCVRJVVV4KQNSO5AEMVJF66Q9ASUAAJG,
+	retryable: false,
+	requestDelay: undefined,
+	stack trace: Error: ExpressionAttributeValues must not be empty
+    at Object.updateUserTag (C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\utils\db.js:150:15)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async C:\Users\linht\OneDrive\Desktop\MERNJOB\support-dashboard\routes\conversation-route.js:19:9

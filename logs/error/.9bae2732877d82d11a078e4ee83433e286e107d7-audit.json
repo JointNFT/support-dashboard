@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\linht\\OneDrive\\Desktop\\MERNJOB\\support-dashboard\\logs\\error\\.9bae2732877d82d11a078e4ee83433e286e107d7-audit.json",
+    "files": [
+        {
+            "date": 1660364882295,
+            "name": "C:\\Users\\linht\\OneDrive\\Desktop\\MERNJOB\\support-dashboard\\logs\\error\\2022-08-13.log",
+            "hash": "0482d086c3f8f280c39a319f4be94b3b1abe9fc67aafc22376eaa06ed9a87172"
+        }
+    ],
+    "hashType": "sha256"
+}
