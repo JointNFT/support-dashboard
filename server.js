@@ -12,7 +12,7 @@ const organizationRouter = require('./routes/organization-route.js');
 const chatRouter = require('./routes/chat-route.js');
 const conversationRouter =  require('./routes/conversation-route.js');
 const { authentication } = require('./middleware/authMiddleware.js');
-const { errorMiddleware } = require('./middleware/error.middleware')
+const { errorHandler } = require('./middleware/error.middleware')
 const innitSocket = require('./socket')
 const session = require('express-session');
 
@@ -60,9 +60,9 @@ app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 
-const initializeErrorHandling = () => {
+/* const initializeErrorHandling = () => {
 	app.use(errorMiddleware)
-}
+} */
 
 // Chat APIs
 /**
@@ -74,7 +74,7 @@ app.use("/chat", chatRouter);
 app.use("/conversations", authentication, conversationRouter);
 
 // Organization APIs
-app.use('/organizations', authentication, organizationRouter);
+app.use('/organizations', authentication,organizationRouter);
 
 // Transaction APIs
 app.get("/transactions", authentication, async function (req, res) {
@@ -130,7 +130,7 @@ app.get("/test", authentication, (req, res) => {
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
-
+app.use(errorHandler)
 server.listen(port, () => {
     console.log(`listening on *:${port}`);
 });
