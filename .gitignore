@@ -50,3 +50,8 @@ amplifytools.xcconfig
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+
+#logs
+logs/*
+./logs*

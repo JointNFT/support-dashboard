@@ -50,8 +50,9 @@ let innitSocket = (io) => {
         });
     
         socket.on("send-message", (data) => {
-            if (!data || !data.accessToken || !data.message || !data.to) {
+            if (!data || !data.accessToken || !data.message || !data.to || !data.address) {
                 io.emit("message", "errored out");
+                return;
             }
             chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
             // chatHandlers.pushToDiscord(data, client);
