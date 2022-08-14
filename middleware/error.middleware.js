@@ -1,5 +1,6 @@
 
-const { logger } = require('../utils/logger')
+const { logger } = require('../utils/logger');
+const util = require('util')
 class ValidationError extends Error{
 	constructor(
 		message,
@@ -78,10 +79,10 @@ const errorHandler = (err, req, res, next) => {
 		}
 	}
 	else if(err instanceof QueryDbError) {
-		logger.error(`DATABASE QUERY: [${req.method}] ${req.path} >> DynamoCode:: ${err?.statusCode}, Message:: ${err.message},\nDetails:\n	time: ${err?.time},\n	code: ${err?.code}\n	requestId: ${err?.requestId},\n	retryable: ${err?.retryable},\n	requestDelay: ${err?.requestDelay},\n	stack trace: ${err?.stack}`)
+		logger.error(`DATABASE QUERY: [${req.method}] ${req.path} >> DynamoCode:: ${err?.statusCode}, Message:: ${err.message},\nDetails:\n	time: ${err?.time},\n	code: ${err?.code}\n	requestId: ${err?.requestId},\n	retryable: ${err?.retryable},\n	requestDelay: ${err?.requestDelay},\n	stack trace: ${err?.stack}\n User Inputs:\n	Query string: ${util.inspect(req.query)}\n	Request body: ${util.inspect(req.body)}`)
 	}
 	else {
-		logger.error(`OPERATIONAL: [${req.method}] ${req.path} >> StatusCode:: ${err?.code}, Message:: ${err.message},\n Stack trace: ${err?.stack}  `)
+		logger.error(`OPERATION: [${req.method}] ${req.path} >> StatusCode:: ${err?.code}, Message:: ${err.message},\n Stack trace: ${err?.stack},\n User Inputs:\n	Query string: ${util.inspect(req.query)}\n	Request body: ${util.inspect(req.body)}`)
 	}
 
 	res.status(bodyError.status).json(bodyError)
