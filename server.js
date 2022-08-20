@@ -47,7 +47,7 @@ app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 const port = process.env.PORT || 3000;
 // Config socket
-var server = require("https").createServer(app);
+var server = require("http").createServer(app);
 var io = require("socket.io")(server, {
     cors: {
         origin: "*",
