@@ -4,11 +4,13 @@ FROM node:17.8.0
 WORKDIR /app
 
 # install and cache app dependencies
-COPY package.json .
-RUN npm install
 COPY . .
+RUN rm package-lock.json && npm install --force
+
 ENV NODE_OPTIONS=--max-old-space-size=8192
+
 RUN npm run build
+
 
 # Make port 3000 available to the world outside this container
 EXPOSE 3000

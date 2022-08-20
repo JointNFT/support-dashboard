@@ -1,7 +1,6 @@
 import UserContext from "./UserContext";
 import { useReducer, useEffect } from "react";
 import UserReducer, { initialState, localState } from "./UserReducer";
-import { Auth, Hub } from "aws-amplify";
 
 const UserState = (props) => {
     const [state, dispatch] = useReducer(UserReducer, localState || initialState);
