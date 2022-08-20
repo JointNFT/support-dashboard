@@ -5,7 +5,7 @@ WORKDIR /app
 
 # install and cache app dependencies
 COPY . .
-RUN rm package-lock.json && npm install --force
+RUN npm install --force
 
 ENV NODE_OPTIONS=--max-old-space-size=8192
 
