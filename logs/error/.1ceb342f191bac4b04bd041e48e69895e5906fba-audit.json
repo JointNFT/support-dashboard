@@ -14,6 +14,21 @@
             "date": 1660285998041,
             "name": "/Users/gauthamgsabahit/workspace/highfy/support-dashboard/logs/error/2022-08-12.log",
             "hash": "199f549871f25a5859a59538ba73557cad8066db9a0b25221c2e7d867bbdc048"
+        },
+        {
+            "date": 1660828840560,
+            "name": "/Users/gauthamgsabahit/workspace/highfy/support-dashboard/logs/error/2022-08-18.log",
+            "hash": "17fb5e168a22a0c82f27b247e1f5302b067f0a9f1d30692b7a4d9fe8e3f77ccb"
+        },
+        {
+            "date": 1660848958561,
+            "name": "/Users/gauthamgsabahit/workspace/highfy/support-dashboard/logs/error/2022-08-19.log",
+            "hash": "edb069d6e216caf6ff18f0ed5a68ef2b0410acadf427d176d7436a0e6ad0c3f8"
+        },
+        {
+            "date": 1660979801963,
+            "name": "/Users/gauthamgsabahit/workspace/highfy/support-dashboard/logs/error/2022-08-20.log",
+            "hash": "4d13e4c90d3b75e61dc21a0026110ac534064581fa1723e5e414c7c57597aef7"
         }
     ],
     "hashType": "sha256"

@@ -328,7 +328,7 @@ const Transaction = ({ userAddress }) => {
           </Box>
           <Box bg="#fff" mt="5">
             <Heading as="h6" size="sm" mb="4" color="blue.700">
-              Protocol
+              Chain
               <InfoIcon ml="2" color={"blue.100"} />
             </Heading>
             <Stack direction={"row"} bg="#fff">

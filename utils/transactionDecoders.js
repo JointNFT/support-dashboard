@@ -17,6 +17,12 @@ ftm: {
     getAbi: 'https://api.ftmscan.com/api?module=contract&action=getabi&address=REPLACE_ADDRESS&apiKey=REPLACE_APIKEY',
     getTx: 'https://api.ftmscan.com/api?module=account&action=txlist&address=REPLACE_ADDRESS&startblock=REPLACE_STARTBLOCK&endblock=999999999&sort=asc&apiKey=REPLACE_APIKEY'
 
+},
+poly: {
+    apiKey: process.env.POLYSCAN_API_KEY,
+    getAbi: 'https://api.polygonscan.com/api?module=contract&action=getabi&address=REPLACE_ADDRESS&apiKey=REPLACE_APIKEY',
+    getTx: 'https://api.polygonscan.com/api?module=account&action=txlist&address=REPLACE_ADDRESS&startblock=REPLACE_STARTBLOCK&endblock=999999999&sort=asc&apiKey=REPLACE_APIKEY'
+
 }};
 
 console.log('key',scannerMap['ftm'].apiKey)
@@ -47,7 +53,6 @@ const populateTransactions = async (transactions, chain) => {
     let populatedTransactions = [];
     let abiStore = {};
     let abi;
-    console.log('here', transactions.length);
     for (var i=0; i < transactions.length; i += 1) {
         let transaction = transactions[i];
         if (abiStore[transaction["to"]] == null) {
@@ -76,9 +81,7 @@ const getAbi = async (address, chain) => {
         url: scannerMap[chain].getAbi.replace('REPLACE_ADDRESS', address).replace('REPLACE_APIKEY', scannerMap[chain].apiKey),
         headers: {},
     };
-    console.log("here");
     const res = await axios(config);
-    console.log(config)
     return res.data.result;
 };
 
