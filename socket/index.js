@@ -58,7 +58,7 @@ let innitSocket = (io) => {
             // chatHandlers.pushToDiscord(data, client);
             let customer = (data.to == "support") ? data.from: data.to;
             
-            console.log('does it even reach here?', sockets.customers[data.accessToken][customer])
+            console.log('does it even reach here?', sockets)
             if (sockets.customers[data.accessToken]) io.to(sockets.customers[data.accessToken][customer]).emit("message", data);
             
             for (supportStaff in sockets.support[data.accessToken]) {
