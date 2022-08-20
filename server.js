@@ -110,48 +110,48 @@ app.get("/transactions", authentication, async function (req, res) {
 });
 
 // Transaction APIs
-app.get("/transactionsV2", async function (req, res) {
-    let protocolId = req?.query?.protocolId;
-    let address = req?.query?.userAddress;
-    console.log(address, protocolId);
-    if (!protocolId) {
-        res.send({ error: "Please enter the protocolId" });
-        return;
-    }
-    if (!address) {
-        res.send({ error: "Please enter the user address" });
-        return;
-    }
-    let startBlock = "0";
+// app.get("/transactionsV2", async function (req, res) {
+//     let protocolId = req?.query?.protocolId;
+//     let address = req?.query?.userAddress;
+//     console.log(address, protocolId);
+//     if (!protocolId) {
+//         res.send({ error: "Please enter the protocolId" });
+//         return;
+//     }
+//     if (!address) {
+//         res.send({ error: "Please enter the user address" });
+//         return;
+//     }
+//     let startBlock = "0";
 
-    const smartContracts = await getSmartContracts(protocolId);
-    const contractsData = synthesizeSmartContracts(smartContracts);
-    console.log(contractsData);
+//     const smartContracts = await getSmartContracts(protocolId);
+//     const contractsData = synthesizeSmartContracts(smartContracts);
+//     console.log(contractsData);
 
 
-    const userTransactions = await utils.getTransactions(address, startBlock, chain);
+//     const userTransactions = await utils.getTransactions(address, startBlock, chain);
 
-    if (userTransactions == null) {
-        res.send({ error: "Could not fetch transactions for user" });
-    }
+//     if (userTransactions == null) {
+//         res.send({ error: "Could not fetch transactions for user" });
+//     }
 
-    // let filteredTransactions = utils.filter_for_useful_transactions(userTransactions, contractAddresses);
+//     // let filteredTransactions = utils.filter_for_useful_transactions(userTransactions, contractAddresses);
 
-    // let populatedTransactions = await utils.populateTransactions(filteredTransactions, chain);
-    // res.send(JSON.stringify({ filteredTransactions: populatedTransactions }));
-});
+//     // let populatedTransactions = await utils.populateTransactions(filteredTransactions, chain);
+//     // res.send(JSON.stringify({ filteredTransactions: populatedTransactions }));
+// });
 
-const synthesizeSmartContracts = (smartContracts) => {
-    let contractsData = {}
-    for (let i in smartContracts) {
-        let scontract = smartContracts[i];
-        if (!(scontract.chain in contractsData)) {
-            contractsData[scontract.chain] = []
-        } 
-        contractsData[scontract.chain].push(scontract.contractAddress)
-    }
-    return contractsData;
-}
+// const synthesizeSmartContracts = (smartContracts) => {
+//     let contractsData = {}
+//     for (let i in smartContracts) {
+//         let scontract = smartContracts[i];
+//         if (!(scontract.chain in contractsData)) {
+//             contractsData[scontract.chain] = []
+//         } 
+//         contractsData[scontract.chain].push(scontract.contractAddress)
+//     }
+//     return contractsData;
+// }
 
 // Wagmi authentication APIs
 app.use('/wagmi', wagmiRouter);
