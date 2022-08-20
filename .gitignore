@@ -53,5 +53,4 @@ amplifytools.xcconfig
 
 
 #logs
-logs/*
 ./logs*
