@@ -66,10 +66,14 @@ const populateTransactions = async (transactions, chain) => {
             populatedTransactions.push(transaction);
             continue;
         }
-
-        abiDecoder.addABI(JSON.parse(abi));
-        let decodedData = abiDecoder.decodeMethod(transaction["input"]);
-        transaction.decodedInput = decodedData;
+        try {
+            abiDecoder.addABI(JSON.parse(abi));
+            let decodedData = abiDecoder.decodeMethod(transaction["input"]);
+            transaction.decodedInput = decodedData;
+        } catch (err) {
+            console.log('meh, decoding didnt work', err);
+        }
+        
         populatedTransactions.push(transaction);
     }
     return populatedTransactions;

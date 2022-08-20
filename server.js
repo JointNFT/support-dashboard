@@ -78,7 +78,7 @@ app.use("/conversations", authentication, conversationRouter);
 app.use('/organizations', authentication,organizationRouter);
 
 // Transaction APIs
-app.get("/transactions", authentication, async function (req, res) {
+app.get("/transactions", async function (req, res) {
     let contractAddresses = req?.query?.contractAddresses?.split(",");
     let address = req?.query?.userAddress;
     let chain = req?.query?.chain;

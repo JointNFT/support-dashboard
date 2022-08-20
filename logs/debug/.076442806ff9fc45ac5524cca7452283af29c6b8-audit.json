@@ -29,6 +29,11 @@
             "date": 1660979801962,
             "name": "/Users/gauthamgsabahit/workspace/highfy/support-dashboard/logs/debug/2022-08-20.log",
             "hash": "ec8ab1f76a7a116006409d748bfac06ab491184ffa13ecfb5150079a4217f572"
+        },
+        {
+            "date": 1661032032317,
+            "name": "/Users/gauthamgsabahit/workspace/highfy/support-dashboard/logs/debug/2022-08-21.log",
+            "hash": "5811e9da7d145bf24416af1de8fb19f16a5f1a255b3ca93e1283673666197351"
         }
     ],
     "hashType": "sha256"
