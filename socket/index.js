@@ -48,7 +48,21 @@ let innitSocket = (io) => {
             io.to(socket.id).emit("new-account", data);
             
         });
-    
+        socket.on("create-guest-id", (data) => {
+            if (!data?.accessToken ) {
+                return;
+            }
+            const guestID = `Guest-${Date.now()}`;
+            chatHandlers.createNewUser(guestID, data.accessToken);
+            if (!(data.accessToken in sockets.customers)) {
+                sockets.customers[data.accessToken] = {};
+            }
+            sockets.customers[data.accessToken][guestID] = socket.id;
+            for (supportStaff in sockets.support[data.accessToken]) {
+                io.to(sockets.support[data.accessToken][supportStaff]).emit("new-account", { userAddress: guestID, accessToken: data.accessToken});
+            }
+            io.to(socket.id).emit("new-account", { userAddress: guestID});
+        })
         socket.on("send-message", (data) => {
             if (!data || !data.accessToken || !data.message || !data.to || !data.address) {
                 io.emit("message", "errored out");
