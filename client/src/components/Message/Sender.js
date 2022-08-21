@@ -39,6 +39,7 @@ const Sender = ({message, src}) => {
           src={src}
           alt="Dan Abramov"
           borderRadius="6px"
+          fallbackSrc="../fallbackImg.png"
         />
       </Box>
     </Flex>

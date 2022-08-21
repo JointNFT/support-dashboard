@@ -11,13 +11,14 @@ const Reciever = ({src, userName, message}) => {
           src={src}
           alt="Dan Abramov"
           borderRadius="6px"
+          fallbackSrc="../fallbackImg.png"
         />
       </Box>
 
       <Box flex="1">
         <Flex w={"80%"} gap="5px" alignItems={"center"} height="40px">
           <Heading as="h6" size="sm">
-            {userName.slice(1,20) + '...'}
+            {userName.slice(0,20) + '...'}
           </Heading>
           <Text>1 hour ago</Text>
         </Flex>
