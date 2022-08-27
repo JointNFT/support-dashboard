@@ -86,21 +86,22 @@ const getDiscordSettings = async (accessToken) => {
     }
 };
 
-const storeMessages = async (userAddress, accessToken, message, to, from) => {
+const storeMessages = async ({address, accessToken, message, timestamp,  photoUrl, to, from}) => {
     try {
         const params = {
             TableName: "SupportMessages",
             Item: {
-                userAddress: userAddress,
-                timestamp: +new Date(),
-                accessToken: accessToken,
-                from: from,
-                to: to,
-                message: message,
+                userAddress: address,
+                timestamp,
+                accessToken,
+                photoUrl,
+                from,
+                to,
+                message,
             },
         };
         let response = await db.put(params).promise();
-        response = await updateUser(userAddress, accessToken, params.Item);
+        response = await updateUser(address, accessToken, params.Item);
         return await response;
     } catch (error) {
         throw new QueryDbError(error);

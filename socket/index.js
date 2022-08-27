@@ -63,20 +63,34 @@ let innitSocket = (io) => {
             }
             io.to(socket.id).emit("new-account", { userAddress: guestID});
         })
-        socket.on("send-message", (data) => {
-            if (!data || !data.accessToken || !data.message || !data.to || !data.address) {
+        socket.on("send-message", async(data) => {
+            if (!data || !data.accessToken || !data.to || !data.address) {
                 io.emit("message", "errored out");
+                console.log("error-1")
                 return;
             }
-            chatHandlers.handleCustomerMessage(data.address, data.message, data.accessToken, data.to, data.from);
+            if( !data.message && !data.attachment) {
+                io.emit("message", "errored out");
+                console.log("message empty")
+                return;
+            }
+            const message = await chatHandlers.handleCustomerMessage({ 
+                address: data.address,
+                message:  data.message,
+                accessToken: data.accessToken, 
+                attachment: data.attachment,
+                to: data.to,
+                from: data.from,
+                timestamp: +new Date()
+            });
             // chatHandlers.pushToDiscord(data, client);
-            let customer = (data.to == "support") ? data.from: data.to;
+            let customer = (data.to === "support") ? data.from: data.to;
             
-            console.log('does it even reach here?', sockets)
-            if (sockets.customers[data.accessToken]) io.to(sockets.customers[data.accessToken][customer]).emit("message", data);
+            //console.log('does it even reach here?', sockets)
+            if (sockets.customers[data.accessToken]) io.to(sockets.customers[data.accessToken][customer]).emit("message", message);
             
             for (supportStaff in sockets.support[data.accessToken]) {
-                io.to(sockets.support[data.accessToken][supportStaff]).emit("message", data);
+                io.to(sockets.support[data.accessToken][supportStaff]).emit("message", message);
             }
             
         });

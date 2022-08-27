@@ -1,15 +1,29 @@
 const { getMessages, storeMessages, getUser, getUsers, updateUser, updateTotalConversations, updateUserTag } = require("./db");
 const { getDiscordSettings, alertInSupportChannel } = require("./discordHandlers");
+const { s3 } = require('./s3');
+const S3_BUCKET = 'photo-messages';
 
-const handleCustomerMessage = async (address, message, accessToken, to, from) => {
+
+const handleCustomerMessage = async ({address, message, attachment, timestamp, accessToken, to, from}) => {
     // check with db is thread is present
     const userAccount = await getUser(address, accessToken);
     if (userAccount == null) {
         await updateUser(address, accessToken);
     }
-
     // create thread
-    const storeMessageRes = await storeMessages(address, accessToken, message, to, from);
+    let photoUrl = '';
+    if(attachment?.file && attachment?.name) {
+        const uploadedImage = await s3.upload({
+            Bucket: S3_BUCKET,
+            Key: `${attachment.name}-${Date.now()}`,
+            Body: attachment.file,
+          }).promise();
+          photoUrl = uploadedImage.Location;
+    }
+    const data = {address,accessToken, message, timestamp, photoUrl, to, from}
+    storeMessages(data);
+     
+    return data;
 };
 
 const createNewUser = async (address, accessToken) => {
