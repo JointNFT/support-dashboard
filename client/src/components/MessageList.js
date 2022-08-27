@@ -9,26 +9,7 @@ import MessageBar from "./Message/MessageBar";
 import MessageBox from "./Message/MessageBox";
 import MessageHeader from "./MessageHeader";
 const MessageList = (props) => {
-  const [input, setInput] = useState("");
-
-  const send = () => {
-    if (input && input != "") {
-      props.onSendMessage(props.channel.userAddress, input);
-      console.log(props.channel)
-      setInput("");
-    }
-  };
-
-  const handleInput = (e) => {
-    setInput(e.target.value);
-  };
-
-  const handleKeypress = (e) => {
-    //it triggers by pressing the enter key
-    if (e.keyCode === 13) {
-      send();
-    }
-  };
+  
   const assignConversation = (address) =>{
     props.assignConversation(address);
   };
@@ -87,6 +68,7 @@ const MessageList = (props) => {
       messageBodyParams.date = m.timestamp;
       messageBodyParams.from = m.from;
       messageBodyParams.to = m.to;
+      messageBodyParams.attachment = m.photoUrl;
       return messageBodyParams;
     });
   } 
@@ -145,11 +127,9 @@ const MessageList = (props) => {
         <MessageBox channel={props.channel} list={list} />
 
         <MessageBar
-          handleInput={handleInput}
-          input={input}
-          handleKeypress={handleKeypress}
           assignConversation={assignConversation}
-          send={send}
+          onSendMessage={props.onSendMessage}
+          userAddress={props?.channel?.userAddress}
         />
       </Box>
     );

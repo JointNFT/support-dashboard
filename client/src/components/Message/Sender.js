@@ -1,7 +1,8 @@
 import { Box, Flex, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
+import ImageModal from "../../ui/ImageModal";
 
-const Sender = ({message, src}) => {
+const Sender = ({message, src, attachment, sentTime}) => {
   return (
     <Flex gap={"10px"} mt="5" mr="5">
       <Box flex="1">
@@ -13,6 +14,7 @@ const Sender = ({message, src}) => {
           justify={"right"}
           ms="auto"
         >
+          <Text mr={'15px'}>{sentTime }</Text>
           <Heading as="h6" size="sm">
             Adam
           </Heading>
@@ -21,14 +23,19 @@ const Sender = ({message, src}) => {
           mt="2"
           borderRadius="4px"
           bg="white"
-          width={"90%"}
+          width={attachment ? 'fit-content' : '90%'}
           p="2"
           ms="auto"
           boxShadow="base"
+          alignItems="flex-end"
         >
-          <Text p="1" textAlign={"justify"} wordBreak="break-word">
-            {message}
-          </Text>
+          {attachment ? (
+             <ImageModal src={attachment}/>
+          ) : (
+            <Text p="1" textAlign={"justify"} wordBreak="break-word">
+              {message}
+            </Text>
+          )}
         </Stack>
       </Box>
 

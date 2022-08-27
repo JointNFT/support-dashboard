@@ -120,7 +120,7 @@ const Organizations = () => {
         flexWrap={"wrap"}
         flexDirection={{ lg: "row", md: "column", sm: "column" }}
       >
-        {organizations.length &&
+        {organizations?.length &&
           organizations.map((organization) => {
             return (
               <OrganizationCard

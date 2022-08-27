@@ -30,7 +30,8 @@ const ChatBox = ({
   unreadCnt,
   status,
   tag,
-  assignedTo
+  assignedTo,
+  photoUrl
 }) => {
   return (
     <Flex
@@ -67,11 +68,11 @@ const ChatBox = ({
           alignItems="center"
           minWidth="0px"
         >
-          <Heading as="h4" size={"sm"} noOfLines={1} color="blue.700">
+          <Heading as="h4" size={"sm"} noOfLines={1} color="blue.700" style={{wordBreak: 'break-all'}}>
             {name}
           </Heading>
           <Text noOfLines={1} fontSize="sm" color="gray.500">
-            {info}
+            {info ? info : photoUrl ? 'Photo sent': ''}
           </Text>
         </Box>
       </Flex>

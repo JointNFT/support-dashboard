@@ -94,6 +94,7 @@ const Chat = (props) => {
     }, [newAccount]);
 
     useEffect(() => {
+        console.log('arrival message', arrivalMessage)
         if (arrivalMessage != null && Object.keys(arrivalMessage).length == 0) return;
         let channelCopy = [...channels];
         channelCopy.forEach((c) => {
@@ -109,7 +110,7 @@ const Chat = (props) => {
         });
         setChannels(channelCopy);
         if (channel == null || !(address in channel)) return;
-        const newChannel = channelCopy.find((c) => c.userAddress == channel.address);
+        const newChannel = channelCopy.find((c) => c.userAddress === channel.address);
         setChannel(newChannel);
     }, [arrivalMessage]);
 
@@ -227,20 +228,21 @@ const Chat = (props) => {
             });
     },[channels, accessToken]);
 
-    const handleSendMessage =useCallback((address, text) => {
-        socket.current.emit("send-message", {
+    const handleSendMessage =useCallback((address, text, attachment) => {
+        const newMessage = {
             id: Date.now(),
             address: address,
             accessToken: accessToken,
             message: text,
+            attachment,
             to: address,
             from: "support",
-            timestamp: +new Date(),
-        });
+        };
+        socket.current.emit("send-message", newMessage );
     }, [accessToken, socket]);
 
     return (
-        <Box width={"100vw"} height="92vh" bg="#EBF8FF">
+        <Box width={"100vw"} height="92vh" bg="#EBF8FF"> 
             <Flex justifyContent="center" height={"90vh"} width="90%" mx={"auto"} gap="30px">
                 <ChatList
                     channels={channels}
@@ -251,7 +253,6 @@ const Chat = (props) => {
                 />
                 <MessageList
                     onSendMessage={handleSendMessage} 
-                    /* onTagClick={handleUserTag} */
                     channel={channel}
                     organization={organization}
                     assignConversation={assignConversation}

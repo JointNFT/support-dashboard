@@ -80,7 +80,6 @@ const ChatList = (props) => {
 
   useEffect(() => {
     const list = getChannelList(props);
-    console.log(list)
     const listByType = sortConversationsByType(list, address, props.type)
     setList(listByType);
   }, [props.channels, props.type, address]);
@@ -91,9 +90,7 @@ const ChatList = (props) => {
 
   const handleClick = (channelId, id) => {
     props.onSelectChannel(channelId);
-    console.log("id", id);
     setIsActive(channelId);
-    console.log("chh", channelId);
   };
 
 // Handle fetch organization and select channel automatically
@@ -117,6 +114,7 @@ useEffect(() => {
         }
     }
 },[location, currentList]);
+
   return (
     <Box
       width={{
@@ -165,6 +163,7 @@ useEffect(() => {
                 src={conversationInfo.avatar}
                 name={conversationInfo.title}
                 info={conversationInfo.subtitle}
+                photoUrl={conversationInfo.photoUrl}
                 unreadCnt={conversationInfo.unread}
                 lastActivityTime={!isNaN(new Date(conversationInfo.date)) ? format(conversationInfo.date) : ''}
                 handleClick={() => handleClick(conversationInfo.title)}

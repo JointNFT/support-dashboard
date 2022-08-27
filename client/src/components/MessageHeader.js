@@ -43,7 +43,7 @@ const MessageHeader = ({
 
       <Box flex={5} marginRight="5" alignItems="center" ml="3" maxWidth="50%">
         <Heading as="h4" size={"sm"} color="#2C5282">
-          {userName.slice(1, 20) + "..."}
+          {userName?.length < 22 ? userName : userName.slice(0, 20) + "..."}
         </Heading>
         <Text noOfLines={1} fontSize="sm">
           {lastMessage != null ? lastMessage.message : '' }

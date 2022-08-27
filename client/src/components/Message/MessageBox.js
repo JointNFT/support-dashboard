@@ -56,6 +56,7 @@ const MessageBox = ({list, channel}) => {
 								message={messageInfo.text}
 								sentTime={format(messageInfo.date)}
 								userName={channel.userAddress}
+								attachment={messageInfo.attachment}
 							/>
 						)}
 						{messageInfo.position === "outgoing" && (
@@ -66,8 +67,11 @@ const MessageBox = ({list, channel}) => {
 								".png"
 							}
 							message={messageInfo.text}
-							sentTime={format(messageInfo.date)}
-							userName={channel.userAddress} />
+							sentTime={format(messageInfo.date)}						
+							userName={channel.userAddress}
+							attachment={messageInfo.attachment}
+							 />
+							
 						)}
 					</>
 				);

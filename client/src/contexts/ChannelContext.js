@@ -17,6 +17,7 @@ export const getChannelList = (props) => {
                         alt: "Some DP",
                         title: c.userAddress,
                         subtitle: c?.messages ? c?.messages[c.messages.length - 1]?.message : c.lastMessage?.message || null,
+                        photoUrl:c?.messages ? c?.messages[c.messages.length - 1]?.photoUrl : c.lastMessage?.photoUrl || null,
                         date: new Date(c?.messages ? c?.messages[c.messages.length - 1]?.timestamp : c?.lastMessage?.timestamp),
                         unread: c.unread != null ? c.unread : 0,
                         tag: c?.tag,
