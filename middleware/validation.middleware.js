@@ -15,6 +15,29 @@ const TYPE = {
     BOOLEAN: 'boolean',
     ANY: 'any'
 }
+const checkType = (value, type) => {
+    let result = false;
+    switch(type) {
+        case TYPE.NUMBER:
+            result =!isNaN(Number(value)) && typeof value !== TYPE.BOOLEAN ;
+            break;
+        case TYPE.STRING:
+            result = typeof value === TYPE.STRING;
+            break;
+        case TYPE.BOOLEAN:
+            result = value === 'true' || value === 'false' || typeof value === TYPE.BOOLEAN;
+            break;
+        case TYPE.OBJECT: 
+             result = typeof value === TYPE.OBJECT;
+             break;
+        case TYPE.ANY:
+            result = true;
+            break;
+        default:
+        break;
+    }
+    return result;
+}
 const validateParams = ({ query, body }) => (req, res, next)  => {
     try {
         const error = {
@@ -29,9 +52,11 @@ const validateParams = ({ query, body }) => (req, res, next)  => {
                 if(!req.query?.[key]) {
                     acc.push(`${key} required`)
                 } 
-                else if (value === TYPE.ANY) {}
-                else if(typeof req.query?.[key] !== value) {
+                else if (!checkType(req.query[key], value)) {
                     acc.push(`${key} is invalid. It should be a ${value}`)
+                }
+                if(value === TYPE.NUMBER && checkType(req.query[key], TYPE.NUMBER)) {
+                    req.query[key] = Number(req.query[key]);
                 }
                 return acc;
         }, []);
@@ -43,9 +68,11 @@ const validateParams = ({ query, body }) => (req, res, next)  => {
                 if(!req.body?.[key]) {
                     acc.push(`${key} required`)
                 } 
-                else if (value === TYPE.ANY) {}
-                else if(typeof req.body?.[key] !== value) {
+                else if (!checkType(req.body[key], value)) {
                     acc.push(`${key} is invalid. It should be a ${value}`)
+                }
+                if(value === TYPE.NUMBER && checkType(req.body[key], TYPE.NUMBER)) {
+                    req.body[key] = Number(req.body[key]);
                 }
                 return acc;
         }, [...error.details]);
